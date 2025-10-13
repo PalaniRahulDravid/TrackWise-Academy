@@ -1,49 +1,39 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-const API_URL = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/auth/register`
-  : "http://localhost:5000/api/auth/register";
+import { register } from "../../api/auth";
+import Toast from "../../components/Toast";
 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const handleChange = (e) => {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess(false);
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        API_URL,
-        { name, email, password },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      if (res.data.success) {
+      const res = await register(form.name, form.email, form.password);
+      if (res.success) {
         setSuccess(true);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
+        setForm({ name: "", email: "", password: "" });
+        setTimeout(() => navigate("/login"), 1500);
       } else {
-        setError(res.data.message || "Registration failed.");
+        setError(res.message || "Registration failed.");
       }
     } catch (err) {
       setError(
         err?.response?.data?.message ||
-        err?.message ||
-        "Registration failed, check credentials & try again."
+          err?.message ||
+          "Registration failed, check credentials & try again."
       );
     } finally {
       setLoading(false);
@@ -52,55 +42,65 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#161f34]">
+      <Toast
+        show={success}
+        message="Registration successful! Redirecting to login..."
+        type="success"
+        onClose={() => setSuccess(false)}
+        duration={1500}
+      />
+      {error && (
+        <Toast
+          show={!!error}
+          message={error}
+          type="error"
+          onClose={() => setError("")}
+        />
+      )}
       <form
+        onSubmit={handleSubmit}
         className="bg-[#232b41] p-8 rounded-2xl shadow-lg w-full max-w-sm"
-        onSubmit={handleRegister}
       >
-        <h2 className="text-3xl font-bold mb-6 text-center text-white">Register</h2>
-        {error && (
-          <div className="bg-red-200 text-red-800 p-2 rounded mb-2 text-sm text-center">
-            {error}
-          </div>
-        )}
-        {success && (
-          <div className="bg-green-200 text-green-800 p-2 rounded mb-2 text-sm text-center">
-            Registration successful! Redirecting...
-          </div>
-        )}
+        <h2 className="text-3xl font-bold mb-6 text-center text-white">
+          Register
+        </h2>
         <label className="block text-white mb-1">Full Name</label>
         <input
-          className="w-full p-3 mb-4 rounded bg-[#1d2436] text-white border-none outline-none"
           type="text"
-          placeholder="Your full name"
-          required
+          name="name"
           minLength={2}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          required
+          value={form.name}
+          onChange={handleChange}
+          className="w-full p-3 mb-4 rounded bg-[#1d2436] text-white border-none outline-none"
+          placeholder="Your full name"
         />
         <label className="block text-white mb-1">Email</label>
         <input
-          className="w-full p-3 mb-4 rounded bg-[#1d2436] text-white border-none outline-none"
           type="email"
-          placeholder="you@example.com"
+          name="email"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={form.email}
+          onChange={handleChange}
+          className="w-full p-3 mb-4 rounded bg-[#1d2436] text-white border-none outline-none"
+          placeholder="you@example.com"
         />
         <label className="block text-white mb-1">Password</label>
         <input
-          className="w-full p-3 mb-6 rounded bg-[#1d2436] text-white border-none outline-none"
           type="password"
-          placeholder="********"
-          required
+          name="password"
           minLength={6}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          required
+          value={form.password}
+          onChange={handleChange}
+          className="w-full p-3 mb-6 rounded bg-[#1d2436] text-white border-none outline-none"
+          placeholder="********"
         />
         <button
+          type="submit"
           className={`w-full bg-[#ff7900] text-white py-3 rounded-xl font-semibold mt-2 transition ${
             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#ff9000]"
           }`}
-          type="submit"
           disabled={loading || success}
         >
           {loading ? "Creating..." : "Create Account"}

@@ -5,11 +5,10 @@ require('dotenv').config();
 
 const app = express();
 
-// =================================
-// MIDDLEWARE CONFIGURATION
-// =================================
+// ===================
+// MIDDLEWARE CONFIG
+// ===================
 
-// CORS Configuration - Allow frontend connections
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
@@ -17,19 +16,16 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware (development)
-if (process.env.NODE_ENV === 'development') {
+if(process.env.NODE_ENV === 'development') {
     app.use((req, res, next) => {
         console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
         next();
     });
 }
 
-// Security headers middleware
 app.use((req, res, next) => {
     res.header('X-Content-Type-Options', 'nosniff');
     res.header('X-Frame-Options', 'DENY');
@@ -37,18 +33,16 @@ app.use((req, res, next) => {
     next();
 });
 
-// =================================
-// ROUTES CONFIGURATION
-// =================================
+// ===================
+// ROUTES SETUP
+// ===================
 
-// Import route modules
 const authRoutes = require('./routes/auth');
-const roadmapRoutes = require('./routes/roadmap');
+const roadmapRoutes = require('./routes/roadmap'); // singular/plural as per your file, but match route usage!
 const chatRoutes = require('./routes/chat');
 
-// Health check and root routes
 app.get('/', (req, res) => {
-    res.json({ 
+    res.json({
         message: 'TrackWise Educational Platform API',
         status: 'Active',
         version: '2.0.0',
@@ -87,12 +81,11 @@ app.get('/health', (req, res) => {
     });
 });
 
-// API Routes
+// Main API feature routes
 app.use('/api/auth', authRoutes);
 app.use('/api/roadmaps', roadmapRoutes);
 app.use('/api/chat', chatRoutes);
 
-// API Information endpoint
 app.get('/api', (req, res) => {
     res.json({
         message: 'TrackWise API v2.0.0 - Complete Educational Platform',
@@ -141,11 +134,10 @@ app.get('/api', (req, res) => {
     });
 });
 
-// =================================
-// DATABASE CONNECTION
-// =================================
+// ===================
+// MONGODB CONNECTION
+// ===================
 
-// MongoDB Connection with optimized settings
 const connectDB = async () => {
     try {
         const conn = await mongoose.connect(process.env.MONGODB_URI, {
@@ -154,54 +146,45 @@ const connectDB = async () => {
             socketTimeoutMS: 45000,
             family: 4
         });
-        
         console.log('\n=================================');
         console.log('✅ MongoDB Connected Successfully');
         console.log(`📡 Database: ${conn.connection.name}`);
         console.log(`🌐 Host: ${conn.connection.host}`);
         console.log(`⚡ Connection State: ${conn.connection.readyState}`);
         console.log('=================================\n');
-        
-        // Store models in app.locals for route access
         app.locals.models = {
             User: require('./models/User'),
             Roadmap: require('./models/Roadmap'),
             Chat: require('./models/Chat')
         };
-        
     } catch (error) {
         console.error('\n=================================');
         console.error('❌ MongoDB Connection Failed');
         console.error('Error:', error.message);
         console.error('=================================\n');
-        
         setTimeout(() => {
             process.exit(1);
         }, 1000);
     }
 };
 
-// Connect to database
 connectDB();
 
-// Handle MongoDB connection events
 mongoose.connection.on('connected', () => {
     console.log('📊 Mongoose connected to MongoDB');
 });
-
 mongoose.connection.on('error', (err) => {
     console.error('❌ Mongoose connection error:', err);
 });
-
 mongoose.connection.on('disconnected', () => {
     console.log('📊 Mongoose disconnected from MongoDB');
 });
 
-// =================================
-// ERROR HANDLING MIDDLEWARE
-// =================================
+// ===================
+// ERROR HANDLING
+// ===================
 
-// 404 Handler - Must be after all routes
+// 404
 app.use((req, res) => {
     res.status(404).json({
         success: false,
@@ -217,7 +200,7 @@ app.use((req, res) => {
     });
 });
 
-// Global Error Handler - Must be last middleware
+// Global
 app.use((err, req, res, next) => {
     console.error('\n=================================');
     console.error('❌ Global Error Handler');
@@ -226,8 +209,6 @@ app.use((err, req, res, next) => {
     console.error('Error:', err.message);
     console.error('Stack:', err.stack);
     console.error('=================================\n');
-    
-    // Mongoose validation error
     if (err.name === 'ValidationError') {
         const errors = Object.values(err.errors).map(e => e.message);
         return res.status(400).json({
@@ -237,8 +218,6 @@ app.use((err, req, res, next) => {
             timestamp: new Date().toISOString()
         });
     }
-    
-    // Mongoose CastError
     if (err.name === 'CastError') {
         return res.status(400).json({
             success: false,
@@ -246,8 +225,6 @@ app.use((err, req, res, next) => {
             timestamp: new Date().toISOString()
         });
     }
-    
-    // MongoDB duplicate key error
     if (err.code === 11000) {
         const field = Object.keys(err.keyPattern)[0];
         return res.status(409).json({
@@ -256,8 +233,6 @@ app.use((err, req, res, next) => {
             timestamp: new Date().toISOString()
         });
     }
-    
-    // JWT errors
     if (err.name === 'JsonWebTokenError') {
         return res.status(401).json({
             success: false,
@@ -265,7 +240,6 @@ app.use((err, req, res, next) => {
             timestamp: new Date().toISOString()
         });
     }
-    
     if (err.name === 'TokenExpiredError') {
         return res.status(401).json({
             success: false,
@@ -273,8 +247,6 @@ app.use((err, req, res, next) => {
             timestamp: new Date().toISOString()
         });
     }
-    
-    // Default error
     res.status(err.statusCode || 500).json({
         success: false,
         message: err.message || 'Internal server error',
@@ -283,12 +255,11 @@ app.use((err, req, res, next) => {
     });
 });
 
-// =================================
+// ===================
 // SERVER STARTUP
-// =================================
+// ===================
 
 const PORT = process.env.PORT || 5000;
-
 const server = app.listen(PORT, () => {
     console.log('\n🚀 ====================================');
     console.log('🎯 TrackWise Educational Platform API v2.0');
@@ -317,9 +288,9 @@ const server = app.listen(PORT, () => {
     console.log('🔗 Connect your frontend to start learning!\n');
 });
 
-// =================================
+// ===================
 // GRACEFUL SHUTDOWN
-// =================================
+// ===================
 
 process.on('SIGTERM', () => {
     console.log('\n🔄 SIGTERM received, shutting down gracefully');
@@ -343,7 +314,6 @@ process.on('SIGINT', () => {
     });
 });
 
-// Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
     console.error('❌ Unhandled Promise Rejection:', err.message);
     server.close(() => {
@@ -351,7 +321,6 @@ process.on('unhandledRejection', (err, promise) => {
     });
 });
 
-// Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
     console.error('❌ Uncaught Exception:', err.message);
     process.exit(1);

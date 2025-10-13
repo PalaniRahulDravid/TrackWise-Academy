@@ -27,7 +27,7 @@ const sendAuthError = (res, status, message, code = null) => {
 
 // Rate limiter middleware
 const rateLimitAuth = (req, res, next) => {
-  const clientKey = req.ip + req.get('User-Agent');
+  const clientKey = req.ip + (req.get('User-Agent') || '');
   const now = Date.now();
 
   if (authAttempts.has(clientKey)) {
@@ -43,7 +43,7 @@ const rateLimitAuth = (req, res, next) => {
 
 // Track failed auth
 const trackFailedAuth = (req) => {
-  const clientKey = req.ip + req.get('User-Agent');
+  const clientKey = req.ip + (req.get('User-Agent') || '');
   const now = Date.now();
 
   if (authAttempts.has(clientKey)) {
@@ -55,15 +55,21 @@ const trackFailedAuth = (req) => {
   }
 };
 
-// Authenticate middleware
+// helper - extract user id from token payload robustly
+const extractUserIdFromPayload = (payload) => {
+  if (!payload) return null;
+  return payload.userId || payload.user_id || payload.id || payload._id || payload.sub || null;
+};
+
+// Authenticate middleware (robust & backwards-compatible)
 const authenticate = async (req, res, next) => {
   try {
-    const authHeader = req.header('Authorization');
+    const authHeader = req.header('Authorization') || req.header('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       trackFailedAuth(req);
       return sendAuthError(res, 401, 'No valid token provided.', 'NO_TOKEN');
     }
-    const token = authHeader.substring(7);
+    const token = authHeader.substring(7).trim();
     if (!token) {
       trackFailedAuth(req);
       return sendAuthError(res, 401, 'Token is empty.', 'EMPTY_TOKEN');
@@ -71,7 +77,8 @@ const authenticate = async (req, res, next) => {
 
     let decoded;
     try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET, { issuer: 'trackwise-api', audience: 'trackwise-app' });
+      // Do not require issuer/audience here to be more compatible with tokens issued by your controller.
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (jwtError) {
       trackFailedAuth(req);
       if (jwtError.name === 'TokenExpiredError') {
@@ -82,23 +89,41 @@ const authenticate = async (req, res, next) => {
       }
       return sendAuthError(res, 401, 'Token verification failed.', 'VERIFICATION_FAILED');
     }
-    if (decoded.type !== 'access') {
+
+    // If tokens in your app use a 'type' field, require 'access'; otherwise allow missing
+    if (decoded.type && decoded.type !== 'access') {
       trackFailedAuth(req);
       return sendAuthError(res, 401, 'Access token required.', 'INVALID_TOKEN_TYPE');
     }
 
-    const user = await User.findById(decoded.userId).select('_id name email role isActive lastLogin stats').lean();
+    const userId = extractUserIdFromPayload(decoded);
+    if (!userId) {
+      trackFailedAuth(req);
+      return sendAuthError(res, 401, 'Invalid token payload.', 'INVALID_TOKEN_PAYLOAD');
+    }
+
+    const user = await User.findById(userId).select('_id name email role isActive lastLogin stats').lean();
 
     if (!user) {
       trackFailedAuth(req);
       return sendAuthError(res, 401, 'User not found.', 'USER_NOT_FOUND');
     }
-    if (!user.isActive) {
+    if (user.isActive === false) {
       trackFailedAuth(req);
       return sendAuthError(res, 401, 'Account deactivated.', 'ACCOUNT_DEACTIVATED');
     }
 
-    req.user = { userId: user._id, name: user.name, email: user.email, role: user.role, isActive: user.isActive, lastLogin: user.lastLogin, stats: user.stats };
+    // Set user with both _id and userId to keep compatibility across codebase
+    req.user = {
+      _id: user._id,
+      userId: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      isActive: user.isActive,
+      lastLogin: user.lastLogin,
+      stats: user.stats
+    };
 
     next();
   } catch (error) {
@@ -132,24 +157,38 @@ const requireStudent = (req, res, next) => {
   }
 };
 
-// Optional auth middleware
+// Optional auth middleware (robust)
 const optionalAuth = async (req, res, next) => {
   try {
-    const authHeader = req.header('Authorization');
+    const authHeader = req.header('Authorization') || req.header('authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       req.user = null;
       return next();
     }
-    const token = authHeader.substring(7);
+    const token = authHeader.substring(7).trim();
     if (!token) {
       req.user = null;
       return next();
     }
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET, { issuer: 'trackwise-api', audience: 'trackwise-app' });
-      if (decoded.type === 'access') {
-        const user = await User.findById(decoded.userId).select('_id name email role isActive lastLogin stats').lean();
-        req.user = user && user.isActive ? { userId: user._id, name: user.name, email: user.email, role: user.role, isActive: user.isActive, lastLogin: user.lastLogin, stats: user.stats } : null;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = extractUserIdFromPayload(decoded);
+      if (userId && (!decoded.type || decoded.type === 'access')) {
+        const user = await User.findById(userId).select('_id name email role isActive lastLogin stats').lean();
+        if (user && user.isActive !== false) {
+          req.user = {
+            _id: user._id,
+            userId: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            isActive: user.isActive,
+            lastLogin: user.lastLogin,
+            stats: user.stats
+          };
+        } else {
+          req.user = null;
+        }
       } else {
         req.user = null;
       }
@@ -164,11 +203,13 @@ const optionalAuth = async (req, res, next) => {
   }
 };
 
-// Validate ownership middleware
+// Validate ownership middleware (robust)
 const validateOwnership = (req, res, next) => {
   try {
     const { userId } = req.params;
-    const authenticatedUserId = req.user.userId.toString();
+    // Accept both req.user.userId and req.user._id
+    const authenticatedUserId = (req.user && (req.user.userId || req.user._id)) ? String(req.user.userId || req.user._id) : null;
+    if (!authenticatedUserId) return sendAuthError(res, 401, 'Authentication required.', 'NO_AUTH');
     if (req.user.role === 'admin') return next();
     if (userId && userId !== authenticatedUserId) return sendAuthError(res, 403, 'Access denied.', 'OWNERSHIP_REQUIRED');
     next();

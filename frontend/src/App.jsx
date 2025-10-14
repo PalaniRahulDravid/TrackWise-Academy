@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
 import Roadmap from "./features/roadmap/Roadmap";
+import Chat from "./features/chat/Chat";
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 
@@ -29,7 +30,8 @@ export default function App() {
             }
           />
           <Route path="/roadmaps" element={<Roadmap />} />
-          {/* You can add other public routes for courses, doubts, and games here */}
+          <Route path="/doubts" element={<Chat />} />
+          {/* Add other public routes for courses, doubts, games here */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>

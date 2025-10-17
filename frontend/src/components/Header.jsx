@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth.jsx";
+import Button from "./Button";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -23,12 +24,17 @@ export default function Header() {
     navigate("/login");
   };
 
+  const handleLoginClick = () => {
+    setMobileOpen(false);
+    navigate("/login");
+  };
+
   return (
     <>
       <header className="fixed top-0 left-0 w-full bg-black py-4 px-4 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto bg-gray-900 text-white rounded-xl shadow-lg px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg">
+            <div className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg h-8 flex items-center">
               ASM
             </div>
             <span className="font-medium text-lg tracking-tight">
@@ -88,20 +94,24 @@ export default function Header() {
             {user ? (
               <div className="relative flex items-center gap-4">
                 <span className="font-semibold">{user.name || "User"}</span>
-                <button
+                <Button
+                  variant="primary"
+                  className="h-8 px-3 py-1 rounded text-lg flex items-center"
+                  style={{ minHeight: "32px" }}
                   onClick={handleLogout}
-                  className="bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition"
                 >
                   Logout
-                </button>
+                </Button>
               </div>
             ) : (
-              <button
+              <Button
+                variant="primary"
+                className="h-8 px-3 py-1 rounded text-lg flex items-center"
+                style={{ minHeight: "32px" }}
                 onClick={() => navigate("/login")}
-                className="bg-orange-600 px-3 py-1 rounded hover:bg-orange-700 transition"
               >
                 Login
-              </button>
+              </Button>
             )}
           </nav>
           <button
@@ -127,12 +137,14 @@ export default function Header() {
           </button>
         </div>
       </header>
+      {/* Overlay */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity md:hidden ${
           mobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={() => setMobileOpen(false)}
       />
+      {/* Mobile Drawer Menu */}
       <div
         className={`fixed top-0 right-0 h-full w-80 bg-gray-800 text-white z-50 transform transition-transform md:hidden ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
@@ -196,21 +208,38 @@ export default function Header() {
               All Resources
             </a>
           </div>
-          {user && (
+          {user ? (
             <div
               className="flex items-center justify-between px-6 py-5 border-t border-gray-700 bg-gray-900"
               style={{ minHeight: 76 }}
             >
               <span className="font-bold">{user.name || "User"}</span>
-              <button
+              <Button
+                variant="primary"
+                className="px-3 py-1 rounded font-semibold text-base"
                 onClick={() => {
                   handleLogout();
                   setMobileOpen(false);
                 }}
-                className="bg-orange-600 px-4 py-2 rounded hover:bg-orange-700 font-semibold"
               >
                 Logout
-              </button>
+              </Button>
+            </div>
+          ) : (
+            <div
+              className="flex flex-col gap-2 items-center px-6 py-6 border-t border-gray-700 bg-gray-900"
+              style={{ minHeight: 86 }}
+            >
+              <span className="font-semibold text-base text-orange-400">
+                Don't have an account?
+              </span>
+              <Button
+                variant="primary"
+                className="px-3 py-1 rounded font-semibold w-full mt-2"
+                onClick={handleLoginClick}
+              >
+                Login
+              </Button>
             </div>
           )}
         </div>

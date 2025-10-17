@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+/* Thin, black-only minimal scrollbar for chat sidebar and chat area */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 7px;
+  background-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #15171a;           /* Jet black, matches dark layouts */
+  border-radius: 10px;
+  border: none;
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #15171a transparent;
+}

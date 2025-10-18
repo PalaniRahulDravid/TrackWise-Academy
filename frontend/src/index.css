@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+body, html {
+  background: #000;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  /* width: 100vw; */
+  overflow-x: hidden;
+}
+
 /* Thin, black-only minimal scrollbar for chat sidebar and chat area */
 .custom-scrollbar::-webkit-scrollbar {
   width: 7px;

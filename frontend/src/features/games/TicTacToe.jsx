@@ -36,41 +36,42 @@ export default function TicTacToe() {
     setStep(0);
   }
 
-  function renderSquare(i) {
-    return (
-      <button
-        onClick={() => handleClick(i)}
-        className="w-16 h-16 text-2xl font-bold rounded bg-gray-900/50 border border-gray-700
-                hover:bg-orange-700/30 transition"
-      >
-        {current[i]}
-      </button>
-    );
-  }
-
   return (
     <>
       <Header />
-      <main className="pt-28 min-h-screen bg-black flex flex-col items-center text-white">
-        <h2 className="text-2xl font-bold mb-4">Tic Tac Toe</h2>
-        <div className="inline-grid grid-cols-3 gap-3 mb-4">
-          {Array.from({ length: 9 }).map((_, i) => renderSquare(i))}
-        </div>
-        <div className="mb-2">
-          {winner
-            ? <span className="text-orange-400 font-semibold">{winner} Wins!</span>
-            : step === 9
-              ? <span className="text-pink-400 font-semibold">Draw!</span>
-              : <span>Next: {xIsNext ? "X" : "O"}</span>
-          }
-        </div>
-        <button
-          className="mt-4 px-6 py-2 bg-orange-500 rounded-xl text-white hover:bg-orange-600 transition font-bold"
-          onClick={restart}
-        >
-          Restart
-        </button>
-      </main>
+      <div
+        className="w-full flex flex-col items-center justify-center bg-black"
+        style={{ minHeight: "calc(100vh - 96px)" }}
+      >
+        <main className="flex flex-col items-center text-white w-full">
+          <h2 className="text-2xl font-bold mb-4 mt-2">Tic Tac Toe</h2>
+          <div className="inline-grid grid-cols-3 gap-3 mb-4">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => handleClick(i)}
+                className="w-16 h-16 text-2xl font-bold rounded bg-gray-900/50 border border-gray-700 hover:bg-orange-700/30 transition"
+              >
+                {current[i]}
+              </button>
+            ))}
+          </div>
+          <div className="mb-2">
+            {winner
+              ? <span className="text-orange-400 font-semibold">{winner} Wins!</span>
+              : step === 9
+                ? <span className="text-pink-400 font-semibold">Draw!</span>
+                : <span>Next: {xIsNext ? "X" : "O"}</span>
+            }
+          </div>
+          <button
+            className="mt-4 px-6 py-2 bg-orange-500 rounded-xl text-white hover:bg-orange-600 transition font-bold"
+            onClick={restart}
+          >
+            Restart
+          </button>
+        </main>
+      </div>
     </>
   );
 }

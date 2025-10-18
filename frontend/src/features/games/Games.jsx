@@ -13,7 +13,10 @@ export default function Games() {
   return (
     <>
       <Header />
-      <main className="h-screen w-full overflow-hidden bg-black text-white flex flex-col items-center justify-center px-4">
+      <main
+        className="w-full bg-black text-white flex flex-col items-center justify-center px-4"
+        style={{ minHeight: "calc(100vh - 96px)" }}
+      >
         <div className="max-w-3xl w-full">
           <h1 className="text-3xl font-bold text-center mb-8">Mini Games</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

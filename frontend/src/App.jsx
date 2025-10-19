@@ -7,6 +7,8 @@ import Chat from "./features/chat/Chat";
 import Games from "./features/games/Games";
 import TicTacToe from "./features/games/TicTacToe";
 import MemoryFlip from "./features/games/MemoryFlip";
+import Snake from "./features/games/Snake";
+import WhackAMole from "./features/games/WhackAMole";
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/games/tictactoe" element={<TicTacToe />} />
           <Route path="/games/memory" element={<MemoryFlip />} />
+          <Route path="/games/snake" element={<Snake />} />
+          <Route path="/games/whackamole" element={<WhackAMole />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

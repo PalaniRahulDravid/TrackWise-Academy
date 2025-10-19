@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 
 import tictactoe from "../../assets/tictactoe.png";
 import memoryflip from "../../assets/memoryflip.png";
+import Snake from "../../assets/Snake.png";
+import whackamole from "../../assets/whackamole.png";
 
 const GAMES = [
   { name: "Tic Tac Toe", path: "/games/tictactoe", img: tictactoe },
-  { name: "Memory Flip", path: "/games/memory", img: memoryflip }
+  { name: "Memory Flip", path: "/games/memory", img: memoryflip },
+  { name: "Snake", path: "/games/snake", img: Snake },
+  { name: "Whack-a-Mole", path: "/games/whackamole", img: whackamole }
 ];
 
 export default function Games() {

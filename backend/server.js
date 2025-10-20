@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 const authRoutes = require('./routes/auth');
 const roadmapRoutes = require('./routes/roadmap'); // singular/plural as per your file, but match route usage!
 const chatRoutes = require('./routes/chat');
+const courseRoutes = require('./routes/course');
 
 app.get('/', (req, res) => {
     res.json({
@@ -85,6 +86,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/roadmaps', roadmapRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/course', courseRoutes);
 
 app.get('/api', (req, res) => {
     res.json({

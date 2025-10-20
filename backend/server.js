@@ -86,7 +86,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/roadmaps', roadmapRoutes);
 app.use('/api/chat', chatRoutes);
-app.use('/api/course', courseRoutes);
+app.use('/api/courses', courseRoutes);
 
 app.get('/api', (req, res) => {
     res.json({

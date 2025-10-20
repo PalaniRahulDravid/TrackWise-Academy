@@ -9,6 +9,7 @@ import TicTacToe from "./features/games/TicTacToe";
 import MemoryFlip from "./features/games/MemoryFlip";
 import Snake from "./features/games/Snake";
 import WhackAMole from "./features/games/WhackAMole";
+import Courses from './features/courses/Courses';
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/games/memory" element={<MemoryFlip />} />
           <Route path="/games/snake" element={<Snake />} />
           <Route path="/games/whackamole" element={<WhackAMole />} />
+          <Route path="/courses" element={<Courses />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

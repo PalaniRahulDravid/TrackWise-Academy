@@ -1,0 +1,60 @@
+{
+  "beginner": [
+    {
+      "level": "beginner",
+      "topic": "Arrays",
+      "title": "Two Sum",
+      "description": "Given an array of integers and a target value, return indices of the two numbers such that they add up to target.",
+      "difficulty": "Easy",
+      "tags": ["Array", "HashMap"],
+      "input": "[2,7,11,15], target = 9",
+      "output": "[0,1]",
+      "sampleCases": [
+        { "input": "[2,7,11,15], 9", "output": "[0,1]" }
+      ]
+    },
+    {
+      "level": "beginner",
+      "topic": "Arrays",
+      "title": "Remove Duplicates from Sorted Array",
+      "description": "Remove duplicates in a sorted array in-place and return the new length.",
+      "difficulty": "Easy",
+      "tags": ["Array", "Two Pointer"],
+      "input": "[1,1,2]",
+      "output": "2",
+      "sampleCases": [
+        { "input": "[1,1,2]", "output": "2" }
+      ]
+    }
+  ],
+  "intermediate": [
+    {
+      "level": "intermediate",
+      "topic": "Arrays",
+      "title": "Sort Colors",
+      "description": "Sort an array containing 0s, 1s, and 2s.",
+      "difficulty": "Medium",
+      "tags": ["Array", "Sorting"],
+      "input": "[2,0,2,1,1,0]",
+      "output": "[0,0,1,1,2,2]",
+      "sampleCases": [
+        { "input": "[2,0,2,1,1,0]", "output": "[0,0,1,1,2,2]" }
+      ]
+    }
+  ],
+  "advanced": [
+    {
+      "level": "advanced",
+      "topic": "Backtracking",
+      "title": "N-Queens",
+      "description": "Place N queens on an N x N chessboard such that no two queens attack each other.",
+      "difficulty": "Hard",
+      "tags": ["Backtracking"],
+      "input": "4",
+      "output": "[['.Q..','...Q','Q...','..Q.'], ...]",
+      "sampleCases": [
+        { "input": "4", "output": "[['.Q..','...Q','Q...','..Q.']]" }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import MemoryFlip from "./features/games/MemoryFlip";
 import Snake from "./features/games/Snake";
 import WhackAMole from "./features/games/WhackAMole";
 import Courses from './features/courses/Courses';
+import DsaFeature from "./features/dsa"; // import the DSA main component
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/games/snake" element={<Snake />} />
           <Route path="/games/whackamole" element={<WhackAMole />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/dsa" element={<DsaFeature />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

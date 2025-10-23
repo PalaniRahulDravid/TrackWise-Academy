@@ -1,13 +1,41 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const submissionSchema = new mongoose.Schema({
-  userId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
-  questionId: { type: String, required: true },
-  code: { type: String, required: true },
-  language: { type: String, required: true },
-  result: { type: String, required: true }, // "Accepted", "Wrong Answer", etc.
-  testCaseResults: [{ input: String, output: String, passed: Boolean }],
-  submittedAt: { type: Date, default: Date.now }
+const SubmissionSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  problem: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'DsaProblem',
+    required: true
+  },
+  code: {
+    type: String,
+    required: true
+  },
+  language: {
+    type: String,
+    enum: ['javascript', 'python', 'java'],
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['Accepted', 'Wrong Answer', 'Time Limit Exceeded', 'Runtime Error', 'Compilation Error'],
+    required: true
+  },
+  runtime: Number,
+  memory: Number,
+  testCasesPassed: Number,
+  totalTestCases: Number,
+  errorMessage: String
+}, {
+  timestamps: true
 });
 
-export default mongoose.model('Submission', submissionSchema);
+SubmissionSchema.index({ user: 1, problem: 1 });
+SubmissionSchema.index({ status: 1 });
+SubmissionSchema.index({ createdAt: -1 });
+
+module.exports = mongoose.model('Submission', SubmissionSchema);

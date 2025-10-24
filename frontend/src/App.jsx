@@ -12,6 +12,8 @@ import WhackAMole from "./features/games/WhackAMole";
 import Courses from './features/courses/Courses';
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
+import DSAHome from "./features/dsa/DSAHome";
+import DsaQuestionList from "./features/dsa/DsaQuestionList";
 
 export default function App() {
   return (
@@ -43,6 +45,8 @@ export default function App() {
           <Route path="/games/snake" element={<Snake />} />
           <Route path="/games/whackamole" element={<WhackAMole />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/dsa" element={<DSAHome />} />
+          <Route path="/dsa/sheet" element={<DsaQuestionList />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

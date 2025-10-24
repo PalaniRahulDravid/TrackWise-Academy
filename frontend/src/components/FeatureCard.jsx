@@ -3,7 +3,7 @@ export default function FeatureCard({ title, desc, gradient, icon, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="group block w-full text-left bg-gray-900 rounded-xl sm:rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+      className="group block w-full sm:w-72 max-w-sm text-left bg-gray-900 rounded-xl sm:rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
     >
       <div className={`h-24 sm:h-28 md:h-32 bg-gradient-to-br ${gradient} flex items-center justify-center`}>
         <div className="bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4">

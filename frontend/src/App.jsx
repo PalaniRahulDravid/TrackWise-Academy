@@ -14,6 +14,8 @@ import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 import DSAHome from "./features/dsa/DSAHome";
 import DsaQuestionList from "./features/dsa/DsaQuestionList";
+import CompanyList from "./features/dsa/CompanyList";
+import CompanyQuestionList from "./features/dsa/CompanyQuestionList";
 
 export default function App() {
   return (
@@ -47,6 +49,8 @@ export default function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/dsa" element={<DSAHome />} />
           <Route path="/dsa/sheet" element={<DsaQuestionList />} />
+          <Route path="/dsa/company" element={<CompanyList />} />
+          <Route path="/dsa/company/:company" element={<CompanyQuestionList />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

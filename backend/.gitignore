@@ -8,4 +8,4 @@ yarn-error.log*
 .vscode/
 dist/
 build/
-data/
+leetcode_dsa_enriched.json

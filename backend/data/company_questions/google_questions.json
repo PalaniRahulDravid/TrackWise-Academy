@@ -1,0 +1,494 @@
+[
+  {
+    "title": "Wave Array",
+    "url": "https://www.geeksforgeeks.org/problems/wave-array-1587115621/1?page=1&difficulty%5B%5D=0&company%5B%5D=Google&category%5B%5D=Arrays&sortBy="
+  },
+  {
+    "title": "Subarray with given sum",
+    "url": "https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&difficulty%5B%5D=0&company%5B%5D=Google&category%5B%5D=Arrays&sortBy="
+  },
+  {
+    "title": "Majority Element",
+    "url": "https://www.geeksforgeeks.org/problems/majority-element-1587115620/1"
+  },
+  {
+    "title": "Peak element",
+    "url": "https://www.geeksforgeeks.org/problems/peak-element/1?page=1&difficulty%5B%5D=0&company%5B%5D=Google&category%5B%5D=Arrays&sortBy="
+  },
+  {
+    "title": "Three Sum Closest",
+    "url": "https://www.geeksforgeeks.org/problems/3-sum-closest/1"
+  },
+  {
+    "title": "Number of subarrays having sum exactly equal to k",
+    "url": "https://www.geeksforgeeks.org/problems/subarrays-with-sum-k/1"
+  },
+  {
+    "title": "Kadane's Algorithm",
+    "url": "https://www.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/1?page=1&difficulty%5B%5D=1&company%5B%5D=Google&category%5B%5D=Arrays&sortBy="
+  },
+  {
+    "title": "Find the element that appears once",
+    "url": "https://www.geeksforgeeks.org/problems/find-element-occuring-once-when-all-other-are-present-thrice/1"
+  },
+  {
+    "title": "Find the minimum element in a sorted and rotated array",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-element-in-a-sorted-and-rotated-array3611/1"
+  },
+  {
+    "title": "Search a Word in a 2D Grid of characters",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-string-in-grid0111/1"
+  },
+  {
+    "title": "Find Surpasser Count of each element in array",
+    "url": "https://www.geeksforgeeks.org/problems/surpasser-count0615/1"
+  },
+  {
+    "title": "Smallest Absolute Difference",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-absolute-difference4320/1"
+  },
+  {
+    "title": "Sum of bit differences among all pairs",
+    "url": "https://www.geeksforgeeks.org/problems/find-sum-of-different-corresponding-bits-for-all-pairs4652/1"
+  },
+  {
+    "title": "Count More than n/k Occurrences",
+    "url": "https://www.geeksforgeeks.org/problems/count-element-occurences/1?page=2&difficulty%5B%5D=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Arrays&sortBy="
+  },
+  {
+    "title": "Capacity To Ship Packages Within D Days",
+    "url": "https://www.geeksforgeeks.org/problems/capacity-to-ship-packages-within-d-days/1"
+  },
+  {
+    "title": "Valid Expression",
+    "url": "https://www.geeksforgeeks.org/problems/valid-expression1025/1"
+  },
+  {
+    "title": "Multiply Large Numbers represented as Strings",
+    "url": "https://www.geeksforgeeks.org/problems/multiply-two-strings/1"
+  },
+  {
+    "title": "Minimum indexed character",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-indexed-character0221/1"
+  },
+  {
+    "title": "Find Maximum number possible by doing at-most K swaps",
+    "url": "https://www.geeksforgeeks.org/problems/largest-number-in-k-swaps-1587115620/1"
+  },
+  {
+    "title": "Uncommon characters",
+    "url": "https://www.geeksforgeeks.org/problems/uncommon-characters4932/1"
+  },
+  {
+    "title": "License Key Formatting",
+    "url": "https://www.geeksforgeeks.org/problems/license-key-formatting/1?page=1&difficulty%5B%5D=1&company%5B%5D=Google&category%5B%5D=Strings&sortBy="
+  },
+  {
+    "title": "Minimum insertions to form a palindrome",
+    "url": "https://www.geeksforgeeks.org/problems/form-a-palindrome1455/1"
+  },
+  {
+    "title": "Longest Repeating Subsequence",
+    "url": "https://www.geeksforgeeks.org/problems/longest-repeating-subsequence2004/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=VMWare&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Strings&sortBy="
+  },
+  {
+    "title": "Alien Dictionary",
+    "url": "https://www.geeksforgeeks.org/problems/alien-dictionary/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=VMWare&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Strings&sortBy="
+  },
+  {
+    "title": "Anagram Palindrome",
+    "url": "https://www.geeksforgeeks.org/problems/anagram-palindrome4720/1?page=5&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=VMWare&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Strings&sortBy="
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "url": "https://www.geeksforgeeks.org/problems/longest-palindrome-in-a-string1956/1"
+  },
+  {
+    "title": "Rabin-Karp Algorithm for Pattern Searching",
+    "url": "https://www.geeksforgeeks.org/problems/search-pattern-rabin-karp-algorithm--141631/1"
+  },
+  {
+    "title": "Longest prefix which is also suffix",
+    "url": "https://www.geeksforgeeks.org/problems/longest-prefix-suffix2527/1"
+  },
+  {
+    "title": "Nth node from end of linked list",
+    "url": "https://www.geeksforgeeks.org/problems/nth-node-from-end-of-linked-list/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Linked%20List&sortBy="
+  },
+  {
+    "title": "Reverse a linked list",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-linked-list/1"
+  },
+  {
+    "title": "Detect loop in a linked list",
+    "url": "https://www.geeksforgeeks.org/problems/detect-loop-in-linked-list/1"
+  },
+  {
+    "title": "Delete a Node from linked list without head pointer",
+    "url": "https://www.geeksforgeeks.org/problems/delete-without-head-pointer/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Linked%20List&sortBy="
+  },
+  {
+    "title": "Find length of Loop",
+    "url": "https://www.geeksforgeeks.org/problems/find-length-of-loop/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Linked%20List&sortBy="
+  },
+  {
+    "title": "Insert in a Sorted List",
+    "url": "https://www.geeksforgeeks.org/problems/insert-in-a-sorted-list/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Linked%20List&sortBy="
+  },
+  {
+    "title": "Pairwise Swap Nodes of a given Linked List",
+    "url": "https://www.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1"
+  },
+  {
+    "title": "Sort a linked list of 0s, 1s and 2s",
+    "url": "https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1"
+  },
+  {
+    "title": "Reverse a sublist of a linked list",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-sublist-of-a-linked-list/1?page=3&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&company%5B%5D=Media.net%20&category%5B%5D=Linked%20List&sortBy="
+  },
+  {
+    "title": "The Celebrity Problem",
+    "url": "https://www.geeksforgeeks.org/problems/the-celebrity-problem/1"
+  },
+  {
+    "title": "Maximum Rectangular Area in a Histogram",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1?page=1&company%5B%5D=Google&category%5B%5D=Stack&sortBy="
+  },
+  {
+    "title": "Max rectangle",
+    "url": "https://www.geeksforgeeks.org/problems/max-rectangle/1?page=1&company%5B%5D=Google&category%5B%5D=Stack&sortBy="
+  },
+  {
+    "title": "Length of the longest valid substring",
+    "url": "https://www.geeksforgeeks.org/problems/longest-valid-parentheses5657/1?page=1&company%5B%5D=Google&category%5B%5D=Stack&sortBy="
+  },
+  {
+    "title": "Find the first circular tour that visits all petrol pumps",
+    "url": "https://www.geeksforgeeks.org/problems/circular-tour-1587115620/1"
+  },
+  {
+    "title": "LRU Cache Implementation",
+    "url": "https://www.geeksforgeeks.org/problems/lru-cache/1"
+  },
+  {
+    "title": "Minimum time required to rot all oranges",
+    "url": "https://www.geeksforgeeks.org/problems/rotten-oranges2536/1"
+  },
+  {
+    "title": "Sliding Window Maximum (Maximum of all subarrays of size k)",
+    "url": "https://www.geeksforgeeks.org/problems/ipl-2021-match-day-2--141634/1"
+  },
+  {
+    "title": "Subarray with given sum",
+    "url": "https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1"
+  },
+  {
+    "title": "Kth smallest element",
+    "url": "https://www.geeksforgeeks.org/problems/kth-smallest-element5635/1"
+  },
+  {
+    "title": "Find a peak element",
+    "url": "https://www.geeksforgeeks.org/problems/peak-element/1"
+  },
+  {
+    "title": "Search in a Rotated Array",
+    "url": "https://www.geeksforgeeks.org/problems/search-in-a-rotated-array4618/1?page=1&company%5B%5D=Google&category%5B%5D=Searching&sortBy="
+  },
+  {
+    "title": "The Painter's Partition Problem-II",
+    "url": "https://www.geeksforgeeks.org/problems/the-painters-partition-problem1535/1"
+  },
+  {
+    "title": "Minimum number of times A has to be repeated such that B is a substring of it",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-times-a-has-to-be-repeated-such-that-b-is-a-substring-of-it--170631/1"
+  },
+  {
+    "title": "Next greater number set digits",
+    "url": "https://www.geeksforgeeks.org/problems/next-greater-number-set-digits3503/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Searching&sortBy="
+  },
+  {
+    "title": "Median of 2 Sorted Arrays of Different Sizes",
+    "url": "https://www.geeksforgeeks.org/problems/median-of-2-sorted-arrays-of-different-sizes/0?problemStatus=unsolved&difficulty%5B%5D=2&page=1&query="
+  },
+  {
+    "title": "Maximum no of 1's row",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-no-of-1s-row3027/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Searching&sortBy="
+  },
+  {
+    "title": "Elements in the Range",
+    "url": "https://www.geeksforgeeks.org/problems/elements-in-the-range2834/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Searching&sortBy="
+  },
+  {
+    "title": "Floor in a Sorted Array",
+    "url": "https://www.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Find all triplets with zero sum",
+    "url": "https://www.geeksforgeeks.org/problems/find-triplets-with-zero-sum/1"
+  },
+  {
+    "title": "Count Inversions",
+    "url": "https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1"
+  },
+  {
+    "title": "Sort an array of 0s, 1s and 2s",
+    "url": "https://www.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s4231/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Minimum Platforms",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-platforms-1587115620/1"
+  },
+  {
+    "title": "Count the number of possible triangles",
+    "url": "https://www.geeksforgeeks.org/problems/count-possible-triangles-1587115620/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "At least two greater elements",
+    "url": "https://www.geeksforgeeks.org/problems/at-least-two-greater-elements4625/1?page=3&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Maximum Intervals Overlap",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-intervals-overlap5708/1?page=3&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Next Greater Even Number",
+    "url": "https://www.geeksforgeeks.org/problems/next-greater-even-number0828/1?page=3&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Count Smaller elements",
+    "url": "https://www.geeksforgeeks.org/problems/count-smaller-elements2214/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Chocolate Distribution Problem",
+    "url": "https://www.geeksforgeeks.org/problems/chocolate-distribution-problem3825/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Sorting&sortBy="
+  },
+  {
+    "title": "Count pairs with given sum",
+    "url": "https://www.geeksforgeeks.org/problems/count-pairs-with-given-sum5022/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Hash&sortBy="
+  },
+  {
+    "title": "Longest Consecutive Subsequence",
+    "url": "https://www.geeksforgeeks.org/problems/longest-consecutive-subsequence2449/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Hash&sortBy="
+  },
+  {
+    "title": "Triplet Sum in Array",
+    "url": "https://www.geeksforgeeks.org/problems/triplet-sum-in-array-1587115621/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Hash&sortBy="
+  },
+  {
+    "title": "Largest subarray of 0's and 1's",
+    "url": "https://www.geeksforgeeks.org/problems/largest-subarray-of-0s-and-1s/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Hash&sortBy="
+  },
+  {
+    "title": "Find median in a stream",
+    "url": "https://www.geeksforgeeks.org/problems/find-median-in-a-stream-1587115620/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Heap&sortBy="
+  },
+  {
+    "title": "Longest K unique characters substring",
+    "url": "https://www.geeksforgeeks.org/problems/longest-k-unique-characters-substring0853/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Hash&sortBy="
+  },
+  {
+    "title": "Winner of an election",
+    "url": "https://www.geeksforgeeks.org/problems/winner-of-an-election-where-votes-are-represented-as-candidate-names-1587115621/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Hash&sortBy="
+  },
+  {
+    "title": "Binary Heap Operations",
+    "url": "https://www.geeksforgeeks.org/problems/operations-on-binary-min-heap/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Heap&sortBy="
+  },
+  {
+    "title": "Kth element in Matrix",
+    "url": "https://www.geeksforgeeks.org/problems/kth-element-in-matrix/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Heap&sortBy="
+  },
+  {
+    "title": "Game with String",
+    "url": "https://www.geeksforgeeks.org/problems/game-with-string4100/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Heap&sortBy="
+  },
+  {
+    "title": "Rearrange characters",
+    "url": "https://www.geeksforgeeks.org/problems/rearrange-characters4649/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&category%5B%5D=Heap&sortBy="
+  },
+  {
+    "title": "Print leaf nodes from preorder traversal of BST",
+    "url": "https://www.geeksforgeeks.org/problems/print-leaf-nodes-from-preorder-traversal-of-bst2657/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Height of Binary Tree",
+    "url": "https://www.geeksforgeeks.org/problems/height-of-binary-tree/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "ZigZag Tree Traversal",
+    "url": "https://www.geeksforgeeks.org/problems/zigzag-tree-traversal/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Left View of Binary Tree",
+    "url": "https://www.geeksforgeeks.org/problems/left-view-of-binary-tree/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Boundary Traversal of binary tree",
+    "url": "https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Lowest Common Ancestor in a Binary Tree",
+    "url": "https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Bottom View of Binary Tree",
+    "url": "https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1?page=1&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Mirror Tree",
+    "url": "https://www.geeksforgeeks.org/problems/mirror-tree/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Sorted Link List to BST",
+    "url": "https://www.geeksforgeeks.org/problems/sorted-list-to-bst/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "k-th smallest element in BST",
+    "url": "https://www.geeksforgeeks.org/problems/find-k-th-smallest-element-in-bst/1"
+  },
+  {
+    "title": "Merge two BST 's",
+    "url": "https://www.geeksforgeeks.org/problems/merge-two-bst-s/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Maximum path sum from any node",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-path-sum-from-any-node/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Maximum sum of Non-adjacent nodes",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-sum-of-non-adjacent-nodes/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Root to leaf paths sum",
+    "url": "https://www.geeksforgeeks.org/problems/root-to-leaf-paths-sum/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Maximum Path Sum between 2 Leaf Nodes",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-path-sum/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Count BST nodes that lie in a given range",
+    "url": "https://www.geeksforgeeks.org/problems/count-bst-nodes-that-lie-in-a-given-range/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Connect Nodes at Same Level",
+    "url": "https://www.geeksforgeeks.org/problems/connect-nodes-at-same-level/1?page=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Tree&category%5B%5D=Binary%20Search%20Tree&sortBy="
+  },
+  {
+    "title": "Dijkstra\u2019s shortest path algorithm",
+    "url": "https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1"
+  },
+  {
+    "title": "Find the number of islands",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-number-of-islands/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Word Boggle",
+    "url": "https://www.geeksforgeeks.org/problems/word-boggle4143/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Prerequisite Tasks",
+    "url": "https://www.geeksforgeeks.org/problems/prerequisite-tasks/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Flood fill Algorithm",
+    "url": "https://www.geeksforgeeks.org/problems/flood-fill-algorithm1856/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "X Total Shapes",
+    "url": "https://www.geeksforgeeks.org/problems/x-total-shapes3617/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Number of Provinces",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-provinces/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Word Ladder I",
+    "url": "https://www.geeksforgeeks.org/problems/word-ladder/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Knight Walk",
+    "url": "https://www.geeksforgeeks.org/problems/knight-walk4521/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Course Schedule",
+    "url": "https://www.geeksforgeeks.org/problems/course-schedule/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Assignment Problem",
+    "url": "https://www.geeksforgeeks.org/problems/assignment-problem3016/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Clone Graph",
+    "url": "https://www.geeksforgeeks.org/problems/clone-graph/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Find the String",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-string/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Graph&category%5B%5D=DFS&category%5B%5D=BFS&sortBy="
+  },
+  {
+    "title": "Trapping Rain Water",
+    "url": "https://www.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Maximum Product Subarray",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-product-subarray3604/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Stock buy and sell",
+    "url": "https://www.geeksforgeeks.org/problems/stock-buy-and-sell-1587115621/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Interleaved Strings",
+    "url": "https://www.geeksforgeeks.org/problems/interleaved-strings/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Stickler Thief",
+    "url": "https://www.geeksforgeeks.org/problems/stickler-theif-1587115621/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Smallest window in a string containing all the characters of another string",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Max rectangle",
+    "url": "https://www.geeksforgeeks.org/problems/max-rectangle/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Activity Selection",
+    "url": "https://www.geeksforgeeks.org/problems/activity-selection-1587115620/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Jump Game",
+    "url": "https://www.geeksforgeeks.org/problems/jump-game/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Knapsack with Duplicate Items",
+    "url": "https://www.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Wildcard Pattern Matching",
+    "url": "https://www.geeksforgeeks.org/problems/wildcard-pattern-matching/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Total Decoding Messages",
+    "url": "https://www.geeksforgeeks.org/problems/total-decoding-messages1235/1?page=1&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Matrix Chain Multiplication",
+    "url": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1?page=1&difficulty%5B%5D=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Count occurences of a given word in a 2-d array",
+    "url": "https://www.geeksforgeeks.org/problems/count-occurences-of-a-given-word-in-a-2-d-array/1?page=1&difficulty%5B%5D=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Brackets in Matrix Chain Multiplication",
+    "url": "https://www.geeksforgeeks.org/problems/brackets-in-matrix-chain-multiplication1024/1?page=1&difficulty%5B%5D=2&company%5B%5D=Amazon&company%5B%5D=Microsoft&company%5B%5D=Flipkart&company%5B%5D=Adobe&company%5B%5D=Google&company%5B%5D=Facebook&category%5B%5D=Dynamic%20Programming&sortBy="
+  },
+  {
+    "title": "Burst Balloon to maximize coins",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-triple-product/1"
+  }
+]

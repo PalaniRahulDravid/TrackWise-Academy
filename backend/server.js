@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'development') {
     next();
   });
 }
+
 app.use((req, res, next) => {
   res.header('X-Content-Type-Options', 'nosniff');
   res.header('X-Frame-Options', 'DENY');
@@ -57,7 +58,8 @@ app.get('/', (req, res) => {
       roadmaps: 'AI-powered personalized learning paths',
       chat: 'Intelligent AI tutoring and doubt resolution',
       analytics: 'Learning progress tracking',
-      dsa: 'DSA practice and company-wise interview questions'
+      dsa: 'DSA practice with Python code execution (MongoDB)',
+      companyQuestions: 'Company-wise interview questions (GitHub cache)'
     },
     endpoints: {
       auth: '/api/auth',
@@ -85,28 +87,26 @@ app.get('/health', (req, res) => {
       aiRoadmaps: 'Active',
       aiChat: 'Active',
       database: 'Connected',
-      dsa: 'Active',
-      companyInterviewQuestions: 'Active'
+      dsa: 'Active (MongoDB)',
+      companyQuestions: 'Active (Cache)'
     },
     timestamp: new Date().toISOString()
   });
 });
 
-// ------- DATA CACHE -------
-const dataCache = { allProblems: [], companyProblems: {} };
-async function loadDataCache() {
+// ------- COMPANY QUESTIONS CACHE (GitHub files) -------
+const companyDataCache = { companyProblems: {} };
+
+async function loadCompanyDataCache() {
   try {
-    const generalData = await fs.readFile('./data/leetcode_dsa_enriched.json', 'utf-8');
-    dataCache.allProblems = JSON.parse(generalData);
     const companies = ['google', 'amazon', 'tcs', 'infosys'];
     for (const company of companies) {
       const cData = await fs.readFile(`./data/company_questions/${company}_questions.json`, 'utf-8');
-      dataCache.companyProblems[company] = JSON.parse(cData);
+      companyDataCache.companyProblems[company] = JSON.parse(cData);
     }
-    console.log('✅ DSA and company questions cached in memory');
+    console.log('✅ Company questions cached in memory from GitHub files');
   } catch (err) {
-    console.error('❌ Error loading cached data:', err);
-    process.exit(1);
+    console.error('❌ Error loading company data:', err);
   }
 }
 
@@ -125,13 +125,17 @@ const connectDB = async () => {
     console.log(`🌐 Host: ${conn.connection.host}`);
     console.log(`⚡ Connection State: ${conn.connection.readyState}`);
     console.log('=================================\n');
+    
     app.locals.models = {
       User: require('./models/User'),
       Roadmap: require('./models/Roadmap'),
       Chat: require('./models/Chat')
     };
-    await loadDataCache();
-    app.locals.dataCache = dataCache;
+    
+    // Load company questions cache
+    await loadCompanyDataCache();
+    app.locals.dataCache = companyDataCache;
+    
   } catch (error) {
     console.error('\n=================================');
     console.error('❌ MongoDB Connection Failed');
@@ -181,6 +185,7 @@ app.use((err, req, res, next) => {
   console.error('Error:', err.message);
   console.error('Stack:', err.stack);
   console.error('=================================\n');
+  
   if (err.name === 'ValidationError') {
     const errors = Object.values(err.errors).map(e => e.message);
     return res.status(400).json({
@@ -190,6 +195,7 @@ app.use((err, req, res, next) => {
       timestamp: new Date().toISOString()
     });
   }
+  
   if (err.name === 'CastError') {
     return res.status(400).json({
       success: false,
@@ -197,6 +203,7 @@ app.use((err, req, res, next) => {
       timestamp: new Date().toISOString()
     });
   }
+  
   if (err.code === 11000) {
     const field = Object.keys(err.keyPattern)[0];
     return res.status(409).json({
@@ -205,6 +212,7 @@ app.use((err, req, res, next) => {
       timestamp: new Date().toISOString()
     });
   }
+  
   if (err.name === 'JsonWebTokenError') {
     return res.status(401).json({
       success: false,
@@ -212,6 +220,7 @@ app.use((err, req, res, next) => {
       timestamp: new Date().toISOString()
     });
   }
+  
   if (err.name === 'TokenExpiredError') {
     return res.status(401).json({
       success: false,
@@ -219,6 +228,7 @@ app.use((err, req, res, next) => {
       timestamp: new Date().toISOString()
     });
   }
+  
   res.status(err.statusCode || 500).json({
     success: false,
     message: err.message || 'Internal server error',
@@ -236,7 +246,8 @@ const server = app.listen(PORT, () => {
   console.log(`🌐 Server: http://localhost:${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`⏰ Started: ${new Date().toLocaleString()}`);
-  console.log('✅ DSA + Company Questions Fully Integrated!');
+  console.log('✅ DSA Problems: MongoDB');
+  console.log('✅ Company Questions: GitHub Cache');
 });
 
 process.on('SIGTERM', () => {
@@ -249,6 +260,7 @@ process.on('SIGTERM', () => {
     });
   });
 });
+
 process.on('SIGINT', () => {
   console.log('\n🔄 SIGINT received, shutting down gracefully');
   server.close(() => {
@@ -259,10 +271,12 @@ process.on('SIGINT', () => {
     });
   });
 });
+
 process.on('unhandledRejection', (err, promise) => {
   console.error('❌ Unhandled Promise Rejection:', err.message);
   server.close(() => { process.exit(1); });
 });
+
 process.on('uncaughtException', (err) => {
   console.error('❌ Uncaught Exception:', err.message);
   process.exit(1);

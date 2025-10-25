@@ -1,0 +1,266 @@
+[
+  {
+    "title": "Non-Repeating Element",
+    "url": "https://www.geeksforgeeks.org/problems/non-repeating-element3958/1"
+  },
+  {
+    "title": "Program for array rotation",
+    "url": "https://www.geeksforgeeks.org/problems/rotate-array-by-n-elements-1587115621/1"
+  },
+  {
+    "title": "Equilibrium index of an array",
+    "url": "https://www.geeksforgeeks.org/problems/equal-sum0810/1"
+  },
+  {
+    "title": "Print array after it is right rotated K times",
+    "url": "https://www.geeksforgeeks.org/problems/sort-the-array0055/1"
+  },
+  {
+    "title": "Array is a subset of another array",
+    "url": "https://www.geeksforgeeks.org/problems/array-subset-of-another-array2317/1"
+  },
+  {
+    "title": "Reverse an array or string",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-string/1"
+  },
+  {
+    "title": "Smallest and second smallest elements in an array",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-smallest-and-second-smallest-element-in-an-array3226/1"
+  },
+  {
+    "title": "Largest element in an array",
+    "url": "https://www.geeksforgeeks.org/problems/help-a-thief5938/1"
+  },
+  {
+    "title": "Second largest element in an array",
+    "url": "https://www.geeksforgeeks.org/problems/second-largest3735/1"
+  },
+  {
+    "title": "Counting frequencies of array elements",
+    "url": "https://www.geeksforgeeks.org/problems/frequency-of-array-elements-1587115620/1"
+  },
+  {
+    "title": "Program for addition of two matrices",
+    "url": "https://www.geeksforgeeks.org/problems/addition-of-two-square-matrices4916/1"
+  },
+  {
+    "title": "Sum of elements in a given array",
+    "url": "https://www.geeksforgeeks.org/problems/search-in-a-matrix--021840/0"
+  },
+  {
+    "title": "Remove duplicates from the sorted array",
+    "url": "https://www.geeksforgeeks.org/problems/remove-duplicate-elements-from-sorted-array/1"
+  },
+  {
+    "title": "Program to check if an array is sorted or not",
+    "url": "https://www.geeksforgeeks.org/problems/check-if-an-array-is-sorted0701/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article"
+  },
+  {
+    "title": "Remove duplicates from an unsorted array using Map data structure",
+    "url": "https://www.geeksforgeeks.org/problems/remove-duplicates-from-unsorted-array4141/1"
+  },
+  {
+    "title": "Average of an array (Iterative and Recursive)",
+    "url": "https://www.geeksforgeeks.org/problems/mean0021/1"
+  },
+  {
+    "title": "Find duplicates in O(n) time and O(1) extra space",
+    "url": "https://www.geeksforgeeks.org/problems/find-duplicates-in-an-array/1"
+  },
+  {
+    "title": "Find maximum possible stolen value from houses",
+    "url": "https://www.geeksforgeeks.org/problems/max-sum-without-adjacents2430/1"
+  },
+  {
+    "title": "Sort elements by frequency",
+    "url": "https://www.geeksforgeeks.org/problems/sorting-elements-of-an-array-by-frequency/0"
+  },
+  {
+    "title": "Sort an array according to the order defined by another array",
+    "url": "https://www.geeksforgeeks.org/problems/relative-sorting4323/1"
+  },
+  {
+    "title": "Maximum Product Subarray",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-product-subarray3604/1"
+  },
+  {
+    "title": "Given String is Palindrome or not",
+    "url": "https://www.geeksforgeeks.org/problems/palindrome-string0817/1"
+  },
+  {
+    "title": "Remove vowels from a String",
+    "url": "https://www.geeksforgeeks.org/problems/remove-vowels-from-string1446/1"
+  },
+  {
+    "title": "Remove spaces from a given string",
+    "url": "https://www.geeksforgeeks.org/problems/remove-spaces0128/1"
+  },
+  {
+    "title": "Remove character",
+    "url": "https://www.geeksforgeeks.org/problems/remove-character3815/1"
+  },
+  {
+    "title": "Remove all characters other than alphabets",
+    "url": "https://www.geeksforgeeks.org/problems/remove-all-characters-other-than-alphabets4923/1"
+  },
+  {
+    "title": "Reverse a string",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-string/1"
+  },
+  {
+    "title": "Sum of numbers in string",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-numbers-in-string-1587115621/1"
+  },
+  {
+    "title": "Frequency of characters in a string",
+    "url": "https://www.geeksforgeeks.org/problems/count-alphabets3649/1"
+  },
+  {
+    "title": "Non Repeating Character",
+    "url": "https://www.geeksforgeeks.org/problems/non-repeating-character-1587115620/1"
+  },
+  {
+    "title": "Strings are anagram of each other",
+    "url": "https://www.geeksforgeeks.org/problems/anagram-1587115620/1"
+  },
+  {
+    "title": "Sort string of characters",
+    "url": "https://www.geeksforgeeks.org/problems/sort-a-string2943/1"
+  },
+  {
+    "title": "Count words in a given string",
+    "url": "https://www.geeksforgeeks.org/problems/count-number-of-words1500/1"
+  },
+  {
+    "title": "Encrypt the string",
+    "url": "https://www.geeksforgeeks.org/problems/encrypt-the-string-10337/1"
+  },
+  {
+    "title": "Remove duplicates from a given string",
+    "url": "https://www.geeksforgeeks.org/problems/remove-all-duplicates-from-a-given-string4321/1"
+  },
+  {
+    "title": "Check if a string is substring of another",
+    "url": "https://www.geeksforgeeks.org/problems/implement-strstr/1"
+  },
+  {
+    "title": "Reverse words in a given string",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-words-in-a-given-string5459/1"
+  },
+  {
+    "title": "Common subsequence in two strings",
+    "url": "https://www.geeksforgeeks.org/problems/common-subsequence4049/1"
+  },
+  {
+    "title": "One string contains wildcard characters",
+    "url": "https://www.geeksforgeeks.org/problems/wildcard-string-matching1126/1"
+  },
+  {
+    "title": "Prime Numbers",
+    "url": "https://www.geeksforgeeks.org/problems/prime-number2314/1"
+  },
+  {
+    "title": "Sum of arithmetic series",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-ap-series4512/1"
+  },
+  {
+    "title": "All divisors of a natural number",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-factors1435/1"
+  },
+  {
+    "title": "Replace all \u20180\u2019 with \u20185\u2019 in an input Integer",
+    "url": "https://www.geeksforgeeks.org/problems/replace-all-0-with-5-in-an-input-integer/1"
+  },
+  {
+    "title": "Program to find GCD or HCF of two numbers",
+    "url": "https://www.geeksforgeeks.org/problems/lcm-and-gcd4516/1"
+  },
+  {
+    "title": "Check if a number is a strong number or not",
+    "url": "https://www.geeksforgeeks.org/problems/strong-numbers3315/1"
+  },
+  {
+    "title": "Check if a given year is leap year",
+    "url": "https://www.geeksforgeeks.org/problems/leap-year0943/1"
+  },
+  {
+    "title": "Program to add two fractions",
+    "url": "https://www.geeksforgeeks.org/problems/add-two-fractions/1"
+  },
+  {
+    "title": "Sum of digits of a number",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-digits1742/1"
+  },
+  {
+    "title": "Find all factors of a natural number",
+    "url": "https://www.geeksforgeeks.org/problems/count-numbers-in-range5305/1"
+  },
+  {
+    "title": "Prime factors of a given number",
+    "url": "https://www.geeksforgeeks.org/problems/largest-prime-factor2601/1"
+  },
+  {
+    "title": "Given number is even or odd",
+    "url": "https://www.geeksforgeeks.org/problems/help-nobita0532/1"
+  },
+  {
+    "title": "Perfect Number",
+    "url": "https://www.geeksforgeeks.org/problems/perfect-number3759/1"
+  },
+  {
+    "title": "Armstrong Numbers",
+    "url": "https://www.geeksforgeeks.org/problems/armstrong-numbers2727/1"
+  },
+  {
+    "title": "Fibonacci numbers",
+    "url": "https://www.geeksforgeeks.org/problems/rohans-love-for-matrix4723/1"
+  },
+  {
+    "title": "Check if a number is Palindrome",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-digit-is-pallindrome-or-not2751/1"
+  },
+  {
+    "title": "Area of a circle",
+    "url": "https://www.geeksforgeeks.org/problems/area-of-rectange-right-angled-triangle-and-circle2600/1"
+  },
+  {
+    "title": "Convert Binary to Decimal",
+    "url": "https://www.geeksforgeeks.org/problems/binary-number-to-decimal-number3525/1"
+  },
+  {
+    "title": "Decimal to Binary conversion",
+    "url": "https://www.geeksforgeeks.org/problems/decimal-to-binary-1587115620/1"
+  },
+  {
+    "title": "Convert a given number to words",
+    "url": "https://www.geeksforgeeks.org/problems/number-to-words0335/1"
+  },
+  {
+    "title": "Bubble Sort",
+    "url": "https://www.geeksforgeeks.org/problems/punish-the-students5726/1"
+  },
+  {
+    "title": "Selection Sort",
+    "url": "https://www.geeksforgeeks.org/problems/selection-sort/1"
+  },
+  {
+    "title": "Insertion Sort",
+    "url": "https://www.geeksforgeeks.org/problems/insertion-sort/1"
+  },
+  {
+    "title": "Quick Sort",
+    "url": "https://www.geeksforgeeks.org/problems/quick-sort/1"
+  },
+  {
+    "title": "Merge Sort",
+    "url": "https://www.geeksforgeeks.org/problems/merge-sort/1"
+  },
+  {
+    "title": "Radix Sort",
+    "url": "https://www.geeksforgeeks.org/problems/radix-sort/1"
+  },
+  {
+    "title": "Counting Sort",
+    "url": "https://www.geeksforgeeks.org/problems/counting-sort/1"
+  }
+]

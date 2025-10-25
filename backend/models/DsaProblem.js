@@ -5,51 +5,48 @@ const TestCaseSchema = new mongoose.Schema({
   output: String,
   explanation: String,
   isHidden: { type: Boolean, default: false }
-});
+}, { _id: false });
 
-const CodeTemplateSchema = new mongoose.Schema({
-  javascript: String,
+const ExampleSchema = new mongoose.Schema({
+  input: String,
+  output: String,
+  explanation: String
+}, { _id: false });
+
+const SolutionSchema = new mongoose.Schema({
   python: String,
-  java: String
-});
+  javascript: String,
+  cpp: String
+}, { _id: false });
 
 const DsaProblemSchema = new mongoose.Schema({
-  id: { type: String },
+  id: { type: String, required: true, unique: true },
   title: { type: String, required: true },
-  description: String,
-  difficulty: {
-    type: String,
-    enum: ['Easy', 'Medium', 'Hard'],
-    required: true
-  },
-  category: { type: String, required: true },
+  difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
+  
+  // NEW FIELDS
+  description: { type: String, default: '' },
+  examples: [ExampleSchema],
+  constraints: [String],
+  testCases: [TestCaseSchema],
+  solution: SolutionSchema,
+  
+  // OLD FIELDS (keep for compatibility)
   topics: [String],
   companies: [String],
-  examples: [TestCaseSchema],
-  testCases: [TestCaseSchema],
-  constraints: [String],
-  templateCode: CodeTemplateSchema,
-  solution: CodeTemplateSchema,
   url: String,
-  source: {
-    type: String,
-    enum: ['leetcode', 'company'],
-    default: 'company'
-  },
-  company: String,
+  paid: { type: String, default: 'No' },
   acceptance: { type: Number, default: 0 },
   submissions: { type: Number, default: 0 },
   successfulSubmissions: { type: Number, default: 0 },
-  isPremium: { type: Boolean, default: false }
-}, { 
-  timestamps: true,
-  toJSON: { virtuals: true }
-});
+  source: { type: String, default: 'leetcode' }
+}, { timestamps: true });
 
-// Indexes
-DsaProblemSchema.index({ title: 1, difficulty: 1, category: 1 });
+// ADD THESE INDEXES FOR BETTER QUERY PERFORMANCE
+DsaProblemSchema.index({ id: 1 });
+DsaProblemSchema.index({ difficulty: 1 });
 DsaProblemSchema.index({ topics: 1 });
 DsaProblemSchema.index({ companies: 1 });
-DsaProblemSchema.index({ source: 1 });
+DsaProblemSchema.index({ title: 'text', description: 'text' }); // Text search
 
 module.exports = mongoose.model('DsaProblem', DsaProblemSchema);

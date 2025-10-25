@@ -3,6 +3,7 @@ const { getCompanyQuestions } = require('../controllers/companyController');
 
 const router = express.Router();
 
-router.get('/:company/questions', getCompanyQuestions); // GET /api/company/google/questions
+// GET /api/company/:company/questions
+router.get('/:company/questions', getCompanyQuestions);
 
 module.exports = router;

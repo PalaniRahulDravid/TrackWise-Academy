@@ -40,7 +40,8 @@ export default function DsaQuestionList() {
       try {
         const { data } = await axios.get(url);
         setProblems(data.problems || []);
-      } catch {
+      } catch (err) {
+        console.error('Error fetching problems:', err);
         setProblems([]);
       }
       setLoading(false);
@@ -107,7 +108,7 @@ export default function DsaQuestionList() {
               {problems.map((problem, idx) => (
                 <li
                   key={problem.id || problem._id}
-                  onClick={() => navigate(`/dsa/problem/${problem.id || problem._id}`)}
+                  onClick={() => navigate(`/dsa/problems/${problem.id}`)}
                   className="bg-[#181d2a] border border-gray-700 rounded-xl shadow-md px-5 py-4 hover:bg-orange-900/10 hover:border-orange-400 flex justify-between items-center cursor-pointer transition-all group"
                 >
                   <span className="font-medium text-lg flex-1 truncate">

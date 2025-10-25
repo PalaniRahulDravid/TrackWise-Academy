@@ -23,14 +23,18 @@ export default function CompanyQuestionList() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchQuestions() {
       setLoading(true);
+      setError(null);
       try {
         const { data } = await axios.get(`${API_BASE_URL}/company/${company}/questions`);
         setQuestions(data.problems || []);
-      } catch {
+      } catch (err) {
+        console.error('Error fetching company questions:', err);
+        setError(err.response?.data?.message || 'Failed to load questions');
         setQuestions([]);
       }
       setLoading(false);
@@ -53,13 +57,15 @@ export default function CompanyQuestionList() {
     <>
       <Header />
       <div
-        className="flex flex-col justify-center items-center bg-black text-white relative overflow-hidden"
+        className="flex flex-col justify-center items-center bg-black text-white relative overflow-hidden px-4"
         style={{ minHeight: "calc(100vh - 96px)" }}
       >
         <div className="max-w-4xl mx-auto w-full">
           <h2 className="text-2xl sm:text-3xl font-bold text-orange-400 mb-6 mt-2 text-center capitalize">
             {company} Interview DSA Questions
           </h2>
+          
+          {/* Stats Bar */}
           <div className="bg-gray-900/70 rounded-xl px-6 py-5 flex flex-wrap items-center justify-between mb-4 shadow-lg border border-gray-800">
             <div className="font-bold text-md sm:text-xl">
               Problems Solved: <span className="text-orange-400">{total}</span>
@@ -85,14 +91,22 @@ export default function CompanyQuestionList() {
 
           {/* Problems List */}
           {loading ? (
-            <div className="text-center text-lg text-gray-400 py-20">Loading questions...</div>
+            <div className="text-center text-lg text-gray-400 py-20">Loading {company} questions...</div>
+          ) : error ? (
+            <div className="text-center text-lg text-red-400 py-20">
+              {error}
+              <br />
+              <span className="text-sm text-gray-400">Company might not exist. Try: google, amazon, tcs, infosys</span>
+            </div>
           ) : displayedQuestions.length === 0 ? (
-            <div className="text-center text-lg text-gray-400 py-20">No questions found. Try a different keyword!</div>
+            <div className="text-center text-lg text-gray-400 py-20">
+              {search ? 'No questions match your search. Try different keywords!' : 'No questions available for this company.'}
+            </div>
           ) : (
             <ul className="space-y-4">
               {displayedQuestions.map((q, idx) => (
                 <li
-                  key={q.title}
+                  key={q.title || idx}
                   onClick={() => q.url && window.open(q.url, "_blank")}
                   className="bg-[#181d2a] border border-gray-700 rounded-xl shadow-md px-5 py-4 hover:bg-orange-900/10 hover:border-orange-400 flex justify-between items-center cursor-pointer transition-all group"
                 >

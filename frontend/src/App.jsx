@@ -16,7 +16,7 @@ import DSAHome from "./features/dsa/DSAHome";
 import DsaQuestionList from "./features/dsa/DsaQuestionList";
 import CompanyList from "./features/dsa/CompanyList";
 import CompanyQuestionList from "./features/dsa/CompanyQuestionList";
-// import DsaProblemDetail from "./features/dsa/DsaProblemDetail";
+import DsaProblemDetail from "./features/dsa/DsaProblemDetail";
 
 export default function App() {
   return (
@@ -52,7 +52,7 @@ export default function App() {
           <Route path="/dsa/sheet" element={<DsaQuestionList />} />
           <Route path="/dsa/company" element={<CompanyList />} />
           <Route path="/dsa/company/:company" element={<CompanyQuestionList />} />
-          {/* <Route path="/dsa/problems/:id" element={<DsaProblemDetail />} /> */}
+          <Route path="/dsa/problems/:id" element={<DsaProblemDetail />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -28,7 +28,28 @@ export async function register(name, email, password) {
   const response = await apiClient.post("/auth/register", {
     name,
     email,
-    password,
+    password
+  });
+  return response.data;
+}
+
+// VERIFY OTP
+export async function verifyOtp(email, otp) {
+  const response = await apiClient.post("/auth/verify-otp", { email, otp });
+  return response.data;
+}
+
+// FORGOT PASSWORD (request reset mail)
+export async function forgotPassword(email) {
+  const response = await apiClient.post("/auth/forgot-password", { email });
+  return response.data;
+}
+
+// RESET PASSWORD
+export async function resetPassword(token, newPassword) {
+  const response = await apiClient.post("/auth/reset-password", {
+    token,
+    newPassword
   });
   return response.data;
 }

@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
+import VerifyEmail from "./features/auth/VerifyEmail";
+import ForgotPassword from "./features/auth/ForgotPassword";
+import ResetPassword from "./features/auth/ResetPassword";
+
 import Roadmap from "./features/roadmap/Roadmap";
 import Chat from "./features/chat/Chat";
 import Games from "./features/games/Games";
@@ -10,8 +14,10 @@ import MemoryFlip from "./features/games/MemoryFlip";
 import Snake from "./features/games/Snake";
 import WhackAMole from "./features/games/WhackAMole";
 import Courses from './features/courses/Courses';
+
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
+
 import DSAHome from "./features/dsa/DSAHome";
 import DsaQuestionList from "./features/dsa/DsaQuestionList";
 import CompanyList from "./features/dsa/CompanyList";
@@ -40,6 +46,9 @@ export default function App() {
               </GuestRoute>
             }
           />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/roadmaps" element={<Roadmap />} />
           <Route path="/doubts" element={<Chat />} />
           <Route path="/games" element={<Games />} />

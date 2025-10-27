@@ -8,12 +8,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     getProfile()
       .then((res) => {
-        if (res.success) setUser(res.user || res.data?.user);
-        setLoading(false);
+        if (mounted && res.success) setUser(res.user || res.data?.user);
+        if (mounted) setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => mounted && setLoading(false));
+
+    // Cleanup on component unmount
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const logout = () => {

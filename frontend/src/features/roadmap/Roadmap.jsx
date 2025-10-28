@@ -53,14 +53,20 @@ export default function Roadmap() {
 
   const handleGenerateClick = async (e) => {
     e.preventDefault();
+
+    // 🔸 Just show toast if user not logged in, don't redirect
     if (!user) {
-      setToast({ show: true, message: "Please login to generate a roadmap.", type: "error" });
-      setTimeout(() => navigate("/login"), 2000);
+      setToast({ show: true, message: "Please login first to generate a roadmap.", type: "error" });
+      setTimeout(() => {
+        setToast((prev) => ({ ...prev, show: false }));
+      }, 3000);
       return;
     }
+
     setLoading(true);
     setError("");
     setShowGeneratedRoadmap(null);
+
     try {
       const token = localStorage.getItem("trackwise_token");
       const res = await axios.post(
@@ -68,6 +74,7 @@ export default function Roadmap() {
         { type, inputFields },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       if (res.status === 201 && res.data?.roadmap) {
         setShowGeneratedRoadmap(res.data.roadmap.roadmapText);
         fetchUserRoadmaps();
@@ -83,10 +90,13 @@ export default function Roadmap() {
 
   const downloadRoadmap = async (id) => {
     if (!user) {
-      setToast({ show: true, message: "Please login to download.", type: "error" });
-      setTimeout(() => navigate("/login"), 2000);
+      setToast({ show: true, message: "Please login first to download roadmap.", type: "error" });
+      setTimeout(() => {
+        setToast((prev) => ({ ...prev, show: false }));
+      }, 3000);
       return;
     }
+
     try {
       const token = localStorage.getItem("trackwise_token");
       const res = await axios.get(`${API_BASE_URL}/roadmaps/download/${id}`, {
@@ -102,15 +112,26 @@ export default function Roadmap() {
       link.remove();
     } catch {
       setToast({ show: true, message: "Failed to download roadmap.", type: "error" });
+      setTimeout(() => {
+        setToast((prev) => ({ ...prev, show: false }));
+      }, 3000);
     }
   };
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <Toast {...toast} show={toast.show} onClose={() => setToast((prev) => ({ ...prev, show: false }))} />
+      {/* Toast always above Header */}
+      <div className="relative z-[9999]">
+        <Toast
+          {...toast}
+          show={toast.show}
+          onClose={() => setToast((prev) => ({ ...prev, show: false }))}
+        />
+      </div>
+
       <Header fixed />
 
-      {/* Decorative animated icons */}
+      {/* Decorative icons */}
       <div className="absolute top-28 left-8 text-orange-400 text-xl sm:text-2xl animate-pulse z-0">✦</div>
       <div className="absolute top-52 right-10 text-yellow-400 text-lg sm:text-2xl animate-pulse z-0">✦</div>
       <div className="absolute bottom-28 left-1/4 text-orange-400 text-base sm:text-xl animate-pulse z-0">+</div>
@@ -242,9 +263,9 @@ export default function Roadmap() {
               {loading ? "Generating..." : "Generate Roadmap"}
             </Button>
           </form>
-          {error && (
-            <div className="text-red-400 text-center mt-3">{error}</div>
-          )}
+
+          {error && <div className="text-red-400 text-center mt-3">{error}</div>}
+
           {showGeneratedRoadmap && (
             <div className="mt-8 bg-[#1a2334] p-6 rounded-xl shadow-lg border border-gray-700">
               <h2 className="text-orange-400 text-lg font-bold mb-2">Your Roadmap</h2>
@@ -262,8 +283,13 @@ export default function Roadmap() {
             )}
             <ul className="space-y-3">
               {roadmaps.map((rm) => (
-                <li key={rm._id} className="flex justify-between items-center bg-[#20293c] rounded-lg p-3">
-                  <span className="text-gray-200 text-left truncate max-w-[180px]">{rm.inputFields.YourGoals?.slice(0,34) || "Roadmap"}</span>
+                <li
+                  key={rm._id}
+                  className="flex justify-between items-center bg-[#20293c] rounded-lg p-3"
+                >
+                  <span className="text-gray-200 text-left truncate max-w-[180px]">
+                    {rm.inputFields.YourGoals?.slice(0, 34) || "Roadmap"}
+                  </span>
                   <Button variant="outline" onClick={() => downloadRoadmap(rm._id)}>
                     Download
                   </Button>

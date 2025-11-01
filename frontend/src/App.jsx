@@ -13,12 +13,13 @@ import TicTacToe from "./features/games/TicTacToe";
 import MemoryFlip from "./features/games/MemoryFlip";
 import Snake from "./features/games/Snake";
 import WhackAMole from "./features/games/WhackAMole";
-import Courses from './features/courses/Courses';
+import Courses from "./features/courses/Courses";
 import FunnyGames from "./features/games/FunnyGames";
 import MindGames from "./features/games/MindGames";
 
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import DSAHome from "./features/dsa/DSAHome";
 import DsaQuestionList from "./features/dsa/DsaQuestionList";
@@ -31,41 +32,30 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route
-            path="/login"
-            element={
-              <GuestRoute>
-                <Login />
-              </GuestRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <GuestRoute>
-                <Register />
-              </GuestRoute>
-            }
-          />
+          <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+          <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/roadmaps" element={<Roadmap />} />
           <Route path="/doubts" element={<Chat />} />
           <Route path="/games" element={<Games />} />
-          <Route path="/games/funny" element={<FunnyGames />} />
-          <Route path="/games/mind" element={<MindGames />} />
-          <Route path="/games/tictactoe" element={<TicTacToe />} />
-          <Route path="/games/memory" element={<MemoryFlip />} />
-          <Route path="/games/snake" element={<Snake />} />
-          <Route path="/games/whackamole" element={<WhackAMole />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/dsa" element={<DSAHome />} />
-          <Route path="/dsa/sheet" element={<DsaQuestionList />} />
-          <Route path="/dsa/company" element={<CompanyList />} />
-          <Route path="/dsa/company/:company" element={<CompanyQuestionList />} />
-          <Route path="/dsa/problems/:id" element={<DsaProblemDetail />} />
+
+          {/* Protected Routes */}
+          <Route path="/games/funny" element={<ProtectedRoute><FunnyGames /></ProtectedRoute>} />
+          <Route path="/games/mind" element={<ProtectedRoute><MindGames /></ProtectedRoute>} />
+          <Route path="/games/tictactoe" element={<ProtectedRoute><TicTacToe /></ProtectedRoute>} />
+          <Route path="/games/memory" element={<ProtectedRoute><MemoryFlip /></ProtectedRoute>} />
+          <Route path="/games/snake" element={<ProtectedRoute><Snake /></ProtectedRoute>} />
+          <Route path="/games/whackamole" element={<ProtectedRoute><WhackAMole /></ProtectedRoute>} />
+          <Route path="/dsa/sheet" element={<ProtectedRoute><DsaQuestionList /></ProtectedRoute>} />
+          <Route path="/dsa/company" element={<ProtectedRoute><CompanyList /></ProtectedRoute>} />
+          <Route path="/dsa/company/:company" element={<ProtectedRoute><CompanyQuestionList /></ProtectedRoute>} />
+          <Route path="/dsa/problems/:id" element={<ProtectedRoute><DsaProblemDetail /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

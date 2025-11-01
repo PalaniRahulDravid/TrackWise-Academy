@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import FeatureCard from "../../components/FeatureCard";
+import Toast from "../../components/Toast";
 import { FaFileCode, FaBuilding } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 
 export default function DSAHome() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [toast, setToast] = useState({ show: false, message: "", type: "error" });
+
+  const handleCardClick = (path) => {
+    if (!user) {
+      setToast({ show: true, message: "Please login first to continue.", type: "error" });
+      setTimeout(() => setToast({ show: false, message: "", type: "error" }), 3000);
+      return;
+    }
+    navigate(path);
+  };
 
   return (
     <>
+      <div className="relative z-[9999]">
+        <Toast
+          show={toast.show}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ show: false, message: "", type: "error" })}
+        />
+      </div>
       <Header />
       <div
         className="flex flex-col justify-center items-center bg-black text-white relative overflow-hidden"
@@ -40,14 +59,14 @@ export default function DSAHome() {
               desc="Curated DSA problems to practice topic-wise"
               gradient="from-blue-500 to-cyan-400"
               icon={<FaFileCode />}
-              onClick={() => navigate("/dsa/sheet")}
+              onClick={() => handleCardClick("/dsa/sheet")}
             />
             <FeatureCard
               title="Company Wise Questions"
               desc="Top interview questions for every company"
               gradient="from-purple-500 to-pink-400"
               icon={<FaBuilding />}
-              onClick={() => navigate("/dsa/company")}
+              onClick={() => handleCardClick("/dsa/company")}
             />
           </div>
         </main>

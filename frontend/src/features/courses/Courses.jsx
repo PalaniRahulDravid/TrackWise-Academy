@@ -3,7 +3,7 @@ import CourseCard from "./CourseCard";
 import CourseSearchBar from "./CourseSearchBar";
 import Header from "../../components/Header";
 
-const BACKEND = "http://localhost:5000";
+const BACKEND = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -12,8 +12,8 @@ export default function Courses() {
   const fetchCourses = async (query = "") => {
     setLoading(true);
     const endpoint = query
-      ? `${BACKEND}/api/courses/youtube-search?query=${encodeURIComponent(query)}`
-      : `${BACKEND}/api/courses/youtube-search?query=Thorab%20Codes%20React%20Tutorial`;
+      ? `${BACKEND}/courses/youtube-search?query=${encodeURIComponent(query)}`
+      : `${BACKEND}/courses/youtube-search?query=Thorab%20Codes%20React%20Tutorial`;
     const res = await fetch(endpoint);
     const data = await res.json();
     setCourses(data.results || []);

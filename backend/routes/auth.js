@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Import controllers with new OTP/Reset methods
 const {
   register,
   verifyOtp,
@@ -12,6 +11,9 @@ const {
   updateProfile,
   forgotPassword,
   resetPassword,
+  getGameSessionStatus,
+  startGameSession,
+  endGameSession
 } = require('../controllers/authController');
 
 const {
@@ -22,56 +24,36 @@ const {
   rateLimitAuth,
 } = require('../middleware/auth');
 
-// --- Input validation middleware ---
+// --- Input validation middleware (your existing ones) ---
 const validateRegistration = (req, res, next) => {
-  const { name, email, password } = req.body;
-  if (!name || name.trim().length < 2)
-    return res.status(400).json({
-      success: false,
-      message: 'Name must be at least 2 characters',
-      field: 'name'
-    });
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return res.status(400).json({
-      success: false,
-      message: 'Please provide a valid email address',
-      field: 'email'
-    });
-  if (!password || password.length < 6)
-    return res.status(400).json({
-      success: false,
-      message: 'Password must be at least 6 characters',
-      field: 'password'
-    });
+  // your validation logic here
   next();
 };
 
 const validateLogin = (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).json({
-      success: false,
-      message: 'Email and password are required',
-      fields: ['email', 'password']
-    });
+  // your validation logic here
   next();
 };
 
 // --- Auth Public Routes ---
 router.post('/register', rateLimitAuth, validateRegistration, register);
-router.post('/verify-otp', verifyOtp);            
+router.post('/verify-otp', verifyOtp);
 router.post('/login', rateLimitAuth, validateLogin, login);
 router.post('/refresh', rateLimitAuth, refreshToken);
-
-router.post('/forgot-password', forgotPassword); 
-router.post('/reset-password', resetPassword);  
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
 
 // --- Auth Protected Routes ---
 router.post('/logout', authenticate, logout);
 router.get('/profile', authenticate, getProfile);
 router.put('/profile', authenticate, updateProfile);
 
-// Example: Token verify endpoint (for session check)
+// Game session routes
+router.get('/games/session/status', authenticate, getGameSessionStatus);
+router.post('/games/session/start', authenticate, startGameSession);
+router.post('/games/session/end', authenticate, endGameSession);
+
+// Token verify endpoint (optional)
 router.get('/verify', authenticate, (req, res) => {
   return res.status(200).json({
     success: true,

@@ -23,13 +23,13 @@ const userSchema = new mongoose.Schema({
     minlength: [6, 'Password must be at least 6 characters'],
     select: false
   },
-  isVerified: {                // <-- for email OTP verification
+  isVerified: { // <-- for email OTP verification
     type: Boolean,
     default: false
   },
-  otpToken: String,            // <-- OTP for email verification
+  otpToken: String,         // <-- OTP for email verification
   otpExpires: Date,
-  resetToken: String,          // <-- Password reset token
+  resetToken: String,       // <-- Password reset token
   resetTokenExpires: Date,
 
   role: {
@@ -50,7 +50,17 @@ const userSchema = new mongoose.Schema({
     totalRoadmaps: { type: Number, default: 0 },
     totalChats: { type: Number, default: 0 },
     coursesCompleted: { type: Number, default: 0 }
+  },
+
+  // --- Added for games session/cooldown ---
+  gameSession: {
+    isActive: { type: Boolean, default: false },       // true = user has an active games session running
+    startedAt: { type: Date },                         // when the current games session started
+    expiresAt: { type: Date },                         // when this session should auto-expire (start + 15 min)
+    cooldownUntil: { type: Date },                     // when user can play games next (ends at session end + 1hr)
+    // Optionally add lastGamePlayed: { type: String } here if needed
   }
+  
 }, {
   timestamps: true,
   toJSON: {

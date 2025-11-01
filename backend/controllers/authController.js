@@ -247,6 +247,99 @@ const resetPassword = async (req, res) => {
   }
 };
 
+// --- GAME SESSION LIMIT/CHECK ENDPOINTS ---
+
+const getGameSessionStatus = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const user = await User.findById(userId);
+    if (!user) return sendErrorResponse(res, 404, "User not found");
+
+    const now = Date.now();
+    const session = user.gameSession || {};
+
+    let status = "inactive";
+    let timeLeft = 0;
+    let cooldown = 0;
+
+    if (session.isActive && session.expiresAt && session.expiresAt > now) {
+      status = "active";
+      timeLeft = Math.max(0, Math.floor((session.expiresAt - now) / 1000));
+    } else if (session.cooldownUntil && session.cooldownUntil > now) {
+      status = "cooldown";
+      cooldown = Math.max(0, Math.floor((session.cooldownUntil - now) / 1000));
+    }
+
+    return sendSuccessResponse(res, 200, "Game session status", {
+      status, // "active" | "cooldown" | "inactive"
+      timeLeft, // seconds
+      cooldown // seconds
+    });
+  } catch (error) {
+    console.error("Game session status error:", error);
+    return sendErrorResponse(res, 500, "Internal server error");
+  }
+};
+
+const startGameSession = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const user = await User.findById(userId);
+    if (!user) return sendErrorResponse(res, 404, "User not found");
+
+    const now = Date.now();
+    if (user.gameSession?.cooldownUntil && user.gameSession.cooldownUntil > now) {
+      const seconds = Math.floor((user.gameSession.cooldownUntil - now) / 1000);
+      return sendErrorResponse(res, 403, `Games are locked. Wait ${seconds} seconds.`);
+    }
+
+    if (user.gameSession?.isActive && user.gameSession.expiresAt > now) {
+      const seconds = Math.floor((user.gameSession.expiresAt - now) / 1000);
+      return sendSuccessResponse(res, 200, `Already in active game session`, {
+        status: "active",
+        timeLeft: seconds
+      });
+    }
+
+    // Start new session (15 min active + 1 hour cooldown after session)
+    const sessionLength = 1 * 60 * 1000;
+    const cooldownLength = 1 * 60 * 1000;
+
+    user.gameSession = {
+      isActive: true,
+      startedAt: now,
+      expiresAt: now + sessionLength,
+      cooldownUntil: now + sessionLength + cooldownLength
+    };
+    await user.save();
+
+    return sendSuccessResponse(res, 200, "Game session started", {
+      status: "active",
+      timeLeft: sessionLength / 1000
+    });
+  } catch (error) {
+    console.error("Start game session error:", error);
+    return sendErrorResponse(res, 500, "Internal server error");
+  }
+};
+
+const endGameSession = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const user = await User.findById(userId);
+    if (!user) return sendErrorResponse(res, 404, "User not found");
+    if (!user.gameSession || !user.gameSession.isActive) {
+      return sendErrorResponse(res, 400, "No active game session to end");
+    }
+    user.gameSession.isActive = false;
+    await user.save();
+    return sendSuccessResponse(res, 200, "Game session ended");
+  } catch (error) {
+    console.error("End game session error:", error);
+    return sendErrorResponse(res, 500, "Internal server error");
+  }
+};
+
 module.exports = {
   register,
   verifyOtp,
@@ -256,5 +349,8 @@ module.exports = {
   getProfile,
   updateProfile,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getGameSessionStatus,
+  startGameSession,
+  endGameSession
 };

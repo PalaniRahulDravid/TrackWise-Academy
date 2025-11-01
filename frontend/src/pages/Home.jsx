@@ -42,7 +42,7 @@ const learningTabs = [
   { id: "roadmaps", label: "AI Roadmap Generator" },
   { id: "courses", label: "Smart Courses" },
   { id: "doubts", label: "Doubt Resolution" },
-  { id: "games", label: "Mind Games" },
+  { id: "games", label: "Mind Refresh Games" },
 ];
 
 const learningContent = [

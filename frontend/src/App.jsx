@@ -14,6 +14,8 @@ import MemoryFlip from "./features/games/MemoryFlip";
 import Snake from "./features/games/Snake";
 import WhackAMole from "./features/games/WhackAMole";
 import Courses from './features/courses/Courses';
+import FunnyGames from "./features/games/FunnyGames";
+import MindGames from "./features/games/MindGames";
 
 import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
@@ -52,6 +54,8 @@ export default function App() {
           <Route path="/roadmaps" element={<Roadmap />} />
           <Route path="/doubts" element={<Chat />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/games/funny" element={<FunnyGames />} />
+          <Route path="/games/mind" element={<MindGames />} />
           <Route path="/games/tictactoe" element={<TicTacToe />} />
           <Route path="/games/memory" element={<MemoryFlip />} />
           <Route path="/games/snake" element={<Snake />} />

@@ -13,7 +13,7 @@ export default function Chat() {
   const [activeChat, setActiveChat] = useState(null);
   const [messageInput, setMessageInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState("");
+  const [toast, setToast] = useState({ show: false, message: "", type: "" });
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1024);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobile, setMobile] = useState(window.innerWidth < 768);
@@ -81,6 +81,17 @@ export default function Chat() {
 
   async function sendMessage(e) {
     e?.preventDefault();
+
+    if (!user) {
+      setToast({
+        show: true,
+        message: "Please login first to send a message.",
+        type: "error",
+      });
+      setTimeout(() => setToast({ show: false, message: "", type: "" }), 3000);
+      return;
+    }
+
     if (!messageInput.trim()) return;
     setLoading(true);
     try {
@@ -100,13 +111,14 @@ export default function Chat() {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         chat = res.data.data.chat;
-        setChats(chats.map(c => c.chatId === chat.chatId ? chat : c));
+        setChats(chats.map((c) => (c.chatId === chat.chatId ? chat : c)));
       }
       setActiveChat(chat);
       setMessageInput("");
       scrollToBottom();
     } catch {
-      setToast("Message send failed!");
+      setToast({ show: true, message: "Message send failed!", type: "error" });
+      setTimeout(() => setToast({ show: false, message: "", type: "" }), 3000);
     } finally {
       setLoading(false);
     }
@@ -123,11 +135,12 @@ export default function Chat() {
     try {
       const res = await axios.get(`${API_BASE_URL}/chat/search`, {
         headers: { Authorization: `Bearer ${token}` },
-        params: { query: val.trim() }
+        params: { query: val.trim() },
       });
       setChats(res.data?.data?.chats || []);
     } catch {
-      setToast("Search failed!");
+      setToast({ show: true, message: "Search failed!", type: "error" });
+      setTimeout(() => setToast({ show: false, message: "", type: "" }), 3000);
     }
   }
 
@@ -162,10 +175,19 @@ export default function Chat() {
 
   return (
     <>
+      {/* Toast container above Header with high z-index */}
+      <div className="relative z-[9999]">
+        <Toast
+          show={toast.show}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ show: false, message: "", type: "" })}
+        />
+      </div>
       <Header />
       <main className="fixed w-screen h-screen top-0 left-0 bg-black pt-[96px] overflow-hidden z-0 flex flex-col">
         <div className="flex flex-1 w-full max-w-7xl mx-auto h-full relative">
-          {/* Sidebar overlay & modal (MOBILE only) */}
+          {/* Sidebar overlay (MOBILE) */}
           {mobile && sidebarOpen && (
             <>
               <div
@@ -190,14 +212,18 @@ export default function Chat() {
                         setSidebarOpen(false);
                       }}
                       disabled={loading}
-                    >+ New Chat</Button>
+                    >
+                      + New Chat
+                    </Button>
                     <Button
                       variant="secondary"
                       className="ml-2 text-xl flex items-center justify-center !px-3 !py-1.5"
                       style={{ minWidth: "32px", minHeight: "32px", borderRadius: "100%" }}
                       onClick={() => setSidebarOpen(false)}
                       aria-label="Close sidebar"
-                    >×</Button>
+                    >
+                      ×
+                    </Button>
                   </div>
                   <div className="px-4 pb-2">
                     <input
@@ -205,7 +231,7 @@ export default function Chat() {
                       className="w-full p-2 rounded bg-gray-900/50 border border-gray-800 text-white"
                       placeholder="Search chats"
                       value={searchQuery}
-                      onChange={e => handleSearch(e.target.value)}
+                      onChange={(e) => handleSearch(e.target.value)}
                     />
                   </div>
                 </div>
@@ -214,14 +240,14 @@ export default function Chat() {
                     {chats.length === 0 && (
                       <div className="text-gray-400 mt-8 text-center">No chats found.</div>
                     )}
-                    {chats.map(chat => (
+                    {chats.map((chat) => (
                       <li
                         key={chat.chatId}
-                        className={`cursor-pointer px-3 py-2 my-1 rounded-lg text-[15px] truncate transition
-                          ${activeChat?.chatId === chat.chatId
+                        className={`cursor-pointer px-3 py-2 my-1 rounded-lg text-[15px] truncate transition ${
+                          activeChat?.chatId === chat.chatId
                             ? "bg-orange-500 text-white"
                             : "hover:bg-gray-900/70 text-gray-100"
-                          }`}
+                        }`}
                         onClick={() => {
                           handleSelectChat(chat.chatId);
                           setSidebarOpen(false);
@@ -254,9 +280,7 @@ export default function Chat() {
             </Button>
           )}
           {(!mobile || (mobile && !sidebarOpen)) && (
-            <aside
-              className="bg-gray-900/50 border-r border-gray-800 flex-col w-72 lg:w-64 h-full z-30 transition duration-300 hidden lg:flex backdrop-blur"
-            >
+            <aside className="bg-gray-900/50 border-r border-gray-800 flex-col w-72 lg:w-64 h-full z-30 transition duration-300 hidden lg:flex backdrop-blur">
               <div className="flex-shrink-0 flex flex-col border-b border-gray-800 bg-gray-900/50">
                 <div className="flex items-center justify-between px-4 pt-4 pb-2">
                   <span className="text-lg font-bold text-white">Chats</span>
@@ -275,7 +299,7 @@ export default function Chat() {
                     className="w-full p-2 rounded bg-gray-900/50 border border-gray-800 text-white"
                     placeholder="Search chats"
                     value={searchQuery}
-                    onChange={e => handleSearch(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
                   />
                 </div>
               </div>
@@ -284,14 +308,14 @@ export default function Chat() {
                   {chats.length === 0 && (
                     <div className="text-gray-400 mt-8 text-center">No chats found.</div>
                   )}
-                  {chats.map(chat => (
+                  {chats.map((chat) => (
                     <li
                       key={chat.chatId}
-                      className={`cursor-pointer px-3 py-2 my-1 rounded-lg text-[15px] truncate transition
-                        ${activeChat?.chatId === chat.chatId
+                      className={`cursor-pointer px-3 py-2 my-1 rounded-lg text-[15px] truncate transition ${
+                        activeChat?.chatId === chat.chatId
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-900/70 text-gray-100"
-                        }`}
+                      }`}
                       onClick={() => handleSelectChat(chat.chatId)}
                     >
                       {chat.title}
@@ -311,7 +335,9 @@ export default function Chat() {
           <section className="flex-1 flex flex-col justify-end min-h-0 bg-gray-900/50 rounded-2xl ml-0 lg:ml-4 shadow-lg relative h-full border border-gray-800 backdrop-blur">
             <div
               ref={chatWindowRef}
-              className={`flex-1 overflow-y-auto px-3 pt-6 pb-2 custom-scrollbar ${mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""}`}
+              className={`flex-1 overflow-y-auto px-3 pt-6 pb-2 custom-scrollbar ${
+                mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""
+              }`}
               style={{ minHeight: 0, filter: mobile && sidebarOpen ? "blur(1px)" : "none" }}
             >
               {!activeChat?.messages?.length ? (
@@ -340,7 +366,9 @@ export default function Chat() {
               )}
             </div>
             <form
-              className={`w-full flex gap-2 px-3 py-3 bg-gray-900/50 border-t border-gray-800 items-center ${mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""}`}
+              className={`w-full flex gap-2 px-3 py-3 bg-gray-900/50 border-t border-gray-800 items-center ${
+                mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""
+              }`}
               style={{ zIndex: 2, filter: mobile && sidebarOpen ? "blur(1px)" : "none" }}
               onSubmit={sendMessage}
             >
@@ -351,11 +379,11 @@ export default function Chat() {
                 placeholder="Type your question..."
                 className="flex-1 resize-none rounded-xl p-3 bg-gray-900/50 text-white border border-gray-800 focus:border-orange-500 placeholder-gray-400"
                 autoFocus
-                onChange={e => setMessageInput(e.target.value)}
+                onChange={(e) => setMessageInput(e.target.value)}
                 disabled={loading || (mobile && sidebarOpen)}
                 style={{
                   minHeight: "44px",
-                  maxHeight: "264px"
+                  maxHeight: "264px",
                 }}
               />
               <Button
@@ -369,7 +397,6 @@ export default function Chat() {
             </form>
           </section>
         </div>
-        {toast && <Toast message={toast} />}
       </main>
     </>
   );

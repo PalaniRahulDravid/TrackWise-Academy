@@ -13,7 +13,9 @@ import TicTacToe from "./features/games/TicTacToe";
 import MemoryFlip from "./features/games/MemoryFlip";
 import Snake from "./features/games/Snake";
 import WhackAMole from "./features/games/WhackAMole";
+import CoursesHome from "./features/courses/CoursesHome";
 import Courses from "./features/courses/Courses";
+import TrackWiseCourses from "./features/courses/TrackWiseCourses";
 import FunnyGames from "./features/games/FunnyGames";
 import MindGames from "./features/games/MindGames";
 
@@ -42,7 +44,9 @@ export default function App() {
           <Route path="/roadmaps" element={<Roadmap />} />
           <Route path="/doubts" element={<Chat />} />
           <Route path="/games" element={<Games />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses" element={<CoursesHome />} />
+          <Route path="/courses/youtube" element={<Courses />} />
+          <Route path="/courses/trackwise" element={<TrackWiseCourses />} />
           <Route path="/dsa" element={<DSAHome />} />
 
           {/* Protected Routes */}

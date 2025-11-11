@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   register,
   verifyOtp,
+  resendOtp,
   login,
   refreshToken,
   logout,
@@ -36,10 +37,11 @@ const validateLogin = (req, res, next) => {
 };
 
 // --- Auth Public Routes ---
-router.post('/register', rateLimitAuth, validateRegistration, register);
+router.post('/register', validateRegistration, register); // Removed rate limiting for registration
 router.post('/verify-otp', verifyOtp);
+router.post('/resend-otp', resendOtp);
 router.post('/login', rateLimitAuth, validateLogin, login);
-router.post('/refresh', rateLimitAuth, refreshToken);
+router.post('/refresh', refreshToken); // Removed rate limiting for refresh
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
 

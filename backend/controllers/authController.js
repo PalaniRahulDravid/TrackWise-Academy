@@ -58,8 +58,17 @@ const register = async (req, res) => {
       }
     });
     await user.save();
-    sendVerificationEmail(user.email, otp).catch(console.error);
-    return sendSuccessResponse(res, 201, 'Registered! OTP sent to your email for verification.');
+    
+    // Send verification email and handle errors properly
+    try {
+      await sendVerificationEmail(user.email, otp);
+      console.log(`✅ OTP sent to ${user.email}: ${otp}`);
+      return sendSuccessResponse(res, 201, 'Registered! OTP sent to your email for verification.');
+    } catch (emailError) {
+      console.error('❌ Email send failed:', emailError.message);
+      // Still return success but with a warning
+      return sendSuccessResponse(res, 201, 'Registered! However, email sending failed. Please contact support. Your OTP is: ' + otp);
+    }
   } catch (error) {
     console.error('Registration error:', error);
     if (error.code === 11000)
@@ -95,6 +104,39 @@ const verifyOtp = async (req, res) => {
   } catch (error) {
     console.error('OTP verification error:', error);
     return sendErrorResponse(res, 500, 'Internal server error during OTP verification');
+  }
+};
+
+// RESEND OTP
+const resendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email)
+      return sendErrorResponse(res, 400, 'Email is required');
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user)
+      return sendErrorResponse(res, 404, 'User not found');
+    if (user.isVerified)
+      return sendErrorResponse(res, 400, 'Email already verified');
+    
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    user.otpToken = otp;
+    user.otpExpires = otpExpires;
+    await user.save();
+    
+    // Send verification email and handle errors properly
+    try {
+      await sendVerificationEmail(user.email, otp);
+      console.log(`✅ OTP resent to ${user.email}: ${otp}`);
+      return sendSuccessResponse(res, 200, 'New OTP sent to your email.');
+    } catch (emailError) {
+      console.error('❌ Email send failed:', emailError.message);
+      return sendSuccessResponse(res, 200, 'Email sending failed. Your OTP is: ' + otp);
+    }
+  } catch (error) {
+    console.error('Resend OTP error:', error);
+    return sendErrorResponse(res, 500, 'Internal server error during resend OTP');
   }
 };
 
@@ -343,6 +385,7 @@ const endGameSession = async (req, res) => {
 module.exports = {
   register,
   verifyOtp,
+  resendOtp,
   login,
   refreshToken,
   logout,

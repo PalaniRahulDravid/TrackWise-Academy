@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Rate limiting
+// Rate limiting - Increased limits for better user experience
 const authAttempts = new Map();
-const MAX_AUTH_ATTEMPTS = 10;
+const MAX_AUTH_ATTEMPTS = 50; // Increased from 10 to 50
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 mins
 
 setInterval(() => {

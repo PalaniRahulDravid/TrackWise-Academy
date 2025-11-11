@@ -1,34 +1,30 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../api/auth";
 import Toast from "../../components/Toast";
-import Header from "../../components/Header";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess(false);
     setLoading(true);
+    setError("");
     try {
       const res = await forgotPassword(email);
       if (res.success) {
         setSuccess(true);
-        setEmail("");
       } else {
-        setError(res.message || "Request failed.");
+        setError(res.message || "Error sending reset link");
       }
     } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          "Something went wrong. Try again."
-      );
+      setError(err?.response?.data?.message || "Server error");
     } finally {
       setLoading(false);
     }
@@ -42,7 +38,6 @@ export default function ForgotPassword() {
         message="Reset link sent to your email!"
         type="success"
         onClose={() => setSuccess(false)}
-        duration={1800}
       />
       {error && (
         <Toast
@@ -52,43 +47,32 @@ export default function ForgotPassword() {
           onClose={() => setError("")}
         />
       )}
-      {/* Animated background icons */}
-      <div className="absolute top-28 left-8 text-orange-400 text-xl sm:text-2xl animate-pulse z-0">✦</div>
-      <div className="absolute top-52 right-10 text-yellow-400 text-lg sm:text-2xl animate-pulse z-0">✦</div>
-      <div className="absolute bottom-28 left-1/4 text-orange-400 text-base sm:text-xl animate-pulse z-0">+</div>
-      <div className="absolute bottom-32 right-8 text-yellow-400 text-lg sm:text-2xl animate-pulse z-0">+</div>
-
-      <main
-        className="w-full bg-black text-white flex flex-col items-center justify-center px-4"
-        style={{ minHeight: "calc(100vh - 96px)" }}
-      >
+      <main className="w-full bg-black text-white flex flex-col items-center justify-center px-4 min-h-screen">
         <form
           onSubmit={handleSubmit}
           className="bg-gray-900/50 border border-gray-800 rounded-2xl shadow-lg w-full max-w-sm p-8 flex flex-col"
-          style={{ marginTop: "24px" }}
-          autoComplete="off"
         >
-          <h2 className="text-2xl font-bold mb-6 text-center text-white">
+          <h2 className="text-3xl font-bold mb-6 text-center text-white">
             Forgot Password
           </h2>
-          <label className="block text-white mb-1">Registered Email</label>
+          <label className="block text-white mb-1">Email</label>
           <input
             type="email"
-            name="email"
             required
             value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="w-full p-3 mb-6 rounded bg-gray-900/50 border border-gray-800 text-white outline-none"
-            placeholder="your@email.com"
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 mb-4 rounded bg-gray-900/50 border border-gray-800 text-white outline-none"
+            placeholder="you@example.com"
           />
-          <Button
-            type="submit"
-            className="w-full mt-2 text-lg"
-            variant="primary"
-            disabled={loading || success}
-          >
+          <Button type="submit" disabled={loading}>
             {loading ? "Sending..." : "Send Reset Link"}
           </Button>
+          <p
+            onClick={() => navigate("/login")}
+            className="text-xs text-[#ff7900] hover:text-white text-center mt-4 cursor-pointer"
+          >
+            Back to Login
+          </p>
         </form>
       </main>
     </>

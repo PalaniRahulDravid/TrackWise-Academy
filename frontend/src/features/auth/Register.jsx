@@ -62,14 +62,17 @@ export default function Register() {
     try {
       const res = await register(form.name.trim(), form.email.trim(), form.password.trim());
       console.log('✅ Registration response:', res);
+      clearTimeout(safetyTimeout);
 
       if (res.success) {
         setSuccess(true);
+        setLoading(false);
+        // Faster redirect - 800ms instead of 1200ms
         setTimeout(() => {
           navigate(`/verify-email?email=${encodeURIComponent(form.email)}`, {
             state: { email: form.email },
           });
-        }, 1200);
+        }, 800);
       } else {
         setError(res.message || "Registration failed.");
         setLoading(false);
@@ -108,10 +111,10 @@ export default function Register() {
       <Header fixed />
       <Toast
         show={success}
-        message="Registration successful! OTP sent to your email."
+        message="✅ Account created! Check your email for OTP."
         type="success"
         onClose={() => setSuccess(false)}
-        duration={1800}
+        duration={1500}
       />
       {error && (
         <Toast

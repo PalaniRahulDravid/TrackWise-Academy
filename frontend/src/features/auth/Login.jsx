@@ -39,11 +39,14 @@ export default function Login() {
     try {
       const res = await login(form.email, form.password);
       console.log('✅ Login response:', res);
+      clearTimeout(safetyTimeout);
       
       if (res.success) {
         setUser(res.data.user);
         setSuccess(true);
-        setTimeout(() => navigate("/"), 1100);
+        setLoading(false);
+        // Faster redirect - 600ms
+        setTimeout(() => navigate("/"), 600);
       } else {
         setError(res.message || "Invalid credentials");
         setLoading(false);
@@ -79,10 +82,10 @@ export default function Login() {
       <Header fixed />
       <Toast
         show={success}
-        message="Login successful! Redirecting..."
+        message="✅ Welcome back! Redirecting..."
         type="success"
         onClose={() => setSuccess(false)}
-        duration={1300}
+        duration={1000}
       />
       {error && (
         <Toast

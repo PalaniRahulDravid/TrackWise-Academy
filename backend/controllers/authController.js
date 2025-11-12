@@ -38,7 +38,8 @@ const register = async (req, res) => {
     if (!name || !email || !password)
       return sendErrorResponse(res, 400, 'Name, email, and password are required');
     
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    // Optimized query - only check email field, use lean() for faster query
+    const existingUser = await User.findOne({ email: email.toLowerCase() }).select('_id').lean();
     if (existingUser)
       return sendErrorResponse(res, 409, 'User already exists with this email');
 

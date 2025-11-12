@@ -1,12 +1,17 @@
 const nodemailer = require('nodemailer');
 
-// Create transporter
+// Create transporter with optimized settings
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  }
+  },
+  pool: true, // Use connection pooling
+  maxConnections: 5, // Max simultaneous connections
+  maxMessages: 100, // Max messages per connection
+  rateDelta: 1000, // Time between rate limit checks
+  rateLimit: 5 // Max 5 messages per rateDelta
 });
 
 // Verify connection on startup
@@ -18,29 +23,36 @@ transporter.verify((error, success) => {
   }
 });
 
-// Send OTP verification email (registration)
+// Send OTP verification email (registration) with timeout
 exports.sendVerificationEmail = async (to, otp) => {
-  try {
-    await transporter.sendMail({
-      from: `"TrackWise Academy" <${process.env.EMAIL_USER}>`,
-      to,
-      subject: "Verify Your Email - TrackWise Academy",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-          <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h2 style="color: #4F46E5; text-align: center;">Welcome to TrackWise Academy!</h2>
-            <p style="font-size: 16px; color: #333;">Thank you for registering with us. Please verify your email address using the OTP below:</p>
-            <div style="text-align: center; margin: 30px 0;">
-              <h1 style="color: #4F46E5; font-size: 36px; letter-spacing: 8px; background-color: #f0f0f0; padding: 20px; border-radius: 8px;">${otp}</h1>
-            </div>
-            <p style="font-size: 14px; color: #666;">This OTP will expire in <strong>10 minutes</strong>.</p>
-            <p style="font-size: 14px; color: #666;">If you didn't request this, please ignore this email.</p>
-            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-            <p style="font-size: 12px; color: #999; text-align: center;">© ${new Date().getFullYear()} TrackWise Academy. All rights reserved.</p>
+  const emailPromise = transporter.sendMail({
+    from: `"TrackWise Academy" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: "Verify Your Email - TrackWise Academy",
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+        <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #4F46E5; text-align: center;">Welcome to TrackWise Academy!</h2>
+          <p style="font-size: 16px; color: #333;">Thank you for registering with us. Please verify your email address using the OTP below:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <h1 style="color: #4F46E5; font-size: 36px; letter-spacing: 8px; background-color: #f0f0f0; padding: 20px; border-radius: 8px;">${otp}</h1>
           </div>
+          <p style="font-size: 14px; color: #666;">This OTP will expire in <strong>10 minutes</strong>.</p>
+          <p style="font-size: 14px; color: #666;">If you didn't request this, please ignore this email.</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <p style="font-size: 12px; color: #999; text-align: center;">© ${new Date().getFullYear()} TrackWise Academy. All rights reserved.</p>
         </div>
-      `
-    });
+      </div>
+    `
+  });
+
+  // Add 10 second timeout for email sending
+  const timeoutPromise = new Promise((_, reject) => 
+    setTimeout(() => reject(new Error('Email timeout')), 10000)
+  );
+
+  try {
+    await Promise.race([emailPromise, timeoutPromise]);
     console.log('✅ Verification email sent to:', to);
   } catch (error) {
     console.error('❌ Email send error:', error.message);

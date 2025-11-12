@@ -82,7 +82,7 @@ userSchema.index({ email: 1 }, { unique: true });
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  const salt = await bcrypt.genSalt(12);
+  const salt = await bcrypt.genSalt(10); // Reduced from 12 to 10 for faster registration
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });

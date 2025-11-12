@@ -22,6 +22,8 @@ export default function VerifyEmail() {
   
   const [email, setEmail] = useState(urlEmail);
   const [showEmailInput, setShowEmailInput] = useState(!urlEmail);
+  const [showOtpHint, setShowOtpHint] = useState(false);
+  const [otpFromServer, setOtpFromServer] = useState(null);
 
   // Countdown timer for resend button
   useEffect(() => {
@@ -59,6 +61,12 @@ export default function VerifyEmail() {
     try {
       const res = await resendOtp(email);
       if (res.success) {
+        // Check if OTP is in the response (email service failed)
+        const otpMatch = res.message?.match(/OTP:\s*(\d{6})/);
+        if (otpMatch) {
+          setOtpFromServer(otpMatch[1]);
+          setShowOtpHint(true);
+        }
         setSuccess(true);
         setCooldown(30); // 30-second cooldown
       } else {
@@ -117,10 +125,18 @@ export default function VerifyEmail() {
               />
             </>
           ) : (
-            <p className="text-sm mb-5 text-gray-400 text-center">
-              Enter the 6-digit OTP sent to <br />
-              <span className="text-orange-400 font-semibold">{email}</span>
-            </p>
+            <>
+              <p className="text-sm mb-3 text-gray-400 text-center">
+                Enter the 6-digit OTP sent to <br />
+                <span className="text-orange-400 font-semibold">{email}</span>
+              </p>
+              {showOtpHint && otpFromServer && (
+                <div className="mb-4 p-3 bg-yellow-900/30 border border-yellow-600/50 rounded text-center">
+                  <p className="text-yellow-300 text-xs mb-1">⚠️ Email service unavailable on free tier</p>
+                  <p className="text-white text-sm">Your OTP: <span className="font-bold text-lg">{otpFromServer}</span></p>
+                </div>
+              )}
+            </>
           )}
 
           <label className="block text-white mb-1">OTP Code</label>

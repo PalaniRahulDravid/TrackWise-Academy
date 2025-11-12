@@ -1,17 +1,26 @@
 const nodemailer = require('nodemailer');
 
-// Create transporter with optimized settings
+// Create transporter - Render blocks SMTP, so we need a workaround
 const transporter = nodemailer.createTransport({
-  service: "Gmail",
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // Use STARTTLS
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  pool: true, // Use connection pooling
-  maxConnections: 5, // Max simultaneous connections
-  maxMessages: 100, // Max messages per connection
-  rateDelta: 1000, // Time between rate limit checks
-  rateLimit: 5 // Max 5 messages per rateDelta
+  pool: true,
+  maxConnections: 5,
+  maxMessages: 100,
+  rateDelta: 1000,
+  rateLimit: 5,
+  // Important for Render
+  tls: {
+    rejectUnauthorized: false // Accept self-signed certificates
+  },
+  connectionTimeout: 30000, // 30 seconds
+  greetingTimeout: 30000,
+  socketTimeout: 30000
 });
 
 // Verify connection on startup

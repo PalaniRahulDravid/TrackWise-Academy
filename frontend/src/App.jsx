@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "./pages/Home";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
@@ -29,7 +30,13 @@ import CompanyList from "./features/dsa/CompanyList";
 import CompanyQuestionList from "./features/dsa/CompanyQuestionList";
 import DsaProblemDetail from "./features/dsa/DsaProblemDetail";
 
+import { wakeUpServer } from "./utils/serverWakeUp";
+
 export default function App() {
+  // Wake up server on app load (for Render.com free tier)
+  useEffect(() => {
+    wakeUpServer();
+  }, []);
   return (
     <AuthProvider>
       <BrowserRouter>

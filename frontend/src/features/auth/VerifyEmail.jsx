@@ -15,10 +15,13 @@ export default function VerifyEmail() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const email =
+  const urlEmail =
     location.state?.email ||
     new URLSearchParams(location.search).get("email") ||
     "";
+  
+  const [email, setEmail] = useState(urlEmail);
+  const [showEmailInput, setShowEmailInput] = useState(!urlEmail);
 
   // Countdown timer for resend button
   useEffect(() => {
@@ -101,11 +104,26 @@ export default function VerifyEmail() {
             Verify Email
           </h2>
 
-          <p className="text-sm mb-5 text-gray-400 text-center">
-            Enter the 6-digit OTP sent to <br />
-            <span className="text-orange-400 font-semibold">{email}</span>
-          </p>
+          {showEmailInput ? (
+            <>
+              <label className="block text-white mb-1">Email</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 mb-4 rounded bg-gray-900/50 border border-gray-800 text-white outline-none"
+                placeholder="you@example.com"
+              />
+            </>
+          ) : (
+            <p className="text-sm mb-5 text-gray-400 text-center">
+              Enter the 6-digit OTP sent to <br />
+              <span className="text-orange-400 font-semibold">{email}</span>
+            </p>
+          )}
 
+          <label className="block text-white mb-1">OTP Code</label>
           <input
             type="text"
             maxLength={6}

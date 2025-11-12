@@ -25,6 +25,7 @@ console.log('🔗 API Base URL:', BASE_URL);
 const apiClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
+  timeout: 60000, // 60 seconds timeout (for Render.com cold starts)
   headers: {
     "Content-Type": "application/json",
   },

@@ -58,17 +58,26 @@ export default function Register() {
         setError(res.message || "Registration failed.");
       }
     } catch (err) {
-      const msg =
-        err?.response?.data?.message ||
-        err?.message ||
-        "Registration failed, check details & try again.";
-
-      if (msg.toLowerCase().includes("already registered")) {
-        setError("Email already registered. Try logging in instead.");
-      } else if (msg.toLowerCase().includes("not verified")) {
-        setError("Email already exists but not verified. Please check your inbox for OTP.");
+      console.error('Registration error:', err);
+      
+      // Handle timeout errors (Render.com cold start)
+      if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        setError("Server is waking up (free tier). Please wait 30 seconds and try again.");
+      } else if (err.code === 'ERR_NETWORK') {
+        setError("Network error. Please check your connection and try again.");
       } else {
-        setError(msg);
+        const msg =
+          err?.response?.data?.message ||
+          err?.message ||
+          "Registration failed, check details & try again.";
+
+        if (msg.toLowerCase().includes("already registered") || msg.toLowerCase().includes("already exists")) {
+          setError("Email already registered. Try logging in instead.");
+        } else if (msg.toLowerCase().includes("not verified")) {
+          setError("Email already exists but not verified. Please check your inbox for OTP.");
+        } else {
+          setError(msg);
+        }
       }
     } finally {
       setLoading(false);

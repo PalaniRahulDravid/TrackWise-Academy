@@ -34,11 +34,23 @@ export default function Login() {
         setError(res.message || "Invalid credentials");
       }
     } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-        err?.message ||
-        "Login failed. Please try again."
-      );
+      console.error('Login error:', err);
+      
+      // Handle timeout errors (Render.com cold start)
+      if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        setError("Server is waking up (free tier). Please wait 30 seconds and try again.");
+      } else if (err.code === 'ERR_NETWORK') {
+        setError("Network error. Please check your connection and try again.");
+      } else {
+        const msg = err?.response?.data?.message || err?.message || "Login failed. Please try again.";
+        
+        // Check if user needs to verify email
+        if (msg.toLowerCase().includes("not verified") || msg.toLowerCase().includes("verify your email")) {
+          setError("Please verify your email first. Check your inbox for OTP.");
+        } else {
+          setError(msg);
+        }
+      }
     } finally {
       setLoading(false);
     }
@@ -142,8 +154,19 @@ export default function Login() {
           >
             {loading ? "Signing in..." : "Login"}
           </Button>
-          <div className="mt-5 text-sm text-center text-gray-300">
-            Don’t have an account?{" "}
+          
+          {/* Verify Email Link */}
+          <div className="mt-3 text-center">
+            <a 
+              href="/verify-email" 
+              className="text-xs text-blue-400 hover:text-blue-300 hover:underline"
+            >
+              Need to verify your email?
+            </a>
+          </div>
+          
+          <div className="mt-3 text-sm text-center text-gray-300">
+            Don't have an account?{" "}
             <a href="/register" className="text-[#ff7900] hover:text-white hover:animate-pulse">
               Create Account
             </a>

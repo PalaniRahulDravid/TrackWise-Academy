@@ -126,16 +126,23 @@ const resendOtp = async (req, res) => {
     user.otpToken = otp;
     user.otpExpires = otpExpires;
     await user.save();
+    console.log(`✅ New OTP generated for ${user.email}: ${otp}`);
     
-    // Send verification email and handle errors properly
-    try {
-      await sendVerificationEmail(user.email, otp);
-      console.log(`✅ OTP resent to ${user.email}: ${otp}`);
-      return sendSuccessResponse(res, 200, 'New OTP sent to your email.');
-    } catch (emailError) {
-      console.error('❌ Email send failed:', emailError.message);
-      return sendSuccessResponse(res, 200, 'Email sending failed. Your OTP is: ' + otp);
-    }
+    // Send email ASYNCHRONOUSLY (don't wait)
+    sendVerificationEmail(user.email, otp)
+      .then((success) => {
+        if (success) {
+          console.log(`✅ OTP resent successfully to ${user.email}`);
+        } else {
+          console.log(`⚠️ Email failed but OTP saved: ${otp}`);
+        }
+      })
+      .catch((err) => {
+        console.error('❌ Unexpected error:', err.message);
+      });
+    
+    // Respond immediately
+    return sendSuccessResponse(res, 200, 'New OTP sent to your email. Check your inbox!');
   } catch (error) {
     console.error('Resend OTP error:', error);
     return sendErrorResponse(res, 500, 'Internal server error during resend OTP');

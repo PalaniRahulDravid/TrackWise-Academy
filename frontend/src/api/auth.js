@@ -25,11 +25,26 @@ console.log('🔗 API Base URL:', BASE_URL);
 const apiClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
-  timeout: 60000, // 60 seconds timeout (for Render.com cold starts)
+  timeout: 90000, // 90 seconds timeout (for Render.com cold starts)
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+// Add response interceptor for better error logging
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('API Error:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      data: error.response?.data,
+      url: error.config?.url
+    });
+    return Promise.reject(error);
+  }
+);
 
 // ======================================================
 // ✅ Token Interceptor (Attach JWT to every request)

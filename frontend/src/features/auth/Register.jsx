@@ -42,10 +42,26 @@ export default function Register() {
       setError("Passwords do not match.");
       return;
     }
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
 
     setLoading(true);
+    console.log('🚀 Starting registration...', { email: form.email, name: form.name });
+    
+    // Safety timeout to prevent infinite loading state
+    const safetyTimeout = setTimeout(() => {
+      if (loading) {
+        console.warn('⚠️ Safety timeout triggered');
+        setLoading(false);
+        setError("Request took too long. Please try again.");
+      }
+    }, 95000); // 95 seconds (slightly more than axios timeout)
+    
     try {
       const res = await register(form.name.trim(), form.email.trim(), form.password.trim());
+      console.log('✅ Registration response:', res);
 
       if (res.success) {
         setSuccess(true);
@@ -56,20 +72,23 @@ export default function Register() {
         }, 1200);
       } else {
         setError(res.message || "Registration failed.");
+        setLoading(false);
       }
     } catch (err) {
-      console.error('Registration error:', err);
+      console.error('❌ Registration error:', err);
       
       // Handle timeout errors (Render.com cold start)
       if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
-        setError("Server is waking up (free tier). Please wait 30 seconds and try again.");
-      } else if (err.code === 'ERR_NETWORK') {
-        setError("Network error. Please check your connection and try again.");
+        setError("Request timeout. Server may be waking up. Please try again in 30 seconds.");
+      } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
+        setError("Network error. Please check your internet connection and try again.");
+      } else if (err.response?.status === 0) {
+        setError("Cannot reach server. Please check your connection or try again later.");
       } else {
         const msg =
           err?.response?.data?.message ||
           err?.message ||
-          "Registration failed, check details & try again.";
+          "Registration failed. Please check your details and try again.";
 
         if (msg.toLowerCase().includes("already registered") || msg.toLowerCase().includes("already exists")) {
           setError("Email already registered. Try logging in instead.");
@@ -79,8 +98,8 @@ export default function Register() {
           setError(msg);
         }
       }
-    } finally {
       setLoading(false);
+      clearTimeout(safetyTimeout);
     }
   };
 
@@ -228,8 +247,24 @@ export default function Register() {
             variant="primary"
             disabled={loading || success}
           >
-            {loading ? "Creating Account..." : "Create Account"}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Creating Account...
+              </span>
+            ) : (
+              "Create Account"
+            )}
           </Button>
+          
+          {error && (
+            <div className="mt-3 text-center text-xs text-gray-400">
+              Having issues? Try refreshing or check console (F12)
+            </div>
+          )}
 
           <div className="mt-5 text-sm text-center text-gray-300">
             Already have an account?{" "}

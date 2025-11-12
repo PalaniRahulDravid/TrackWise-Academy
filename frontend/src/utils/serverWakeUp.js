@@ -7,25 +7,27 @@ export const wakeUpServer = async () => {
                           window.location.hostname === '127.0.0.1';
     
     if (isDevelopment) {
-      return; // Skip wake-up call in development
+      console.log('🏠 Running in development mode - skipping server wake-up');
+      return;
     }
 
     const baseURL = "https://trackwise-academy.onrender.com";
-    console.log('⏰ Waking up server...');
+    console.log('⏰ Pinging server to wake it up...');
     
+    const startTime = Date.now();
     const response = await axios.get(`${baseURL}/health`, {
-      timeout: 5000,
+      timeout: 10000, // 10 seconds for health check
     });
     
+    const elapsed = Date.now() - startTime;
     if (response.status === 200) {
-      console.log('✅ Server is awake!');
+      console.log(`✅ Server is awake! (${elapsed}ms)`);
+      console.log('📊 Server status:', response.data);
     }
   } catch (error) {
-    console.log('⚠️ Server is waking up, this may take 30-50 seconds...');
+    console.warn('⚠️ Server is still waking up (this is normal for free tier)');
+    console.log('💡 First request may take 30-60 seconds');
   }
 };
 
-// Call this on app initialization
-if (typeof window !== 'undefined') {
-  wakeUpServer();
-}
+// Don't auto-call on import - let App.jsx control it

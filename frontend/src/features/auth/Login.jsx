@@ -24,23 +24,40 @@ export default function Login() {
     setLoading(true);
     setError("");
     setSuccess(false);
+    
+    console.log('🚀 Starting login...', { email: form.email });
+    
+    // Safety timeout to prevent infinite loading state
+    const safetyTimeout = setTimeout(() => {
+      if (loading) {
+        console.warn('⚠️ Safety timeout triggered');
+        setLoading(false);
+        setError("Request took too long. Please try again.");
+      }
+    }, 95000); // 95 seconds
+    
     try {
       const res = await login(form.email, form.password);
+      console.log('✅ Login response:', res);
+      
       if (res.success) {
         setUser(res.data.user);
         setSuccess(true);
         setTimeout(() => navigate("/"), 1100);
       } else {
         setError(res.message || "Invalid credentials");
+        setLoading(false);
       }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error('❌ Login error:', err);
       
       // Handle timeout errors (Render.com cold start)
       if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
-        setError("Server is waking up (free tier). Please wait 30 seconds and try again.");
-      } else if (err.code === 'ERR_NETWORK') {
-        setError("Network error. Please check your connection and try again.");
+        setError("Request timeout. Server may be waking up. Please try again in 30 seconds.");
+      } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
+        setError("Network error. Please check your internet connection and try again.");
+      } else if (err.response?.status === 0) {
+        setError("Cannot reach server. Please check your connection or try again later.");
       } else {
         const msg = err?.response?.data?.message || err?.message || "Login failed. Please try again.";
         
@@ -51,8 +68,9 @@ export default function Login() {
           setError(msg);
         }
       }
-    } finally {
       setLoading(false);
+    } finally {
+      clearTimeout(safetyTimeout);
     }
   };
 

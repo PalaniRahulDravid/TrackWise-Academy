@@ -34,41 +34,42 @@ const sendSuccessResponse = (res, status, message, data = null) => {
 // REGISTER - sends OTP (email)
 const register = async (req, res) => {
   try {
-    const { name, email, password, age, education, experience, interests } = req.body;
+    const { name, email, password } = req.body;
     if (!name || !email || !password)
       return sendErrorResponse(res, 400, 'Name, email, and password are required');
+    
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser)
       return sendErrorResponse(res, 409, 'User already exists with this email');
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    
     const user = new User({
       name: name.trim(),
       email: email.toLowerCase().trim(),
       password,
       isVerified: false,
       otpToken: otp,
-      otpExpires,
-      profile: {
-        ...(age && { age: parseInt(age) }),
-        ...(education && { education: education.trim() }),
-        ...(experience && { experience }),
-        ...(interests && Array.isArray(interests) && { interests }),
-      }
+      otpExpires
     });
-    await user.save();
     
-    // Send verification email and handle errors properly
-    try {
-      await sendVerificationEmail(user.email, otp);
-      console.log(`✅ OTP sent to ${user.email}: ${otp}`);
-      return sendSuccessResponse(res, 201, 'Registered! OTP sent to your email for verification.');
-    } catch (emailError) {
-      console.error('❌ Email send failed:', emailError.message);
-      // Still return success but with a warning
-      return sendSuccessResponse(res, 201, 'Registered! However, email sending failed. Please contact support. Your OTP is: ' + otp);
-    }
+    await user.save();
+    console.log(`✅ User registered: ${user.email}, OTP: ${otp}`);
+    
+    // Send email ASYNCHRONOUSLY (don't wait for it)
+    sendVerificationEmail(user.email, otp)
+      .then(() => {
+        console.log(`✅ OTP email sent to ${user.email}`);
+      })
+      .catch((emailError) => {
+        console.error('❌ Email send failed:', emailError.message);
+        console.log(`⚠️ Backup OTP for ${user.email}: ${otp}`);
+      });
+    
+    // Respond immediately without waiting for email
+    return sendSuccessResponse(res, 201, 'Registration successful! OTP sent to your email.');
+    
   } catch (error) {
     console.error('Registration error:', error);
     if (error.code === 11000)

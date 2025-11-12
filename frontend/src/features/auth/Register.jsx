@@ -57,7 +57,7 @@ export default function Register() {
         setLoading(false);
         setError("Request took too long. Please try again.");
       }
-    }, 95000); // 95 seconds (slightly more than axios timeout)
+    }, 35000); // 35 seconds (slightly more than axios timeout)
     
     try {
       const res = await register(form.name.trim(), form.email.trim(), form.password.trim());
@@ -79,7 +79,7 @@ export default function Register() {
       
       // Handle timeout errors (Render.com cold start)
       if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
-        setError("Request timeout. Server may be waking up. Please try again in 30 seconds.");
+        setError("Request timeout. The server may be waking up. Please wait 10 seconds and try again.");
       } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
         setError("Network error. Please check your internet connection and try again.");
       } else if (err.response?.status === 0) {

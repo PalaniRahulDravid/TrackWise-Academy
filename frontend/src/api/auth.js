@@ -25,7 +25,7 @@ console.log('🔗 API Base URL:', BASE_URL);
 const apiClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
-  timeout: 90000, // 90 seconds timeout (for Render.com cold starts)
+  timeout: 30000, // 30 seconds timeout (backend responds immediately now)
   headers: {
     "Content-Type": "application/json",
   },
@@ -62,23 +62,11 @@ apiClient.interceptors.request.use((config) => {
 // ======================================================
 
 // REGISTER — triggers OTP email
-export async function register(
-  name,
-  email,
-  password,
-  age,
-  education,
-  experience,
-  interests
-) {
+export async function register(name, email, password) {
   const response = await apiClient.post("/auth/register", {
     name,
     email,
-    password,
-    age,
-    education,
-    experience,
-    interests,
+    password
   });
   return response.data;
 }

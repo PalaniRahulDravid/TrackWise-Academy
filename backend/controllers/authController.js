@@ -70,10 +70,8 @@ const register = async (req, res) => {
         console.log(`⚠️ Backup OTP for ${user.email}: ${otp}`);
       });
     
-    // TEMPORARY: Include OTP in response (Render blocks SMTP)
-    // TODO: Remove after migrating to SendGrid/Resend/Brevo
     return sendSuccessResponse(res, 201, 
-      `Registration successful! Your OTP: ${otp}. (Email may not work on free tier)`
+      'Registration successful! Please check your email for the OTP.'
     );
     
   } catch (error) {
@@ -146,8 +144,7 @@ const resendOtp = async (req, res) => {
         console.error('❌ Unexpected error:', err.message);
       });
     
-    // Respond immediately with OTP hint (temporary fix for Render free tier)
-    return sendSuccessResponse(res, 200, `New OTP sent to your email. Your OTP: ${otp}. (Email may not work on free tier)`);
+    return sendSuccessResponse(res, 200, 'New OTP sent to your email. Please check your inbox!');
   } catch (error) {
     console.error('Resend OTP error:', error);
     return sendErrorResponse(res, 500, 'Internal server error during resend OTP');

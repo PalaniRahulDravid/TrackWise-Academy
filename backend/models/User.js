@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
     match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email'],
-    index: true,
   },
   password: {
     type: String,
@@ -23,15 +22,11 @@ const userSchema = new mongoose.Schema({
     minlength: [6, 'Password must be at least 6 characters'],
     select: false
   },
-  isVerified: { // <-- for email OTP verification
-    type: Boolean,
-    default: false
-  },
-  otpToken: String,         // <-- OTP for email verification
+  isVerified: { type: Boolean, default: false },
+  otpToken: String,
   otpExpires: Date,
-  resetToken: String,       // <-- Password reset token
+  resetToken: String,
   resetTokenExpires: Date,
-
   role: {
     type: String,
     enum: ['student', 'admin'],
@@ -51,16 +46,12 @@ const userSchema = new mongoose.Schema({
     totalChats: { type: Number, default: 0 },
     coursesCompleted: { type: Number, default: 0 }
   },
-
-  // --- Added for games session/cooldown ---
   gameSession: {
-    isActive: { type: Boolean, default: false },       // true = user has an active games session running
-    startedAt: { type: Date },                         // when the current games session started
-    expiresAt: { type: Date },                         // when this session should auto-expire (start + 15 min)
-    cooldownUntil: { type: Date },                     // when user can play games next (ends at session end + 1hr)
-    // Optionally add lastGamePlayed: { type: String } here if needed
+    isActive: { type: Boolean, default: false },
+    startedAt: { type: Date },
+    expiresAt: { type: Date },
+    cooldownUntil: { type: Date },
   }
-  
 }, {
   timestamps: true,
   toJSON: {
@@ -78,11 +69,10 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.index({ email: 1 }, { unique: true });
-// ... all your original indexes
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  const salt = await bcrypt.genSalt(10); // Reduced from 12 to 10 for faster registration
+  const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });

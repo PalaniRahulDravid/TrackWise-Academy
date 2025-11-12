@@ -9,9 +9,12 @@ export default function VerifyEmail() {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [cooldown, setCooldown] = useState(0);
+  const [successMessage, setSuccessMessage] = useState(""); // ✅ dynamic success message
+  const [otpFromServer, setOtpFromServer] = useState(null);
+  const [showOtpHint, setShowOtpHint] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,13 +22,11 @@ export default function VerifyEmail() {
     location.state?.email ||
     new URLSearchParams(location.search).get("email") ||
     "";
-  
+
   const [email, setEmail] = useState(urlEmail);
   const [showEmailInput, setShowEmailInput] = useState(!urlEmail);
-  const [showOtpHint, setShowOtpHint] = useState(false);
-  const [otpFromServer, setOtpFromServer] = useState(null);
 
-  // Countdown timer for resend button
+  // --- Countdown timer for resend cooldown ---
   useEffect(() => {
     if (cooldown > 0) {
       const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
@@ -41,7 +42,7 @@ export default function VerifyEmail() {
     try {
       const res = await verifyOtp(email, otp);
       if (res.success) {
-        setSuccess(true);
+        setSuccessMessage("Email verified successfully! 🎉"); // ✅ changed toast message
         setTimeout(() => navigate("/login"), 1500);
       } else {
         setError(res.message || "Invalid OTP");
@@ -61,14 +62,14 @@ export default function VerifyEmail() {
     try {
       const res = await resendOtp(email);
       if (res.success) {
-        // Check if OTP is in the response (email service failed)
+        // Check if OTP is in response (fallback for free-tier)
         const otpMatch = res.message?.match(/OTP:\s*(\d{6})/);
         if (otpMatch) {
           setOtpFromServer(otpMatch[1]);
           setShowOtpHint(true);
         }
-        setSuccess(true);
-        setCooldown(30); // 30-second cooldown
+        setSuccessMessage("OTP sent successfully! Check your inbox."); // ✅ new message
+        setCooldown(30); // 30s cooldown
       } else {
         setError(res.message || "Failed to resend OTP");
       }
@@ -86,13 +87,17 @@ export default function VerifyEmail() {
     <>
       <Header fixed />
 
-      {/* Toasts */}
-      <Toast
-        show={success}
-        message="OTP sent successfully! Check your inbox."
-        type="success"
-        onClose={() => setSuccess(false)}
-      />
+      {/* ✅ Success Toast */}
+      {successMessage && (
+        <Toast
+          show={!!successMessage}
+          message={successMessage}
+          type="success"
+          onClose={() => setSuccessMessage("")}
+        />
+      )}
+
+      {/* ❌ Error Toast */}
       {error && (
         <Toast
           show={!!error}
@@ -132,8 +137,13 @@ export default function VerifyEmail() {
               </p>
               {showOtpHint && otpFromServer && (
                 <div className="mb-4 p-3 bg-yellow-900/30 border border-yellow-600/50 rounded text-center">
-                  <p className="text-yellow-300 text-xs mb-1">⚠️ Email service unavailable on free tier</p>
-                  <p className="text-white text-sm">Your OTP: <span className="font-bold text-lg">{otpFromServer}</span></p>
+                  <p className="text-yellow-300 text-xs mb-1">
+                    ⚠️ Email service unavailable on free tier
+                  </p>
+                  <p className="text-white text-sm">
+                    Your OTP:{" "}
+                    <span className="font-bold text-lg">{otpFromServer}</span>
+                  </p>
                 </div>
               )}
             </>
@@ -154,11 +164,12 @@ export default function VerifyEmail() {
             {loading ? "Verifying..." : "Verify OTP"}
           </Button>
 
-          {/* Resend OTP Button */}
+          {/* Resend OTP */}
           <div className="text-center mt-5">
             {cooldown > 0 ? (
               <p className="text-sm text-gray-400">
-                Resend available in <span className="text-orange-400">{cooldown}s</span>
+                Resend available in{" "}
+                <span className="text-orange-400">{cooldown}s</span>
               </p>
             ) : (
               <button

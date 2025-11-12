@@ -10,7 +10,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'https://track-wise-academy.vercel.app',
-  /^https:\/\/track-wise-academy.*\.vercel\.app$/ // Allow Vercel preview URLs
+  /^https:\/\/track-wise-academy-.*\.vercel\.app$/
 ];
 
 app.use(cors({

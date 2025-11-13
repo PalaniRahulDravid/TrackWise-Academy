@@ -354,9 +354,9 @@ const startGameSession = async (req, res) => {
       });
     }
 
-    // Start new session (15 min active + 1 hour cooldown after session)
-    const sessionLength = 1 * 60 * 1000;
-    const cooldownLength = 1 * 60 * 1000;
+    // Start new session (20 min active + 1 hour cooldown after session)
+    const sessionLength = 20 * 60 * 1000;
+    const cooldownLength = 60 * 60 * 1000;
 
     user.gameSession = {
       isActive: true,

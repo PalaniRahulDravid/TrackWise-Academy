@@ -76,6 +76,12 @@ export default function Header() {
                       Courses
                     </a>
                     <a
+                      href="/dsa"
+                      className="block px-4 py-2 hover:bg-gray-700 rounded"
+                    >
+                      DSA Practice
+                    </a>
+                    <a
                       href="/doubts"
                       className="block px-4 py-2 hover:bg-gray-700 rounded"
                     >
@@ -183,6 +189,12 @@ export default function Header() {
               className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
             >
               Courses
+            </a>
+            <a
+              href="/dsa"
+              className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
+            >
+              DSA Practice
             </a>
             <a
               href="/doubts"

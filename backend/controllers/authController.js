@@ -174,10 +174,11 @@ const login = async (req, res) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? 'none' : 'lax',
+      secure: true, // Always use secure in production (HTTPS)
+      sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: '/'
+      path: '/',
+      domain: isProduction ? undefined : undefined // Let browser handle domain
     };
     
     res.cookie('accessToken', tokens.accessToken, cookieOptions);
@@ -212,10 +213,11 @@ const refreshToken = async (req, res) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction,
+      secure: true, // Always use secure for HTTPS
       sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      path: '/'
+      path: '/',
+      domain: isProduction ? undefined : undefined
     };
     
     res.cookie('accessToken', accessToken, cookieOptions);
@@ -241,11 +243,13 @@ const logout = async (req, res) => {
     await User.findByIdAndUpdate(userId, { $unset: { refreshToken: 1 } });
     
     // Clear HTTP-Only cookies
+    const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      path: '/'
+      secure: true, // Always use secure
+      sameSite: isProduction ? 'none' : 'lax',
+      path: '/',
+      domain: isProduction ? undefined : undefined
     };
     
     res.clearCookie('accessToken', cookieOptions);

@@ -184,7 +184,14 @@ export default function Chat() {
         />
       </div>
       <Header />
-      <main className="fixed w-screen h-screen top-0 left-0 bg-black pt-[96px] overflow-hidden z-0 flex flex-col">
+      <main 
+        className="fixed w-screen top-0 left-0 bg-black overflow-hidden z-0 flex flex-col"
+        style={{
+          height: 'calc(100vh - env(safe-area-inset-top))',
+          paddingTop: 'max(96px, calc(96px + env(safe-area-inset-top)))',
+          paddingBottom: 'env(safe-area-inset-bottom)'
+        }}
+      >
         <div className="flex flex-1 w-full max-w-7xl mx-auto h-full relative">
           {/* Sidebar overlay (MOBILE) */}
           {mobile && sidebarOpen && (
@@ -194,8 +201,10 @@ export default function Chat() {
                 onClick={() => setSidebarOpen(false)}
               ></div>
               <aside
-                className="fixed top-[96px] left-0 w-full h-[calc(100vh-96px)] bg-gray-900/50 z-50 flex flex-col border-r border-gray-800 backdrop-blur"
+                className="fixed left-0 w-full bg-gray-900/50 z-50 flex flex-col border-r border-gray-800 backdrop-blur"
                 style={{
+                  top: 'max(96px, calc(96px + env(safe-area-inset-top)))',
+                  height: 'calc(100vh - max(96px, calc(96px + env(safe-area-inset-top))) - env(safe-area-inset-bottom))',
                   maxWidth: "95vw",
                   boxShadow: "0 0 24px 0 rgba(0,0,0,0.48)",
                 }}
@@ -270,8 +279,12 @@ export default function Chat() {
           {mobile && !sidebarOpen && (
             <Button
               variant="primary"
-              className="fixed left-3 top-24 rounded-full w-10 h-10 flex items-center justify-center z-50 text-xl !p-0"
-              style={{ minWidth: 0, minHeight: 0 }}
+              className="fixed left-3 rounded-full w-10 h-10 flex items-center justify-center z-50 text-xl !p-0"
+              style={{ 
+                minWidth: 0, 
+                minHeight: 0,
+                top: 'max(96px, calc(96px + env(safe-area-inset-top)))'
+              }}
               onClick={() => setSidebarOpen(true)}
               aria-label="Open sidebar"
             >
@@ -365,10 +378,15 @@ export default function Chat() {
               )}
             </div>
             <form
-              className={`w-full flex gap-2 px-3 py-3 bg-gray-900/50 border-t border-gray-800 items-center ${
+              className={`w-full flex gap-2 px-3 bg-gray-900/50 border-t border-gray-800 items-center ${
                 mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""
               }`}
-              style={{ zIndex: 2, filter: mobile && sidebarOpen ? "blur(1px)" : "none" }}
+              style={{ 
+                zIndex: 2, 
+                filter: mobile && sidebarOpen ? "blur(1px)" : "none",
+                paddingTop: '12px',
+                paddingBottom: 'max(12px, calc(12px + env(safe-area-inset-bottom)))'
+              }}
               onSubmit={sendMessage}
             >
               <textarea

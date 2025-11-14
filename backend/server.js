@@ -1,8 +1,11 @@
+require('dotenv').config(); // Load environment variables FIRST
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs/promises');
-require('dotenv').config();
+const session = require('express-session');
+const passport = require('./config/passport');
 
 const app = express();
 
@@ -45,6 +48,22 @@ app.use(cors({
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Session configuration for Passport
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-super-secret-session-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Cookie parser middleware (built-in with Express 5)
 app.use((req, res, next) => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const {
   register,
@@ -14,7 +15,8 @@ const {
   resetPassword,
   getGameSessionStatus,
   startGameSession,
-  endGameSession
+  endGameSession,
+  googleCallback
 } = require('../controllers/authController');
 
 const {
@@ -44,6 +46,21 @@ router.post('/login', rateLimitAuth, validateLogin, login);
 router.post('/refresh', refreshToken); // Removed rate limiting for refresh
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
+
+// --- Google OAuth Routes ---
+router.get('/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email']
+  })
+);
+
+router.get('/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: process.env.FRONTEND_URL ? `${process.env.FRONTEND_URL}/login?error=auth_failed` : '/login?error=auth_failed',
+    session: false
+  }),
+  googleCallback
+);
 
 // --- Auth Protected Routes ---
 router.post('/logout', authenticate, logout);

@@ -18,9 +18,22 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
+    required: function() {
+      // Password is only required for non-Google auth users
+      return this.authProvider === 'local';
+    },
     minlength: [6, 'Password must be at least 6 characters'],
     select: false
+  },
+  authProvider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local'
+  },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true // Allows null values while maintaining uniqueness for non-null values
   },
   isVerified: { type: Boolean, default: false },
   otpToken: String,

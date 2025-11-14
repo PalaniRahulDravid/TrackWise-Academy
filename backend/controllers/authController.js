@@ -441,6 +441,54 @@ const endGameSession = async (req, res) => {
   }
 };
 
+// Google OAuth Callback Handler
+const googleCallback = async (req, res) => {
+  try {
+    const user = req.user; // Set by Passport after successful authentication
+    
+    if (!user) {
+      console.error('❌ No user found in Google callback');
+      return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=auth_failed`);
+    }
+
+    console.log('✅ Google OAuth successful for:', user.email);
+
+    // Generate JWT tokens
+    const tokens = generateTokens(user._id);
+    
+    // Update refresh token and last login
+    user.refreshToken = tokens.refreshToken;
+    await user.updateLastLogin();
+    await user.save();
+
+    // Set HTTP-Only cookies
+    const isProduction = process.env.NODE_ENV === 'production';
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: isProduction ? 'none' : 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/',
+      domain: isProduction ? undefined : undefined
+    };
+
+    res.cookie('accessToken', tokens.accessToken, cookieOptions);
+    res.cookie('refreshToken', tokens.refreshToken, {
+      ...cookieOptions,
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+    });
+
+    // Redirect to frontend home page
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/?login=success`);
+
+  } catch (error) {
+    console.error('❌ Google callback error:', error);
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/login?error=server_error`);
+  }
+};
+
 module.exports = {
   register,
   verifyOtp,
@@ -454,5 +502,6 @@ module.exports = {
   resetPassword,
   getGameSessionStatus,
   startGameSession,
-  endGameSession
+  endGameSession,
+  googleCallback
 };

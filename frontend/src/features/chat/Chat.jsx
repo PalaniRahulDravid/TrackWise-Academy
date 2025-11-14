@@ -7,6 +7,13 @@ import useAuth from "../../hooks/useAuth";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+// Configure axios instance with credentials for cookie-based auth
+const chatAPI = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: { "Content-Type": "application/json" }
+});
+
 export default function Chat() {
   const { user } = useAuth();
   const [chats, setChats] = useState([]);
@@ -20,7 +27,6 @@ export default function Chat() {
 
   const chatWindowRef = useRef();
   const inputRef = useRef();
-  const token = localStorage.getItem("trackwise_token");
 
   useEffect(() => {
     if (mobile && sidebarOpen) {
@@ -47,9 +53,7 @@ export default function Chat() {
 
   async function fetchChats() {
     try {
-      const res = await axios.get(`${API_BASE_URL}/chat/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await chatAPI.get('/chat/');
       setChats(res.data?.data?.chats || []);
       if (res.data?.data?.chats.length > 0) {
         fetchChatById(res.data.data.chats[0].chatId);
@@ -64,9 +68,7 @@ export default function Chat() {
 
   async function fetchChatById(chatId) {
     try {
-      const res = await axios.get(`${API_BASE_URL}/chat/${chatId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await chatAPI.get(`/chat/${chatId}`);
       if (res.data?.data?.chat) setActiveChat(res.data.data.chat);
     } catch {
       setActiveChat(null);
@@ -97,18 +99,16 @@ export default function Chat() {
     try {
       let chat = activeChat;
       if (!chat) {
-        const res = await axios.post(
-          `${API_BASE_URL}/chat/new`,
-          { message: messageInput },
-          { headers: { Authorization: `Bearer ${token}` } }
+        const res = await chatAPI.post(
+          '/chat/new',
+          { message: messageInput }
         );
         chat = res.data.data.chat;
         setChats([chat, ...chats]);
       } else {
-        const res = await axios.post(
-          `${API_BASE_URL}/chat/${chat.chatId}/message`,
-          { message: messageInput },
-          { headers: { Authorization: `Bearer ${token}` } }
+        const res = await chatAPI.post(
+          `/chat/${chat.chatId}/message`,
+          { message: messageInput }
         );
         chat = res.data.data.chat;
         setChats(chats.map((c) => (c.chatId === chat.chatId ? chat : c)));
@@ -133,8 +133,7 @@ export default function Chat() {
     setSearchQuery(val);
     if (!val.trim()) return fetchChats();
     try {
-      const res = await axios.get(`${API_BASE_URL}/chat/search`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await chatAPI.get('/chat/search', {
         params: { query: val.trim() },
       });
       setChats(res.data?.data?.chats || []);

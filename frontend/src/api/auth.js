@@ -24,8 +24,8 @@ console.log('🔗 API Base URL:', BASE_URL);
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true,
-  timeout: 30000, // 30 seconds timeout (backend responds immediately now)
+  withCredentials: true, // Enable sending cookies with requests
+  timeout: 30000, // 30 seconds timeout
   headers: {
     "Content-Type": "application/json",
   },
@@ -46,16 +46,7 @@ apiClient.interceptors.response.use(
   }
 );
 
-// ======================================================
-// ✅ Token Interceptor (Attach JWT to every request)
-// ======================================================
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("trackwise_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// Note: No need for token interceptor - cookies are sent automatically with withCredentials: true
 
 // ======================================================
 // ✅ Auth APIs
@@ -83,26 +74,21 @@ export async function resendOtp(email) {
   return response.data;
 }
 
-// LOGIN — returns tokens + user data
+// LOGIN — returns user data (tokens are set in HTTP-Only cookies by backend)
 export async function login(email, password) {
   const response = await apiClient.post("/auth/login", { email, password });
-
-  const accessToken = response.data?.data?.tokens?.accessToken;
-  if (accessToken) {
-    localStorage.setItem("trackwise_token", accessToken);
-  }
-
+  // Cookies are automatically handled by the browser
   return response.data;
 }
 
-// LOGOUT — removes token both from backend & local storage
+// LOGOUT — clears HTTP-Only cookies via backend
 export async function logout() {
   try {
     await apiClient.post("/auth/logout");
+    // Cookies are automatically cleared by the backend
   } catch (error) {
     console.error("Logout failed:", error);
-  } finally {
-    localStorage.removeItem("trackwise_token");
+    // Even if logout fails, cookies might be cleared by backend
   }
 }
 
@@ -127,13 +113,10 @@ export async function resetPassword(token, newPassword) {
   return response.data;
 }
 
-// REFRESH TOKEN — optional helper if needed later
-export async function refreshToken(refreshToken) {
-  const response = await apiClient.post("/auth/refresh", { refreshToken });
-  const newAccess = response.data?.data?.tokens?.accessToken;
-  if (newAccess) {
-    localStorage.setItem("trackwise_token", newAccess);
-  }
+// REFRESH TOKEN — refresh tokens stored in HTTP-Only cookies
+export async function refreshToken() {
+  const response = await apiClient.post("/auth/refresh");
+  // New tokens are automatically set in cookies by backend
   return response.data;
 }
 

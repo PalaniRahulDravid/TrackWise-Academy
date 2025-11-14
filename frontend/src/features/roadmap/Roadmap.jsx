@@ -8,6 +8,13 @@ import useAuth from "../../hooks/useAuth";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+// Configure axios instance with credentials for cookie-based auth
+const roadmapAPI = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: { "Content-Type": "application/json" }
+});
+
 export default function Roadmap() {
   const [inputFields, setInputFields] = useState({
     SelectedDomain: "",
@@ -37,10 +44,7 @@ export default function Roadmap() {
   async function fetchUserRoadmaps() {
     try {
       setError("");
-      const token = localStorage.getItem("trackwise_token");
-      const res = await axios.get(`${API_BASE_URL}/roadmaps/user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await roadmapAPI.get('/roadmaps/user');
       if (res.data?.roadmaps) setRoadmaps(res.data.roadmaps);
     } catch {
       setError("Failed to load saved roadmaps.");
@@ -68,11 +72,9 @@ export default function Roadmap() {
     setShowGeneratedRoadmap(null);
 
     try {
-      const token = localStorage.getItem("trackwise_token");
-      const res = await axios.post(
-        `${API_BASE_URL}/roadmaps/generate`,
-        { type, inputFields },
-        { headers: { Authorization: `Bearer ${token}` } }
+      const res = await roadmapAPI.post(
+        '/roadmaps/generate',
+        { type, inputFields }
       );
 
       if (res.status === 201 && res.data?.roadmap) {
@@ -98,9 +100,7 @@ export default function Roadmap() {
     }
 
     try {
-      const token = localStorage.getItem("trackwise_token");
-      const res = await axios.get(`${API_BASE_URL}/roadmaps/download/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await roadmapAPI.get(`/roadmaps/download/${id}`, {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([res.data]));

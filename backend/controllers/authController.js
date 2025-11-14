@@ -8,12 +8,12 @@ const generateTokens = (userId) => {
   const accessToken = jwt.sign(
     { userId, type: 'access' },
     process.env.JWT_SECRET,
-    { expiresIn: '15m', issuer: 'trackwise-api', audience: 'trackwise-app' }
+    { expiresIn: '7d', issuer: 'trackwise-api', audience: 'trackwise-app' }
   );
   const refreshToken = jwt.sign(
     { userId, type: 'refresh' },
     process.env.JWT_SECRET,
-    { expiresIn: '7d', issuer: 'trackwise-api', audience: 'trackwise-app' }
+    { expiresIn: '30d', issuer: 'trackwise-api', audience: 'trackwise-app' }
   );
   return { accessToken, refreshToken };
 };
@@ -169,9 +169,26 @@ const login = async (req, res) => {
     user.refreshToken = tokens.refreshToken;
     await user.updateLastLogin();
     await user.save();
+    
+    // Set HTTP-Only cookies
+    const isProduction = process.env.NODE_ENV === 'production';
+    const cookieOptions = {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/'
+    };
+    
+    res.cookie('accessToken', tokens.accessToken, cookieOptions);
+    res.cookie('refreshToken', tokens.refreshToken, {
+      ...cookieOptions,
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+    });
+    
     const userResponse = user.toJSON();
     delete userResponse.refreshToken;
-    return sendSuccessResponse(res, 200, 'Login successful', { user: userResponse, tokens });
+    return sendSuccessResponse(res, 200, 'Login successful', { user: userResponse });
   } catch (error) {
     console.error('Login error:', error);
     return sendErrorResponse(res, 500, 'Internal server error during login');
@@ -181,7 +198,7 @@ const login = async (req, res) => {
 // TOKEN REFRESH
 const refreshToken = async (req, res) => {
   try {
-    const { refreshToken: token } = req.body;
+    const token = req.cookies.refreshToken;
     if (!token) return sendErrorResponse(res, 400, 'Refresh token is required');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (decoded.type !== 'refresh')
@@ -190,9 +207,24 @@ const refreshToken = async (req, res) => {
     if (!user) return sendErrorResponse(res, 401, 'Invalid refresh token');
     const { accessToken, refreshToken: newRefreshToken } = generateTokens(user._id);
     await User.findByIdAndUpdate(user._id, { refreshToken: newRefreshToken, lastLogin: new Date() });
-    return sendSuccessResponse(res, 200, 'Token refreshed successfully', {
-      tokens: { accessToken, refreshToken: newRefreshToken }
+    
+    // Set new tokens in HTTP-Only cookies
+    const isProduction = process.env.NODE_ENV === 'production';
+    const cookieOptions = {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: '/'
+    };
+    
+    res.cookie('accessToken', accessToken, cookieOptions);
+    res.cookie('refreshToken', newRefreshToken, {
+      ...cookieOptions,
+      maxAge: 30 * 24 * 60 * 60 * 1000
     });
+    
+    return sendSuccessResponse(res, 200, 'Token refreshed successfully');
   } catch (error) {
     console.error('Token refresh error:', error);
     if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
@@ -207,6 +239,18 @@ const logout = async (req, res) => {
   try {
     const { userId } = req.user;
     await User.findByIdAndUpdate(userId, { $unset: { refreshToken: 1 } });
+    
+    // Clear HTTP-Only cookies
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/'
+    };
+    
+    res.clearCookie('accessToken', cookieOptions);
+    res.clearCookie('refreshToken', cookieOptions);
+    
     return sendSuccessResponse(res, 200, 'Logout successful');
   } catch (error) {
     console.error('Logout error:', error);

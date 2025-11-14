@@ -64,15 +64,20 @@ const extractUserIdFromPayload = (payload) => {
 // Authenticate middleware (robust & backwards-compatible)
 const authenticate = async (req, res, next) => {
   try {
-    const authHeader = req.header('Authorization') || req.header('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      trackFailedAuth(req);
-      return sendAuthError(res, 401, 'No valid token provided.', 'NO_TOKEN');
+    // First try to get token from HTTP-Only cookie (primary method)
+    let token = req.cookies?.accessToken;
+    
+    // Fallback to Authorization header for backwards compatibility
+    if (!token) {
+      const authHeader = req.header('Authorization') || req.header('authorization');
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7).trim();
+      }
     }
-    const token = authHeader.substring(7).trim();
+    
     if (!token) {
       trackFailedAuth(req);
-      return sendAuthError(res, 401, 'Token is empty.', 'EMPTY_TOKEN');
+      return sendAuthError(res, 401, 'No valid token provided.', 'NO_TOKEN');
     }
 
     let decoded;
@@ -160,12 +165,17 @@ const requireStudent = (req, res, next) => {
 // Optional auth middleware (robust)
 const optionalAuth = async (req, res, next) => {
   try {
-    const authHeader = req.header('Authorization') || req.header('authorization');
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      req.user = null;
-      return next();
+    // First try to get token from HTTP-Only cookie
+    let token = req.cookies?.accessToken;
+    
+    // Fallback to Authorization header
+    if (!token) {
+      const authHeader = req.header('Authorization') || req.header('authorization');
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7).trim();
+      }
     }
-    const token = authHeader.substring(7).trim();
+    
     if (!token) {
       req.user = null;
       return next();

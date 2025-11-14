@@ -28,6 +28,19 @@ export default function Chat() {
   const chatWindowRef = useRef();
   const inputRef = useRef();
 
+// DYNAMIC HEIGHT FIX FOR REAL MOBILE DEVICES
+  useEffect(() => {
+    const setAppHeight = () => {
+      document.documentElement.style.setProperty(
+        "--app-height",
+        `${window.visualViewport?.height || window.innerHeight}px`
+      );
+    };
+    setAppHeight();
+    window.visualViewport?.addEventListener("resize", setAppHeight);
+    return () => window.visualViewport?.removeEventListener("resize", setAppHeight);
+  }, []);
+
   useEffect(() => {
     if (mobile && sidebarOpen) {
       document.body.style.overflow = "hidden";
@@ -187,7 +200,7 @@ export default function Chat() {
       <main 
         className="fixed w-screen top-0 left-0 bg-black overflow-hidden z-0 flex flex-col"
         style={{
-          height: 'calc(100vh - env(safe-area-inset-top))',
+          height: 'var(--app-height)',
           paddingTop: 'max(96px, calc(96px + env(safe-area-inset-top)))',
           paddingBottom: 'env(safe-area-inset-bottom)'
         }}

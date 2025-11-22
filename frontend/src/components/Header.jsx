@@ -52,7 +52,9 @@ export default function Header() {
               >
                 Resources
                 <svg
-                  className="w-4 h-4 ml-1"
+                  className={`w-4 h-4 ml-1 transition-transform duration-200 ${
+                    resourcesOpen ? "rotate-180" : ""
+                  }`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -64,37 +66,77 @@ export default function Header() {
                 </svg>
               </button>
               {resourcesOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-50">
-                  <div className="py-2">
+                <div className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-800 rounded-lg shadow-2xl z-50 overflow-hidden">
+                  <div className="py-1">
                     <a
                       href="/roadmaps"
-                      className="block px-4 py-2 hover:bg-gray-700 rounded"
+                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
                     >
-                      Roadmaps
+                      <div className="text-orange-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Roadmaps</div>
+                        <div className="text-[11px] text-gray-400">Guided learning paths</div>
+                      </div>
                     </a>
                     <a
                       href="/courses"
-                      className="block px-4 py-2 hover:bg-gray-700 rounded"
+                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
                     >
-                      Courses
+                      <div className="text-orange-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Courses</div>
+                        <div className="text-[11px] text-gray-400">Video tutorials</div>
+                      </div>
                     </a>
                     <a
                       href="/dsa"
-                      className="block px-4 py-2 hover:bg-gray-700 rounded"
+                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
                     >
-                      DSA Practice
+                      <div className="text-orange-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">DSA Practice</div>
+                        <div className="text-[11px] text-gray-400">Solve problems</div>
+                      </div>
                     </a>
                     <a
                       href="/doubts"
-                      className="block px-4 py-2 hover:bg-gray-700 rounded"
+                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
                     >
-                      Doubts
+                      <div className="text-orange-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Doubts</div>
+                        <div className="text-[11px] text-gray-400">AI-powered help</div>
+                      </div>
                     </a>
                     <a
                       href="/games"
-                      className="block px-4 py-2 hover:bg-gray-700 rounded"
+                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
                     >
-                      Games
+                      <div className="text-orange-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Games</div>
+                        <div className="text-[11px] text-gray-400">Fun activities</div>
+                      </div>
                     </a>
                   </div>
                 </div>
@@ -113,7 +155,7 @@ export default function Header() {
             ) : (
               <button
                 onClick={() => navigate("/login")}
-                className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200"
+                className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm cursor-pointer hover:bg-orange-600 transition duration-200"
               >
                 Login
               </button>

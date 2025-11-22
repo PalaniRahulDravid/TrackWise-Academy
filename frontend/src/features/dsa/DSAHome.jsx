@@ -62,7 +62,7 @@ export default function DSAHome() {
               onClick={() => handleCardClick("/dsa/sheet")}
             />
             <FeatureCard
-              title="Company Wise Questions"
+              title="Company Wise"
               desc="Top interview questions for every company"
               gradient="from-purple-500 to-pink-400"
               icon={<FaBuilding />}

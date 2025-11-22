@@ -32,7 +32,7 @@ const features = [
   },
   {
     title: "Smart Courses",
-    desc: "Access curated courses from top platforms aligned with your learning objectives.",
+    desc: "Access curated courses from top platforms aligned with your learning objectives and career goals.",
     href: "/courses",
     img: feature2,
   },
@@ -44,13 +44,13 @@ const features = [
   },
   {
     title: "AI Doubt Resolution",
-    desc: "Get instant clarifications on complex topics through intelligent AI-powered chat.",
+    desc: "Get instant clarifications on complex topics through intelligent AI-powered chat and guided support.",
     href: "/doubts",
     img: feature4,
   },
   {
     title: "Mind Refresh Games",
-    desc: "Take productive breaks with brain-training games to keep your mind sharp and focused.",
+    desc: "Take productive breaks with brain-training games to keep your mind sharp, focused, and energized.",
     href: "/games",
     img: feature5,
   },
@@ -504,7 +504,7 @@ export default function Home() {
         </div>
 
         <div className="text-center mt-8 border-t border-gray-800 pt-4 text-xs text-gray-500">
-          © 2025 TrackWise Academy. All rights reserved. Built with ❤️ by Rahul.
+          © 2025 TrackWise Academy | All rights reserved. Built with by Rahul Dravid.
         </div>
       </footer>
     </div>

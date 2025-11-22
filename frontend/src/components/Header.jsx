@@ -34,7 +34,10 @@ export default function Header() {
       <header className="fixed top-0 left-0 w-full bg-black py-4 px-4 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto bg-gray-900 text-white rounded-xl shadow-lg px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg h-8 flex items-center">
+            <div 
+              className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg h-8 flex items-center cursor-pointer hover:bg-orange-600 transition duration-200"
+              onClick={() => navigate("/")}
+            >
               ASM
             </div>
             <span className="font-medium text-lg tracking-tight">
@@ -45,7 +48,7 @@ export default function Header() {
             <div ref={resourcesRef} className="relative">
               <button
                 onClick={() => setResourcesOpen((o) => !o)}
-                className="hover:text-orange-400 transition flex items-center gap-1"
+                className="hover:text-orange-400 transition flex items-center gap-1 cursor-pointer"
               >
                 Resources
                 <svg
@@ -100,24 +103,20 @@ export default function Header() {
             {user ? (
               <div className="relative flex items-center gap-4">
                 <span className="font-semibold">{user.name || "User"}</span>
-                <Button
-                  variant="primary"
-                  className="h-8 px-3 py-1 rounded text-lg flex items-center"
-                  style={{ minHeight: "32px" }}
+                <button
                   onClick={handleLogout}
+                  className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200"
                 >
                   Logout
-                </Button>
+                </button>
               </div>
             ) : (
-              <Button
-                variant="primary"
-                className="h-8 px-3 py-1 rounded text-lg flex items-center"
-                style={{ minHeight: "32px" }}
+              <button
                 onClick={() => navigate("/login")}
+                className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200"
               >
                 Login
-              </Button>
+              </button>
             )}
           </nav>
           <button
@@ -159,7 +158,13 @@ export default function Header() {
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg">
+            <div 
+              className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg hover:bg-orange-600 transition duration-200"
+              onClick={() => {
+                navigate("/");
+                setMobileOpen(false);
+              }}
+            >
               ASM
             </div>
             <span className="font-medium text-lg">AI Skill Mentor</span>
@@ -226,16 +231,15 @@ export default function Header() {
               style={{ minHeight: 76 }}
             >
               <span className="font-bold">{user.name || "User"}</span>
-              <Button
-                variant="primary"
-                className="px-3 py-1 rounded font-semibold text-base"
+              <button
                 onClick={() => {
                   handleLogout();
                   setMobileOpen(false);
                 }}
+                className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200"
               >
                 Logout
-              </Button>
+              </button>
             </div>
           ) : (
             <div
@@ -245,13 +249,12 @@ export default function Header() {
               <span className="font-semibold text-base text-orange-400">
                 Don't have an account?
               </span>
-              <Button
-                variant="primary"
-                className="px-3 py-1 rounded font-semibold w-full mt-2"
+              <button
                 onClick={handleLoginClick}
+                className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200 w-full"
               >
                 Login
-              </Button>
+              </button>
             </div>
           )}
         </div>

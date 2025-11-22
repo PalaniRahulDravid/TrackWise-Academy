@@ -246,7 +246,7 @@ export default function Home() {
         <section className="mb-16 sm:mb-24">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-              Everything You Need to Excel
+              Start Your Career Journey Today
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Comprehensive learning platform with AI-powered features
@@ -343,9 +343,9 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => setCurrentTestimonial(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${index === currentTestimonial
+                    className={`h-2 rounded-full transition-all ${index === currentTestimonial
                         ? "bg-orange-500 w-8"
-                        : "bg-gray-600"
+                        : "bg-gray-600 w-2"
                       }`}
                   />
                 ))}
@@ -354,32 +354,79 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA SECTION */}
-        <section className="mb-16 sm:mb-24">
-          <div className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-gray-800 text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-              Ready to Start Your Journey?
-            </h2>
-            <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-              Join over 1.2 million learners who are already mastering their skills with ASM
-            </p>
+        {/* CTA SECTION - UNIQUE DESIGN */}
+        <section className="mb-16 sm:mb-24 relative">
+          <div className="relative bg-gray-900/50 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-gray-800 overflow-hidden">
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-full mb-4">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                  <span className="text-orange-400 text-sm font-medium">1.2M+ Active Learners</span>
+                </div>
+                
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+                  Ready to Start Your Journey?
+                </h2>
+                
+                <p className="text-lg text-gray-300 mb-2 max-w-2xl mx-auto">
+                  Join thousands of learners who are already mastering their skills
+                </p>
+                <p className="text-sm text-gray-400 max-w-xl mx-auto">
+                  Start with a personalized roadmap, practice DSA, or explore curated courses
+                </p>
+              </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button
-                variant="gradient"
-                className="w-full sm:w-auto min-w-[200px] text-lg font-bold px-8 py-4 rounded-xl"
-                onClick={() => navigate(user ? "/roadmaps" : "/register")}
-              >
-                {user ? "Create Roadmap" : "Sign Up Free"} →
-              </Button>
+              {/* CTA Buttons with Stats */}
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-3xl mx-auto">
+                <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+                  <Button
+                    variant="gradient"
+                    className="w-full sm:w-auto min-w-[220px] text-base font-semibold px-8 py-3 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transition-all duration-300"
+                    onClick={() => navigate(user ? "/roadmaps" : "/register")}
+                  >
+                    {user ? "Create Roadmap" : "Get Started Free"} →
+                  </Button>
+                  <span className="text-xs text-gray-500">Everything is Free of Cost</span>
+                </div>
 
-              <Button
-                variant="outline"
-                className="w-full sm:w-auto min-w-[200px] text-lg font-bold px-8 py-4 rounded-xl border-2 border-gray-700 hover:border-purple-400"
-                onClick={() => navigate("/dsa")}
-              >
-                Browse DSA Problems
-              </Button>
+                <div className="hidden sm:block w-px h-16 bg-gray-700"></div>
+                <div className="block sm:hidden w-16 h-px bg-gray-700"></div>
+
+                <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto min-w-[220px] text-base font-semibold px-8 py-3 hover:bg-gray-800/50 transition-all duration-300"
+                    onClick={() => navigate("/dsa")}
+                  >
+                    Explore DSA Problems
+                  </Button>
+                  <span className="text-xs text-gray-500">500+ curated problems</span>
+                </div>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="mt-10 pt-8 border-t border-gray-800/50">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                  <div>
+                    <div className="text-2xl font-bold text-white mb-1">1.2M+</div>
+                    <div className="text-xs text-gray-400">Active Users</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-white mb-1">500+</div>
+                    <div className="text-xs text-gray-400">DSA Problems</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-white mb-1">1000+</div>
+                    <div className="text-xs text-gray-400">Courses</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-white mb-1">24/7</div>
+                    <div className="text-xs text-gray-400">AI Support</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

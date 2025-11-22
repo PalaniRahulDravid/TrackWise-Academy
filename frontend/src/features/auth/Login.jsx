@@ -168,7 +168,7 @@ export default function Login() {
           </div>
           <Button
             type="submit"
-            className="w-full mt-1 text-base py-2.5"
+            className="w-full mt-1"
             variant="primary"
             disabled={loading || success}
           >

@@ -184,7 +184,7 @@ export default function Snake() {
                 </div>
                 <button
                   onClick={restart}
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2 rounded-xl"
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2 rounded-lg"
                 >
                   Restart
                 </button>

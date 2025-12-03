@@ -6,14 +6,18 @@ import Button from "./Button";
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const resourcesRef = useRef(null);
+  const profileRef = useRef(null);
 
   useEffect(() => {
     function handler(e) {
       if (resourcesRef.current && !resourcesRef.current.contains(e.target))
         setResourcesOpen(false);
+      if (profileRef.current && !profileRef.current.contains(e.target))
+        setProfileOpen(false);
     }
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -31,12 +35,15 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full bg-black py-4 px-4 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto bg-gray-900 text-white rounded-xl shadow-lg px-6 py-3 flex items-center justify-between">
+      <header className="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-md border-b border-gray-800/50 z-50">
+        <div className="max-w-7xl mx-auto text-white px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div 
-              className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg h-8 flex items-center cursor-pointer hover:bg-orange-600 transition duration-200"
-              onClick={() => navigate("/")}
+              className="bg-orange-500 px-3 py-1 rounded-md font-bold text-lg h-8 flex items-center cursor-pointer hover:bg-orange-600 transition duration-200"
+              onClick={() => {
+                navigate("/");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             >
               ASM
             </div>
@@ -44,113 +51,118 @@ export default function Header() {
               AI Skill Mentor
             </span>
           </div>
+          {/* Animated Resource Links - Centered */}
+          <div className={`hidden md:flex items-center gap-6 overflow-hidden transition-all duration-500 ease-in-out absolute left-1/2 transform -translate-x-1/2 ${
+            resourcesOpen ? "max-w-[600px] opacity-100" : "max-w-0 opacity-0"
+          }`}>
+            <a
+              href="/roadmaps"
+              className="text-sm font-medium hover:text-orange-400 transition-colors whitespace-nowrap"
+            >
+              Roadmaps
+            </a>
+            <a
+              href="/courses"
+              className="text-sm font-medium hover:text-orange-400 transition-colors whitespace-nowrap"
+            >
+              Courses
+            </a>
+            <a
+              href="/dsa"
+              className="text-sm font-medium hover:text-orange-400 transition-colors whitespace-nowrap"
+            >
+              DSA
+            </a>
+            <a
+              href="/doubts"
+              className="text-sm font-medium hover:text-orange-400 transition-colors whitespace-nowrap"
+            >
+              Doubts
+            </a>
+            <a
+              href="/games"
+              className="text-sm font-medium hover:text-orange-400 transition-colors whitespace-nowrap"
+            >
+              Games
+            </a>
+          </div>
+          
           <nav className="hidden md:flex items-center gap-7">
-            <div ref={resourcesRef} className="relative">
-              <button
-                onClick={() => setResourcesOpen((o) => !o)}
-                className="hover:text-orange-400 transition flex items-center gap-1 cursor-pointer"
+            <button
+              onClick={() => setResourcesOpen((o) => !o)}
+              className="text-sm font-medium hover:text-orange-400 transition-colors flex items-center gap-1"
+            >
+              Resources
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  resourcesOpen ? "rotate-180" : ""
+                }`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
               >
-                Resources
-                <svg
-                  className={`w-4 h-4 ml-1 transition-transform duration-200 ${
-                    resourcesOpen ? "rotate-180" : ""
-                  }`}
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-              {resourcesOpen && (
-                <div className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-800 rounded-lg shadow-2xl z-50 overflow-hidden">
-                  <div className="py-1">
-                    <a
-                      href="/roadmaps"
-                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
-                    >
-                      <div className="text-orange-500">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Roadmaps</div>
-                        <div className="text-[11px] text-gray-400">Guided learning paths</div>
-                      </div>
-                    </a>
-                    <a
-                      href="/courses"
-                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
-                    >
-                      <div className="text-orange-500">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Courses</div>
-                        <div className="text-[11px] text-gray-400">Video tutorials</div>
-                      </div>
-                    </a>
-                    <a
-                      href="/dsa"
-                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
-                    >
-                      <div className="text-orange-500">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">DSA Practice</div>
-                        <div className="text-[11px] text-gray-400">Solve problems</div>
-                      </div>
-                    </a>
-                    <a
-                      href="/doubts"
-                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
-                    >
-                      <div className="text-orange-500">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Doubts</div>
-                        <div className="text-[11px] text-gray-400">AI-powered help</div>
-                      </div>
-                    </a>
-                    <a
-                      href="/games"
-                      className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-800 transition-colors group"
-                    >
-                      <div className="text-orange-500">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm text-white group-hover:text-orange-400 transition-colors">Games</div>
-                        <div className="text-[11px] text-gray-400">Fun activities</div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div>
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
             {user ? (
-              <div className="relative flex items-center gap-4">
-                <span className="font-semibold">{user.name || "User"}</span>
+              <div ref={profileRef} className="relative">
                 <button
-                  onClick={handleLogout}
-                  className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200"
+                  onClick={() => setProfileOpen((o) => !o)}
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
                 >
-                  Logout
+                  {user.profilePicture ? (
+                    <img
+                      src={user.profilePicture}
+                      alt={user.name}
+                      className="w-9 h-9 rounded-full border-2 border-orange-500 object-cover"
+                    />
+                  ) : (
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center font-bold text-white border-2 border-orange-500">
+                      {user.name?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  )}
                 </button>
+                
+                {profileOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-gray-900 border border-gray-800 rounded-lg shadow-2xl z-50 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-gray-800">
+                      <div className="flex items-center gap-3">
+                        {user.profilePicture ? (
+                          <img
+                            src={user.profilePicture}
+                            alt={user.name}
+                            className="w-10 h-10 rounded-full border-2 border-orange-500 object-cover"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center font-bold text-white text-lg">
+                            {user.name?.charAt(0).toUpperCase() || "U"}
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-white truncate">{user.name || "User"}</p>
+                          <p className="text-xs text-gray-400 truncate">{user.email || ""}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="py-1">
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setProfileOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-800 transition-colors text-left text-sm"
+                      >
+                        <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        <span className="text-white">Logout</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <button
@@ -201,10 +213,11 @@ export default function Header() {
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
           <div className="flex items-center gap-3">
             <div 
-              className="bg-orange-500 px-3 py-1 rounded-lg font-bold text-lg hover:bg-orange-600 transition duration-200"
+              className="bg-orange-500 px-3 py-1 rounded-md font-bold text-lg hover:bg-orange-600 transition duration-200 cursor-pointer"
               onClick={() => {
                 navigate("/");
                 setMobileOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
               ASM
@@ -301,7 +314,7 @@ export default function Header() {
           )}
         </div>
       </div>
-      <div className="h-20 md:h-24" />
+      <div className="h-[72px]" />
     </>
   );
 }

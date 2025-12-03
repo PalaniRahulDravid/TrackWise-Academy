@@ -97,7 +97,7 @@ export default function WhackAMole() {
         {/* Game grid */}
         <div
           className={
-            "grid rounded-xl bg-black border-2 border-[#262a38] shadow-xl"
+            "grid rounded-lg bg-black border-2 border-[#262a38] shadow-xl"
           }
           style={{
             gridTemplateColumns: `repeat(${GRID}, ${btnSize}px)`,
@@ -155,7 +155,7 @@ export default function WhackAMole() {
                 Awesome! You whacked {score} mole{score === 1 ? "" : "s"}! 😂
               </div>}
             <button
-              className="mt-1 px-7 py-2 text-lg bg-gradient-to-b from-orange-400 to-orange-600 rounded-2xl text-white font-bold shadow hover:scale-105 transition"
+              className="mt-1 px-7 py-2 text-lg bg-gradient-to-b from-orange-400 to-orange-600 rounded-lg text-white font-bold shadow hover:scale-105 transition"
               onClick={startGame}
             >
               {timeLeft === 0 ? "Play Again" : "Start Game"}

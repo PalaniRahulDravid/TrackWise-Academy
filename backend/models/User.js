@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     sparse: true // Allows null values while maintaining uniqueness for non-null values
   },
+  profilePicture: {
+    type: String, // URL to profile picture (from Google or uploaded)
+    default: null
+  },
   isVerified: { type: Boolean, default: false },
   otpToken: String,
   otpExpires: Date,

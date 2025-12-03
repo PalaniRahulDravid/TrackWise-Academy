@@ -26,7 +26,7 @@ import feature6 from "../assets/featurecard6.png";
 const features = [
   {
     title: "AI Roadmap Generator",
-    desc: "Build your personalized learning path with AI assistance tailored to your career goals.",
+    desc: "Build your personalized learning path with powerful AI assistance crafted for your long-term career goals.",
     href: "/roadmaps",
     img: feature1,
   },
@@ -151,12 +151,58 @@ export default function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [stats, setStats] = useState({
+    users: 0,
+    dsaProblems: 0,
+    courses: 0
+  });
+  const [recentUsers, setRecentUsers] = useState([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    // Fetch real platform stats from backend
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/platform-stats`, {
+          credentials: 'include'
+        });
+        const data = await response.json();
+        if (data.success) {
+          setStats({
+            users: data.data.users,
+            dsaProblems: data.data.dsaProblems,
+            courses: data.data.courses
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch platform stats:', error);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  useEffect(() => {
+    // Fetch recent 5 users from backend
+    const fetchRecentUsers = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/recent-users`, {
+          credentials: 'include'
+        });
+        const data = await response.json();
+        if (data.success && data.data.users.length > 0) {
+          setRecentUsers(data.data.users);
+        }
+      } catch (error) {
+        console.error('Failed to fetch recent users:', error);
+      }
+    };
+    fetchRecentUsers();
   }, []);
 
   return (
@@ -170,36 +216,124 @@ export default function Home() {
 
       <Header />
 
-      <main className="px-4 sm:px-5 py-8 sm:py-16 max-w-7xl mx-auto relative z-10">
+      <main className="relative z-10">
 
-        {/* HERO SECTION */}
-        <section className="text-center mb-12 sm:mb-20 max-w-4xl mx-auto animate-fadeIn">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-5">
-            Welcome{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 animate-pulse">
-              {user ? user.name.split(" ")[0].toUpperCase() : "Buddy"}
-            </span>
-          </h1>
-
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto">
-            Welcome to TrackWise Academy! You can call me ASM, your AI Skill Mentor—that's my special name.
-            I'm here to help you master your skills with a unique AI-powered platform that guides your learning journey, answers your doubts, and keeps your mind sharp and motivated.
-          </p>
-
-          <Button
-            variant="gradient"
-            className="min-w-[240px] text-lg font-bold px-8 py-4 rounded-xl"
-            onClick={() => navigate("/roadmaps")}
-          >
-            Let's start your journey
-          </Button>
+        {/* HERO SECTION - MODERN DESIGN */}
+        <section className="relative overflow-hidden border-b border-gray-800 h-screen flex items-center">
+          
+          {/* Subtle Background Pattern */}
+          <div className="absolute inset-0 bg-gradient-to-b from-orange-500/5 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" />
+          
+          <div className="container relative mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-6">
+              
+              {/* Animated Badge */}
+              <div className="flex justify-center animate-fadeIn">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-sm border-2 border-orange-500/20 rounded-lg shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                  </span>
+                  <span className="text-xs sm:text-sm md:text-base font-semibold text-orange-400">
+                    Your Complete AI Learning Platform
+                  </span>
+                </div>
+              </div>
+              
+              {/* Main Heading */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight animate-fadeIn delay-100">
+                <span className="block text-white">Learn, Practice & Excel</span>
+                <span className="block bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent mt-2">Your AI-Powered Tech Journey</span>
+              </h1>
+              
+              {/* Description */}
+              <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed animate-fadeIn delay-200">
+                Master DSA with {stats.dsaProblems > 0 ? stats.dsaProblems : '500+'} curated problems, get personalized AI roadmaps, access top courses, and clear doubts instantly. Your complete platform for tech excellence.
+              </p>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 px-4 animate-fadeIn delay-300">
+                <button
+                  onClick={() => navigate("/roadmaps")}
+                  className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 h-10 text-sm"
+                >
+                  Get Started Free
+                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => {
+                    const featuresSection = document.querySelector('[data-section="features"]');
+                    featuresSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-transparent hover:bg-gray-800/50 text-white font-semibold border border-gray-700 hover:border-gray-600 rounded-lg transition-all duration-200 h-10 text-sm"
+                >
+                  Explore Features
+                </button>
+              </div>
+              
+              {/* User Stats with Animated Avatars - Real Data */}
+              <div className="flex flex-col items-center gap-3 pt-4 min-h-[100px] justify-center animate-fadeIn delay-400">
+                {recentUsers.length > 0 && (
+                  <div className="flex items-center gap-1">
+                    <div className="flex -space-x-3">
+                      {recentUsers.map((person, index) => {
+                        const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'];
+                        const userColor = colors[index % colors.length];
+                        
+                        return (
+                          <div key={index} className="group relative">
+                            {/* Avatar */}
+                            {person.profilePicture ? (
+                              <img
+                                src={person.profilePicture}
+                                alt={person.name}
+                                className="w-11 h-11 rounded-full border-2 border-black shadow-lg object-cover transition-all duration-300 hover:-translate-y-1 hover:scale-110 cursor-pointer"
+                              />
+                            ) : (
+                              <div 
+                                className="w-11 h-11 rounded-full border-2 border-black shadow-lg flex items-center justify-center text-white font-semibold text-sm transition-all duration-300 hover:-translate-y-1 hover:scale-110 cursor-pointer"
+                                style={{ backgroundColor: userColor }}
+                              >
+                                {person.initial}
+                              </div>
+                            )}
+                            
+                            {/* Tooltip */}
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 border border-gray-700 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                              <p className="text-white text-xs font-semibold">{person.name}</p>
+                              <p className="text-gray-400 text-xs">{person.email}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                
+                {stats.users > 0 && (
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900/50 backdrop-blur-sm border border-gray-800 shadow-lg">
+                    <Users className="h-4 w-4 text-orange-500" />
+                    <span className="text-xs sm:text-sm font-semibold text-gray-300">
+                      Join <span className="text-orange-500">{stats.users.toLocaleString()}+</span> developers already learning
+                    </span>
+                  </div>
+                )}
+              </div>
+              
+            </div>
+          </div>
         </section>
 
+        <div className="max-w-7xl mx-auto px-4">
+
         {/* HOW IT WORKS */}
-<section className="mb-20">
-  <div className="text-center mb-12">
-    <h2 className="text-4xl font-extrabold mb-3">How It Works</h2>
-    <p className="text-gray-400">Get started in just 4 simple steps</p>
+<section className="mb-20 pt-16">
+  <div className="text-center mb-16">
+    <h2 className="text-4xl font-extrabold mb-4">How It Works</h2>
+    <p className="text-gray-400 text-lg">Get started in just 4 simple steps</p>
   </div>
 
   <div className="relative flex flex-col md:flex-row items-center justify-center gap-10">
@@ -222,7 +356,7 @@ export default function Home() {
     {howItWorks.map((item, index) => (
       <div
         key={index}
-        className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-gray-800 w-72 h-64 flex flex-col items-center justify-start text-center shadow-lg gap-3"
+        className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 md:p-10 border border-gray-800 w-72 h-64 flex flex-col items-center justify-start text-center shadow-lg gap-3"
       >
         {/* STEP NUMBER */}
         <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
@@ -243,7 +377,7 @@ export default function Home() {
 
 
         {/* FEATURES (NOW USING FEATURECARD COMPONENT ⭐) */}
-        <section className="mb-16 sm:mb-24">
+        <section className="mb-16 sm:mb-24" data-section="features">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
               Start Your Career Journey Today
@@ -253,7 +387,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2 sm:px-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((f, index) => (
               <FeatureCard
                 key={index}
@@ -284,10 +418,10 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className="flex gap-6 items-start bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 hover:border-orange-500/50 transition-all"
+                  className="flex gap-6 items-start bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-gray-800 hover:border-orange-500/50 transition-all"
                 >
                   <div className="flex-shrink-0">
-                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500/10 rounded-xl flex items-center justify-center">
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500/10 rounded-lg flex items-center justify-center">
                       <IconComponent className="w-7 h-7 text-purple-400" />
                     </div>
                   </div>
@@ -314,7 +448,7 @@ export default function Home() {
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-gray-800 relative">
+            <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 md:p-12 border border-gray-800 relative">
               <div className="text-6xl text-orange-400/20 absolute top-4 left-4">"</div>
 
               <div className="relative z-10">
@@ -356,14 +490,14 @@ export default function Home() {
 
         {/* CTA SECTION - UNIQUE DESIGN */}
         <section className="mb-16 sm:mb-24 relative">
-          <div className="relative bg-gray-900/50 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-gray-800 overflow-hidden">
+          <div className="relative bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 md:p-12 border border-gray-800 overflow-hidden">
             
             {/* Content */}
             <div className="relative z-10">
               <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-full mb-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg mb-4">
                   <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-                  <span className="text-orange-400 text-sm font-medium">1.2M+ Active Learners</span>
+                  <span className="text-orange-400 text-sm font-medium">{stats.users > 0 ? `${stats.users.toLocaleString()} Active Learners` : 'Join Our Growing Community'}</span>
                 </div>
                 
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
@@ -408,22 +542,18 @@ export default function Home() {
 
               {/* Trust Indicators */}
               <div className="mt-10 pt-8 border-t border-gray-800/50">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">1.2M+</div>
+                    <div className="text-2xl font-bold text-white mb-1">{stats.users > 0 ? stats.users.toLocaleString() : '---'}</div>
                     <div className="text-xs text-gray-400">Active Users</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">500+</div>
+                    <div className="text-2xl font-bold text-white mb-1">{stats.dsaProblems > 0 ? stats.dsaProblems : '---'}+</div>
                     <div className="text-xs text-gray-400">DSA Problems</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">1000+</div>
+                    <div className="text-2xl font-bold text-white mb-1">{stats.courses > 0 ? stats.courses.toLocaleString() : '---'}+</div>
                     <div className="text-xs text-gray-400">Courses</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-white mb-1">24/7</div>
-                    <div className="text-xs text-gray-400">AI Support</div>
                   </div>
                 </div>
               </div>
@@ -431,6 +561,7 @@ export default function Home() {
           </div>
         </section>
 
+        </div>
       </main>
 
       {/* FOOTER */}

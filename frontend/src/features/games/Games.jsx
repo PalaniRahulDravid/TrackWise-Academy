@@ -137,7 +137,7 @@ export default function Games() {
     // ACTIVE (Before game start)
     if (status === "active" && !gameStarted) {
       return (
-        <div className="bg-gradient-to-r from-green-900/40 to-emerald-900/40 text-green-200 rounded-xl px-6 py-4 border border-green-600/30 shadow-xl mb-10 animate-pulse">
+        <div className="bg-gradient-to-r from-green-900/40 to-emerald-900/40 text-green-200 rounded-lg px-6 py-4 border border-green-600/30 shadow-xl mb-10 animate-pulse">
           <p className="flex items-center justify-center gap-2">
             <span className="text-2xl">🎮</span>
             <span className="font-bold text-white">Games are active! Start playing now!</span>
@@ -149,7 +149,7 @@ export default function Games() {
     // ACTIVE (Game started → countdown)
     if (status === "active" && gameStarted) {
       return (
-        <div className="bg-gradient-to-r from-orange-900/40 to-red-900/40 text-orange-200 rounded-xl px-6 py-4 border border-orange-600/30 shadow-xl mb-10">
+        <div className="bg-gradient-to-r from-orange-900/40 to-red-900/40 text-orange-200 rounded-lg px-6 py-4 border border-orange-600/30 shadow-xl mb-10">
           <p className="flex items-center justify-center gap-2">
             <span className="text-2xl">⏳</span>
             <span>
@@ -164,7 +164,7 @@ export default function Games() {
     // COOLDOWN MODE
     if (status === "cooldown") {
       return (
-        <div className="bg-gradient-to-r from-red-900/40 to-pink-900/40 text-red-200 rounded-xl px-6 py-4 border border-red-600/30 shadow-xl mb-10">
+        <div className="bg-gradient-to-r from-red-900/40 to-pink-900/40 text-red-200 rounded-lg px-6 py-4 border border-red-600/30 shadow-xl mb-10">
           <p className="flex items-center justify-center gap-2">
             <span className="text-2xl">📚</span>
             <span>
@@ -210,7 +210,7 @@ export default function Games() {
 
           {renderStatusUI()}
 
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
             <FeatureCard
               title="Funny Games"
               desc="Relax and have fun with classic games!"
@@ -222,7 +222,7 @@ export default function Games() {
 
             <FeatureCard
               title="Mind Games"
-              desc="Challenge your brain with puzzles!"
+              desc="Challenge your brain with engaging puzzles!"
               gradient="from-blue-400 to-cyan-400"
               icon={<FaBrain />}
               onClick={() => handleCardClick("/games/mind")}

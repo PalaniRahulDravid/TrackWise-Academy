@@ -16,7 +16,10 @@ const {
   getGameSessionStatus,
   startGameSession,
   endGameSession,
-  googleCallback
+  googleCallback,
+  getUserCount,
+  getPlatformStats,
+  getRecentUsers
 } = require('../controllers/authController');
 
 const {
@@ -46,6 +49,9 @@ router.post('/login', rateLimitAuth, validateLogin, login);
 router.post('/refresh', refreshToken); // Removed rate limiting for refresh
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
+router.get('/user-count', getUserCount); // Public endpoint for homepage stats
+router.get('/platform-stats', getPlatformStats); // Public endpoint for all stats
+router.get('/recent-users', getRecentUsers); // Public endpoint for recent 5 users
 
 // --- Google OAuth Routes ---
 router.get('/google',

@@ -45,7 +45,7 @@ export default function TrackWiseCourses() {
         </div>
 
         {/* Coming Soon Banner */}
-        <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 rounded-xl p-8 mb-8 text-center">
+        <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 rounded-lg p-8 mb-8 text-center">
           <h2 className="text-3xl font-bold mb-3">🚀 Coming Soon!</h2>
           <p className="text-lg mb-4">
             We're working hard to bring you the best learning experience
@@ -65,7 +65,7 @@ export default function TrackWiseCourses() {
             {upcomingCourses.map((course, index) => (
               <div
                 key={index}
-                className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-purple-400 transition"
+                className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-purple-400 transition"
               >
                 <div className="text-5xl mb-4">{course.icon}</div>
                 <h4 className="text-xl font-bold mb-2">{course.title}</h4>
@@ -80,7 +80,7 @@ export default function TrackWiseCourses() {
         </div>
 
         {/* Features Section */}
-        <div className="mt-12 bg-gray-50 rounded-xl p-8">
+        <div className="mt-12 bg-gray-50 rounded-lg p-8">
           <h3 className="text-2xl font-bold mb-6 text-center">✨ Course Features</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">

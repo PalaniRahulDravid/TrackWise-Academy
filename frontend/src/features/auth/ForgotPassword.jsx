@@ -50,7 +50,7 @@ export default function ForgotPassword() {
       <main className="w-full bg-black text-white flex flex-col items-center justify-center px-4 min-h-screen">
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-900/50 border border-gray-800 rounded-2xl shadow-lg w-full max-w-sm p-8 flex flex-col"
+          className="bg-gray-900/50 border border-gray-800 rounded-lg shadow-lg w-full max-w-sm p-8 flex flex-col"
         >
           <h2 className="text-3xl font-bold mb-6 text-center text-white">
             Forgot Password

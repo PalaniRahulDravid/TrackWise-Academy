@@ -65,7 +65,7 @@ export default function DsaQuestionList() {
       <div className="bg-black min-h-screen pt-7 px-4 text-white">
         <div className="max-w-4xl mx-auto">
           {/* Stats Bar */}
-          <div className="bg-gray-900/70 rounded-xl px-6 py-5 flex flex-wrap items-center justify-between mb-4 shadow-lg border border-gray-800">
+          <div className="bg-gray-900/70 rounded-lg px-6 py-5 flex flex-wrap items-center justify-between mb-4 shadow-lg border border-gray-800">
             <div className="font-bold text-md sm:text-xl">
               Problems Solved: <span className="text-orange-400">{difficultyStats.total}</span>
             </div>
@@ -115,7 +115,7 @@ export default function DsaQuestionList() {
                       navigate(`/dsa/problems/${problem.id}`);
                     }
                   }}
-                  className="bg-[#181d2a] border border-gray-700 rounded-xl shadow-md px-5 py-4 hover:bg-orange-900/10 hover:border-orange-400 flex justify-between items-center cursor-pointer transition-all group"
+                  className="bg-[#181d2a] border border-gray-700 rounded-lg shadow-md px-5 py-4 hover:bg-orange-900/10 hover:border-orange-400 flex justify-between items-center cursor-pointer transition-all group"
                 >
                   <span className="font-medium text-lg flex-1 truncate">
                     {idx + 1}. {problem.title}

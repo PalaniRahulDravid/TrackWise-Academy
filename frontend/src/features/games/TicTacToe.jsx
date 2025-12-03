@@ -65,7 +65,7 @@ export default function TicTacToe() {
             }
           </div>
           <button
-            className="mt-4 px-6 py-2 bg-orange-500 rounded-xl text-white hover:bg-orange-600 transition font-bold"
+            className="mt-4 px-6 py-2 bg-orange-500 rounded-lg text-white hover:bg-orange-600 transition font-bold"
             onClick={restart}
           >
             Restart

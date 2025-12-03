@@ -174,7 +174,7 @@ const login = async (req, res) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: true, // Always use secure in production (HTTPS)
+      secure: isProduction, // Only secure in production (HTTPS), false in development
       sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/',
@@ -213,7 +213,7 @@ const refreshToken = async (req, res) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: true, // Always use secure for HTTPS
+      secure: isProduction, // Only secure in production
       sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: '/',
@@ -246,7 +246,7 @@ const logout = async (req, res) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: true, // Always use secure
+      secure: isProduction, // Only secure in production
       sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       domain: isProduction ? undefined : undefined
@@ -441,6 +441,38 @@ const endGameSession = async (req, res) => {
   }
 };
 
+// Get User Count (Public endpoint for homepage stats)
+const getUserCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ isActive: true });
+    return sendSuccessResponse(res, 200, 'User count retrieved', { count });
+  } catch (error) {
+    console.error('Get user count error:', error);
+    return sendErrorResponse(res, 500, 'Internal server error');
+  }
+};
+
+// Get Platform Stats (Public endpoint for homepage)
+const getPlatformStats = async (req, res) => {
+  try {
+    const DsaProblem = require('../models/DsaProblem');
+    
+    const [userCount, dsaCount] = await Promise.all([
+      User.countDocuments({ isActive: true }),
+      DsaProblem.countDocuments()
+    ]);
+    
+    return sendSuccessResponse(res, 200, 'Platform stats retrieved', { 
+      users: userCount,
+      dsaProblems: dsaCount,
+      courses: 1000 // You can update this when you have a Course model
+    });
+  } catch (error) {
+    console.error('Get platform stats error:', error);
+    return sendErrorResponse(res, 500, 'Internal server error');
+  }
+};
+
 // Google OAuth Callback Handler
 const googleCallback = async (req, res) => {
   try {
@@ -465,7 +497,7 @@ const googleCallback = async (req, res) => {
     const isProduction = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: true,
+      secure: isProduction, // Only secure in production
       sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/',
@@ -489,6 +521,32 @@ const googleCallback = async (req, res) => {
   }
 };
 
+// Get recent 5 users for homepage display
+const getRecentUsers = async (req, res) => {
+  try {
+    const recentUsers = await User.find({ isVerified: true })
+      .select('name email profilePicture createdAt')
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
+
+    const formattedUsers = recentUsers.map(user => ({
+      name: user.name,
+      email: user.email,
+      profilePicture: user.profilePicture,
+      initial: user.name?.charAt(0).toUpperCase() || 'U'
+    }));
+
+    return sendSuccessResponse(res, 200, 'Recent users fetched successfully', {
+      users: formattedUsers
+    });
+
+  } catch (error) {
+    console.error('Error fetching recent users:', error);
+    return sendErrorResponse(res, 500, 'Failed to fetch recent users');
+  }
+};
+
 module.exports = {
   register,
   verifyOtp,
@@ -503,5 +561,8 @@ module.exports = {
   getGameSessionStatus,
   startGameSession,
   endGameSession,
-  googleCallback
+  googleCallback,
+  getUserCount,
+  getPlatformStats,
+  getRecentUsers
 };

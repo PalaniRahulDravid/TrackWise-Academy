@@ -32,11 +32,19 @@ passport.use(
           name: profile.displayName
         });
 
+        // Extract profile picture URL
+        const profilePicture = profile.photos?.[0]?.value || null;
+
         // Check if user already exists with this Google ID
         let user = await User.findOne({ googleId: profile.id });
 
         if (user) {
           console.log('✅ Existing Google user found:', user.email);
+          // Update profile picture if it changed
+          if (profilePicture && user.profilePicture !== profilePicture) {
+            user.profilePicture = profilePicture;
+            await user.save();
+          }
           return done(null, user);
         }
 
@@ -54,6 +62,9 @@ passport.use(
           user.googleId = profile.id;
           user.authProvider = 'google';
           user.isVerified = true; // Google accounts are pre-verified
+          if (profilePicture) {
+            user.profilePicture = profilePicture;
+          }
           await user.save();
           return done(null, user);
         }
@@ -66,6 +77,7 @@ passport.use(
           googleId: profile.id,
           authProvider: 'google',
           isVerified: true, // Google accounts are pre-verified
+          profilePicture: profilePicture,
           password: Math.random().toString(36).slice(-12) + Math.random().toString(36).slice(-12) // Random password (not used)
         });
 

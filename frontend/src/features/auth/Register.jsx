@@ -145,7 +145,7 @@ export default function Register() {
       >
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-900/50 border border-gray-800 rounded-2xl shadow-lg w-full max-w-sm p-8 flex flex-col"
+          className="bg-gray-900/50 border border-gray-800 rounded-lg shadow-lg w-full max-w-sm p-8 flex flex-col"
           style={{ marginTop: "24px" }}
           autoComplete="off"
         >

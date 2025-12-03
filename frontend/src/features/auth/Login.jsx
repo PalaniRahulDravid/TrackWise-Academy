@@ -107,7 +107,7 @@ export default function Login() {
       >
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-900/50 border border-gray-800 rounded-2xl shadow-lg w-full max-w-sm p-6 flex flex-col"
+          className="bg-gray-900/50 border border-gray-800 rounded-lg shadow-lg w-full max-w-sm p-6 flex flex-col"
           autoComplete="off"
         >
           <h2 className="text-3xl font-bold mb-4 text-center text-white">

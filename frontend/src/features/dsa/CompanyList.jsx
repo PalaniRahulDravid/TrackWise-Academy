@@ -28,7 +28,7 @@ export default function CompanyList() {
                         <button
                             key={c.name}
                             onClick={() => navigate(`/dsa/company/${c.path}`)}
-                            className="bg-gray-900 border border-gray-700 rounded-2xl flex flex-col items-center justify-center gap-4 py-8 hover:bg-orange-900/20 shadow-lg group transition"
+                            className="bg-gray-900 border border-gray-700 rounded-lg flex flex-col items-center justify-center gap-4 py-8 hover:bg-orange-900/20 shadow-lg group transition"
                         >
                             <img src={c.logo} alt={c.name} className="h-14 w-14 object-contain mb-2" />
                             <span className="text-xl font-semibold group-hover:text-orange-400 transition">{c.name}</span>

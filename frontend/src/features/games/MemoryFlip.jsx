@@ -64,7 +64,7 @@ export default function MemoryFlip() {
         )}
         <button
           onClick={restart}
-          className="px-6 py-2 bg-orange-500 rounded-xl text-white font-bold hover:bg-orange-600"
+          className="px-6 py-2 bg-orange-500 rounded-lg text-white font-bold hover:bg-orange-600"
         >
           Restart
         </button>

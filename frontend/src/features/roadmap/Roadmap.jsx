@@ -152,7 +152,7 @@ export default function Roadmap() {
         </section>
 
         {/* Form */}
-        <section className="bg-gray-900/50 rounded-2xl shadow-lg p-6 sm:p-10 mb-10 border border-gray-800">
+        <section className="bg-gray-900/50 rounded-lg shadow-lg p-6 sm:p-10 mb-10 border border-gray-800">
           <form onSubmit={handleGenerateClick}>
             <div className="mb-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-8 justify-center">
               <label className="text-base font-semibold text-white">Type: </label>
@@ -267,7 +267,7 @@ export default function Roadmap() {
           {error && <div className="text-red-400 text-center mt-3">{error}</div>}
 
           {showGeneratedRoadmap && (
-            <div className="mt-8 bg-[#1a2334] p-6 rounded-xl shadow-lg border border-gray-700">
+            <div className="mt-8 bg-[#1a2334] p-6 rounded-lg shadow-lg border border-gray-700">
               <h2 className="text-orange-400 text-lg font-bold mb-2">Your Roadmap</h2>
               <pre className="whitespace-pre-wrap text-[15px] text-gray-100">{showGeneratedRoadmap}</pre>
             </div>
@@ -276,7 +276,7 @@ export default function Roadmap() {
 
         {/* Previous Roadmaps */}
         {user && (
-          <section className="bg-gray-900/50 rounded-2xl p-4 sm:p-6 mb-6 text-center relative border border-gray-800 mx-0">
+          <section className="bg-gray-900/50 rounded-lg p-4 sm:p-6 mb-6 text-center relative border border-gray-800 mx-0">
             <h2 className="text-xl sm:text-2xl font-bold mb-3 px-2 text-white">Previous Roadmaps</h2>
             {roadmaps.length === 0 && (
               <div className="text-gray-400 text-center">No saved roadmaps yet.</div>

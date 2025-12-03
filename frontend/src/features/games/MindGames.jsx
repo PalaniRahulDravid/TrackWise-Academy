@@ -23,7 +23,7 @@ export default function MindGames() {
               <button
                 key={game.name}
                 onClick={() => navigate(game.path)}
-                className="bg-gray-900/50 border border-gray-700 rounded-2xl text-center shadow hover:shadow-xl hover:bg-blue-900/40 transition p-7 flex flex-col items-center justify-center cursor-pointer"
+                className="bg-gray-900/50 border border-gray-700 rounded-lg text-center shadow hover:shadow-xl hover:bg-blue-900/40 transition p-7 flex flex-col items-center justify-center cursor-pointer"
               >
                 <img
                   src={game.img}

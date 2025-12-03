@@ -357,7 +357,7 @@ export default function Chat() {
               </div>
             </aside>
           )}
-          <section className="flex-1 flex flex-col justify-end min-h-0 bg-gray-900/50 rounded-2xl ml-0 lg:ml-4 shadow-lg relative h-full border border-gray-800 backdrop-blur">
+          <section className="flex-1 flex flex-col justify-end min-h-0 bg-gray-900/50 rounded-lg ml-0 lg:ml-4 shadow-lg relative h-full border border-gray-800 backdrop-blur">
             <div
               ref={chatWindowRef}
               className={`flex-1 overflow-y-auto px-3 pt-6 pb-2 custom-scrollbar ${
@@ -376,7 +376,7 @@ export default function Chat() {
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} mb-3`}
                   >
                     <div
-                      className="max-w-[85%] px-4 py-3 rounded-2xl text-base bg-gray-900/50 text-gray-100 border border-gray-800"
+                      className="max-w-[85%] px-4 py-3 rounded-lg text-base bg-gray-900/50 text-gray-100 border border-gray-800"
                       style={{
                         wordBreak: "break-word",
                         whiteSpace: "pre-wrap",
@@ -407,7 +407,7 @@ export default function Chat() {
                 rows={1}
                 value={messageInput}
                 placeholder="Type your question..."
-                className="flex-1 resize-none rounded-xl p-3 bg-gray-900/50 text-white border border-gray-800 focus:border-orange-500 placeholder-gray-400"
+                className="flex-1 resize-none rounded-lg p-3 bg-gray-900/50 text-white border border-gray-800 focus:border-orange-500 placeholder-gray-400"
                 autoFocus
                 onChange={(e) => setMessageInput(e.target.value)}
                 disabled={loading || (mobile && sidebarOpen)}

@@ -6,7 +6,7 @@ import Toast from "../../components/Toast";
 import { FaFileCode, FaBuilding } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 
-export default function DsaHome() {
+export default function DSAHome() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [toast, setToast] = useState({ show: false, message: "", type: "error" });

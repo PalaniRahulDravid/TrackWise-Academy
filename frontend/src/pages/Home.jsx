@@ -252,21 +252,21 @@ export default function Home() {
               </div>
               
               {/* Main Heading */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight animate-fadeIn delay-100">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight animate-fadeIn delay-100">
                 <span className="block text-white">Learn, Practice & Excel</span>
                 <span className="block bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent mt-2">Your AI-Powered Tech Journey</span>
               </h1>
               
               {/* Description */}
-              <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed animate-fadeIn delay-200">
+              <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed animate-fadeIn delay-200 px-2">
                 Master DSA with {stats.dsaProblems > 0 ? stats.dsaProblems : '500+'} curated problems, get personalized AI roadmaps, access top courses, and clear doubts instantly. Your complete platform for tech excellence.
               </p>
               
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 px-4 animate-fadeIn delay-300">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 px-2 sm:px-4 animate-fadeIn delay-300">
                 <button
                   onClick={() => navigate("/roadmaps")}
-                  className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 h-10 text-sm"
+                  className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 min-h-[40px] text-xs sm:text-sm cursor-pointer"
                 >
                   Get Started Free
                   <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -280,7 +280,7 @@ export default function Home() {
                       featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                   }}
-                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-transparent hover:bg-gray-800/50 text-white font-semibold border border-gray-700 hover:border-gray-600 rounded-lg transition-all duration-200 h-10 text-sm"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-transparent hover:bg-gray-800/50 text-white font-semibold border border-gray-700 hover:border-gray-600 rounded-lg transition-all duration-200 min-h-[40px] text-xs sm:text-sm cursor-pointer"
                 >
                   Explore Features
                 </button>
@@ -342,16 +342,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
 
         {/* HOW IT WORKS */}
-<section className="mb-20 pt-16" aria-labelledby="how-it-works-heading">
-  <div className="text-center mb-16">
-    <h2 id="how-it-works-heading" className="text-4xl font-extrabold mb-4">How It Works</h2>
-    <p className="text-gray-400 text-lg">Get started in just 4 simple steps</p>
+<section className="mb-16 sm:mb-20 pt-12 sm:pt-16" aria-labelledby="how-it-works-heading">
+  <div className="text-center mb-12 sm:mb-16 px-4">
+    <h2 id="how-it-works-heading" className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4">How It Works</h2>
+    <p className="text-gray-400 text-sm sm:text-base md:text-lg">Get started in just 4 simple steps</p>
   </div>
 
-  <div className="relative flex flex-col md:flex-row items-center justify-center gap-10">
+  <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-6 px-4">
 
     {/* Dotted Path */}
-    <div className="hidden md:block absolute top-1/2 left-0 w-full pointer-events-none -z-10">
+    <div className="hidden lg:block absolute top-1/2 left-0 w-full pointer-events-none -z-10">
       <svg width="100%" height="40">
         <line
           x1="5%"
@@ -368,18 +368,18 @@ export default function Home() {
     {howItWorks.map((item, index) => (
       <div
         key={index}
-        className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 md:p-10 border border-gray-800 w-72 h-64 flex flex-col items-center justify-start text-center shadow-lg gap-3"
+        className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-6 sm:p-8 border border-gray-800 w-full min-h-[240px] sm:min-h-[260px] lg:h-64 flex flex-col items-center justify-start text-center shadow-lg gap-2 sm:gap-3"
       >
         {/* STEP NUMBER */}
-        <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+        <div className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
           {index + 1}
         </div>
 
         {/* TITLE */}
-        <h3 className="text-xl font-bold text-white">{item.title}</h3>
+        <h3 className="text-lg sm:text-xl font-bold text-white">{item.title}</h3>
 
         {/* DESCRIPTION */}
-        <p className="text-gray-300 text-sm leading-relaxed px-2">
+        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed px-1 sm:px-2">
           {item.description}
         </p>
       </div>
@@ -389,17 +389,17 @@ export default function Home() {
 
 
         {/* FEATURES (NOW USING FEATURECARD COMPONENT ⭐) */}
-        <section className="mb-16 sm:mb-24" data-section="features">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+        <section className="mb-16 sm:mb-24 px-4" data-section="features">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4">
               Start Your Career Journey Today
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto px-4">
               Comprehensive learning platform with AI-powered features
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
             {features.map((f, index) => (
               <FeatureCard
                 key={index}
@@ -414,33 +414,33 @@ export default function Home() {
         </section>
 
         {/* BENEFITS */}
-        <section className="mb-16 sm:mb-24">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+        <section className="mb-16 sm:mb-24 px-4">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4">
               Why Choose ASM?
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto px-4">
               Features that set us apart from traditional learning platforms
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {benefits.map((benefit, index) => {
               const IconComponent = benefit.icon;
               return (
                 <div
                   key={index}
-                  className="flex gap-6 items-start bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-gray-800 hover:border-orange-500/50 transition-all"
+                  className="flex gap-4 sm:gap-6 items-start bg-gray-900/50 backdrop-blur-sm rounded-lg p-5 sm:p-6 md:p-8 border border-gray-800 hover:border-orange-500/50 transition-all"
                 >
                   <div className="flex-shrink-0">
-                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500/10 rounded-lg flex items-center justify-center">
-                      <IconComponent className="w-7 h-7 text-purple-400" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-500/10 rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-purple-400" />
                     </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-xl font-bold mb-2 text-white">{benefit.title}</h3>
-                    <p className="text-gray-400 leading-relaxed">{benefit.desc}</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">{benefit.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-400 leading-relaxed">{benefit.desc}</p>
                   </div>
                 </div>
               );
@@ -449,35 +449,35 @@ export default function Home() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="mb-16 sm:mb-24">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+        <section className="mb-16 sm:mb-24 px-4">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4">
               Success Stories
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto px-4">
               Join thousands who have transformed their careers with ASM
             </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 md:p-12 border border-gray-800 relative">
-              <div className="text-6xl text-orange-400/20 absolute top-4 left-4">"</div>
+            <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-6 sm:p-8 md:p-12 border border-gray-800 relative">
+              <div className="text-4xl sm:text-5xl md:text-6xl text-orange-400/20 absolute top-3 sm:top-4 left-3 sm:left-4">"</div>
 
               <div className="relative z-10">
-                <p className="text-xl text-gray-300 mb-6 italic leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-5 sm:mb-6 italic leading-relaxed">
                   {testimonials[currentTestimonial].text}
                 </p>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-xl font-bold">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-lg sm:text-xl font-bold flex-shrink-0">
                     {testimonials[currentTestimonial].name[0]}
                   </div>
 
-                  <div>
-                    <div className="font-bold text-white">
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-white text-sm sm:text-base">
                       {testimonials[currentTestimonial].name}
                     </div>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-xs sm:text-sm text-gray-400">
                       {testimonials[currentTestimonial].role}
                     </div>
                   </div>
@@ -501,35 +501,35 @@ export default function Home() {
         </section>
 
         {/* CTA SECTION - UNIQUE DESIGN */}
-        <section className="mb-16 sm:mb-24 relative">
-          <div className="relative bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 md:p-12 border border-gray-800 overflow-hidden">
+        <section className="mb-16 sm:mb-24 relative px-4">
+          <div className="relative bg-gray-900/50 backdrop-blur-sm rounded-lg p-6 sm:p-8 md:p-12 border border-gray-800 overflow-hidden">
             
             {/* Content */}
             <div className="relative z-10">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg mb-4">
+              <div className="text-center mb-6 sm:mb-8">
+                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg mb-3 sm:mb-4">
                   <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-                  <span className="text-orange-400 text-sm font-medium">{stats.users > 0 ? `${stats.users.toLocaleString()} Active Learners` : 'Join Our Growing Community'}</span>
+                  <span className="text-orange-400 text-xs sm:text-sm font-medium">{stats.users > 0 ? `${stats.users.toLocaleString()} Active Learners` : 'Join Our Growing Community'}</span>
                 </div>
                 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent px-2">
                   Ready to Start Your Journey?
                 </h2>
                 
-                <p className="text-lg text-gray-300 mb-2 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-2 max-w-2xl mx-auto px-4">
                   Join thousands of learners who are already mastering their skills
                 </p>
-                <p className="text-sm text-gray-400 max-w-xl mx-auto">
+                <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto px-4">
                   Start with a personalized roadmap, practice DSA, or explore curated courses
                 </p>
               </div>
 
               {/* CTA Buttons with Stats */}
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-3xl mx-auto">
-                <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center max-w-3xl mx-auto">
+                <div className="flex flex-col items-center gap-2 sm:gap-3 w-full sm:w-auto">
                   <Button
                     variant="gradient"
-                    className="w-full sm:w-auto min-w-[220px] text-base font-semibold px-8 py-3 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transition-all duration-300"
+                    className="w-full sm:w-auto min-w-[200px] sm:min-w-[220px] text-sm sm:text-base font-semibold px-6 sm:px-8 py-2.5 sm:py-3 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transition-all duration-300"
                     onClick={() => navigate(user ? "/roadmaps" : "/register")}
                   >
                     {user ? "Create Roadmap" : "Get Started Free"} →
@@ -540,10 +540,10 @@ export default function Home() {
                 <div className="hidden sm:block w-px h-16 bg-gray-700"></div>
                 <div className="block sm:hidden w-16 h-px bg-gray-700"></div>
 
-                <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+                <div className="flex flex-col items-center gap-2 sm:gap-3 w-full sm:w-auto">
                   <Button
                     variant="outline"
-                    className="w-full sm:w-auto min-w-[220px] text-base font-semibold px-8 py-3 hover:bg-gray-800/50 transition-all duration-300"
+                    className="w-full sm:w-auto min-w-[200px] sm:min-w-[220px] text-sm sm:text-base font-semibold px-6 sm:px-8 py-2.5 sm:py-3 hover:bg-gray-800/50 transition-all duration-300"
                     onClick={() => navigate("/dsa")}
                   >
                     Explore DSA Problems
@@ -553,22 +553,22 @@ export default function Home() {
               </div>
 
               {/* Trust Indicators */}
-              <div className="mt-10 pt-8 border-t border-gray-800/50">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+              <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-800/50">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">
+                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">
                       {stats.users > 0 ? stats.users.toLocaleString() : '1000+'}
                     </div>
                     <div className="text-xs text-gray-400">Active Users</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">
+                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">
                       {stats.dsaProblems > 0 ? `${stats.dsaProblems}+` : '500+'}
                     </div>
                     <div className="text-xs text-gray-400">DSA Problems</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-white mb-1">
+                  <div className="col-span-2 md:col-span-1">
+                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">
                       {stats.courses > 0 ? `${stats.courses.toLocaleString()}+` : '1000+'}
                     </div>
                     <div className="text-xs text-gray-400">Courses</div>
@@ -584,69 +584,69 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="bg-[#181e24] border-t border-gray-800 pt-10 pb-4 text-gray-300 mt-10">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-10 md:gap-20 items-start">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-10 lg:gap-20 items-start">
 
-          <div className="md:w-1/3">
-            <h3 className="text-2xl font-bold mb-2">
+          <div className="lg:w-1/3">
+            <h3 className="text-xl sm:text-2xl font-bold mb-2">
               <span className="text-orange-400">ASM</span> AI Skill Mentor
             </h3>
 
-            <p className="text-gray-400 mb-6 text-sm">
+            <p className="text-gray-400 mb-6 text-xs sm:text-sm leading-relaxed">
               Your AI-powered companion for mastering programming, DSA, and technical skills. Build roadmaps, solve problems, and achieve your career goals.
             </p>
 
             <div className="flex gap-4 text-gray-400">
-              <a href="https://github.com/PalaniRahulDravid" target="_blank" rel="noopener noreferrer" className="hover:text-black">
-                <Github size={22} />
+              <a href="https://github.com/PalaniRahulDravid" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
+                <Github size={20} className="sm:w-[22px] sm:h-[22px]" />
               </a>
-              <a href="https://www.linkedin.com/in/palani-rahul-dravid-a89916292/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
-                <Linkedin size={22} />
+              <a href="https://www.linkedin.com/in/palani-rahul-dravid-a89916292/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">
+                <Linkedin size={20} className="sm:w-[22px] sm:h-[22px]" />
               </a>
-              <a href="https://www.instagram.com/useless._.boy._.rahul/" target="_blank" rel="noopener noreferrer" className="hover:text-red-500">
-                <Instagram size={22} />
+              <a href="https://www.instagram.com/useless._.boy._.rahul/" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition-colors">
+                <Instagram size={20} className="sm:w-[22px] sm:h-[22px]" />
               </a>
-              <a href="https://wa.me/9059074389" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">
-                <FaWhatsapp size={22} />
+              <a href="https://wa.me/9059074389" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+                <FaWhatsapp size={20} className="sm:w-[22px] sm:h-[22px]" />
               </a>
             </div>
           </div>
 
           {/* Footer Columns */}
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 w-full text-sm">
+          <div className="grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4 w-full text-xs sm:text-sm">
 
             <div>
-              <p className="text-orange-400 font-semibold mb-3">Features</p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2" onClick={() => navigate("/roadmaps")}>
+              <p className="text-orange-400 font-semibold mb-3 text-sm sm:text-base">Features</p>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors" onClick={() => navigate("/roadmaps")}>
                 AI Roadmaps
               </p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2" onClick={() => navigate("/courses")}>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors" onClick={() => navigate("/courses")}>
                 Smart Courses
               </p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2" onClick={() => navigate("/dsa")}>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors" onClick={() => navigate("/dsa")}>
                 DSA Practice
               </p>
             </div>
 
             <div>
-              <p className="text-orange-400 font-semibold mb-3">Resources</p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2" onClick={() => navigate("/doubts")}>
+              <p className="text-orange-400 font-semibold mb-3 text-sm sm:text-base">Resources</p>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors" onClick={() => navigate("/doubts")}>
                 Doubt Resolution
               </p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2" onClick={() => navigate("/games")}>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors" onClick={() => navigate("/games")}>
                 Mind Games
               </p>
             </div>
 
             <div>
-              <p className="text-orange-400 font-semibold mb-3">Company</p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2">About Us</p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2">Contact</p>
+              <p className="text-orange-400 font-semibold mb-3 text-sm sm:text-base">Company</p>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors">About Us</p>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors">Contact</p>
             </div>
 
             <div>
-              <p className="text-orange-400 font-semibold mb-3">Legal</p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2">Privacy Policy</p>
-              <p className="hover:text-orange-400 cursor-pointer mb-2">Terms of Service</p>
+              <p className="text-orange-400 font-semibold mb-3 text-sm sm:text-base">Legal</p>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors">Privacy Policy</p>
+              <p className="hover:text-orange-400 cursor-pointer mb-2 transition-colors">Terms of Service</p>
             </div>
 
           </div>

@@ -137,35 +137,35 @@ export default function Roadmap() {
       <div className="absolute bottom-28 left-1/4 text-orange-400 text-base sm:text-xl animate-pulse z-0">+</div>
       <div className="absolute bottom-32 right-8 text-yellow-400 text-lg sm:text-2xl animate-pulse z-0">+</div>
 
-      <main className="px-4 sm:px-5 py-12 sm:py-20 max-w-3xl mx-auto z-10 relative">
+      <main className="px-4 sm:px-6 py-12 sm:py-16 md:py-20 max-w-3xl mx-auto z-10 relative">
         {/* Title */}
-        <section className="text-center mb-10 sm:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-6 px-2">
+        <section className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl font-extrabold leading-tight mb-4 sm:mb-6 px-2">
             Generate Your{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">
               Personalized Roadmap
             </span>
           </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto px-2 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-2 leading-relaxed">
             Let AI help you build a step-by-step learning plan tailored to your skills, domain, and goals.
           </p>
         </section>
 
         {/* Form */}
-        <section className="bg-gray-900/50 rounded-lg shadow-lg p-6 sm:p-10 mb-10 border border-gray-800">
+        <section className="bg-gray-900/50 rounded-lg shadow-lg p-5 sm:p-8 md:p-10 mb-10 border border-gray-800">
           <form onSubmit={handleGenerateClick}>
-            <div className="mb-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-8 justify-center">
-              <label className="text-base font-semibold text-white">Type: </label>
+            <div className="mb-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-6 md:gap-8 justify-center">
+              <label className="text-sm sm:text-base font-semibold text-white">Type: </label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="bg-gray-900/50 text-white p-2 rounded outline-none border border-gray-800 focus:border-orange-500"
+                className="bg-gray-900/50 text-white p-2 sm:p-2.5 rounded outline-none border border-gray-800 focus:border-orange-500 w-full sm:w-auto text-sm sm:text-base"
               >
                 <option value="domain">By Domain</option>
                 <option value="branch">By College Branch</option>
               </select>
             </div>
-            <div className="grid gap-4 mb-6">
+            <div className="grid gap-3 sm:gap-4 mb-6">
               {type === "domain" ? (
                 <>
                   <input
@@ -174,21 +174,21 @@ export default function Roadmap() {
                     value={inputFields.SelectedDomain}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <input
                     name="CurrentSkills"
                     placeholder="Current Skills"
                     value={inputFields.CurrentSkills}
                     onChange={handleInputChange}
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <select
                     name="ExperienceLevel"
                     value={inputFields.ExperienceLevel}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 text-sm sm:text-base"
                   >
                     <option>Beginner</option>
                     <option>Intermediate</option>
@@ -200,14 +200,14 @@ export default function Roadmap() {
                     value={inputFields.TimeAvailability}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <input
                     name="PreferredLearningPace"
                     placeholder="Preferred learning pace"
                     value={inputFields.PreferredLearningPace}
                     onChange={handleInputChange}
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <textarea
                     name="YourGoals"
@@ -215,7 +215,7 @@ export default function Roadmap() {
                     value={inputFields.YourGoals}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 h-24 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 h-24 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                 </>
               ) : (
@@ -226,7 +226,7 @@ export default function Roadmap() {
                     value={inputFields.CollegeBranch}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <input
                     name="TimeAvailability"
@@ -234,14 +234,14 @@ export default function Roadmap() {
                     value={inputFields.TimeAvailability}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <input
                     name="PreferredLearningPace"
                     placeholder="Preferred learning pace"
                     value={inputFields.PreferredLearningPace}
                     onChange={handleInputChange}
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                   <textarea
                     name="YourGoals"
@@ -249,7 +249,7 @@ export default function Roadmap() {
                     value={inputFields.YourGoals}
                     onChange={handleInputChange}
                     required
-                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-3 h-24 placeholder-gray-400 transition"
+                    className="bg-gray-900/50 border border-gray-800 outline-none focus:border-orange-500 text-white rounded p-2.5 sm:p-3 h-24 placeholder-gray-400 transition text-sm sm:text-base"
                   />
                 </>
               )}
@@ -257,7 +257,7 @@ export default function Roadmap() {
             <Button
               variant="primary"
               type="submit"
-              className="mt-2 w-full py-3 text-lg"
+              className="mt-2 w-full py-2.5 sm:py-3 text-base sm:text-lg"
               disabled={loading}
             >
               {loading ? "Generating..." : "Generate Roadmap"}

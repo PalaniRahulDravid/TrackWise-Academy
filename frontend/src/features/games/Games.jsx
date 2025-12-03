@@ -197,7 +197,7 @@ export default function Games() {
         style={{ minHeight: "calc(100vh - 96px)" }}
       >
         <main className="px-4 py-10 max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-extrabold mb-4">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold mb-4">
             Welcome to{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">
               Games

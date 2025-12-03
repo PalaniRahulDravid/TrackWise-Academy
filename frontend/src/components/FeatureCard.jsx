@@ -6,13 +6,13 @@ export default function FeatureCard({ title, desc, gradient, icon, img, onClick,
       className={`group flex flex-col w-full text-left 
         bg-gray-900 rounded-lg overflow-hidden 
         hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl
-        h-full min-h-[280px]
+        h-full min-h-[260px] xs:min-h-[280px] sm:min-h-[300px]
         ${isComingSoon ? "opacity-60 cursor-not-allowed" : ""}
       `}
     >
       {/* 🔥 If IMG exists → show image top */}
       {img ? (
-        <div className="w-full h-40 sm:h-44 md:h-48 bg-gray-800 overflow-hidden">
+        <div className="w-full h-36 xs:h-40 sm:h-44 md:h-48 bg-gray-800 overflow-hidden">
           <img 
             src={img} 
             alt={title} 
@@ -29,11 +29,11 @@ export default function FeatureCard({ title, desc, gradient, icon, img, onClick,
       )}
 
       {/* TEXT SECTION */}
-      <div className="p-5 sm:p-6 flex-1 flex flex-col">
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-orange-400 transition-all">
+      <div className="p-4 xs:p-5 sm:p-6 flex-1 flex flex-col">
+        <h3 className="text-base xs:text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-orange-400 transition-all">
           {title}
         </h3>
-        <p className="text-gray-400 text-sm sm:text-base leading-relaxed line-clamp-3">
+        <p className="text-gray-400 text-xs xs:text-sm sm:text-base leading-relaxed line-clamp-3">
           {desc}
         </p>
       </div>

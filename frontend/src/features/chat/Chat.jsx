@@ -23,7 +23,8 @@ export default function Chat() {
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1024);
   const [searchQuery, setSearchQuery] = useState("");
-  const [mobile, setMobile] = useState(window.innerWidth < 768);
+  const [mobile, setMobile] = useState(window.innerWidth < 1024);
+  const [deleteConfirm, setDeleteConfirm] = useState({ show: false, chatId: null, chatTitle: "" });
 
   const chatWindowRef = useRef();
   const inputRef = useRef();
@@ -52,7 +53,7 @@ export default function Chat() {
 
   useEffect(() => {
     const handleResize = () => {
-      setMobile(window.innerWidth < 768);
+      setMobile(window.innerWidth < 1024);
       setSidebarOpen(window.innerWidth >= 1024);
     };
     window.addEventListener("resize", handleResize);
@@ -160,6 +161,35 @@ export default function Chat() {
     if (mobile) setSidebarOpen(false);
   }
 
+  async function handleDeleteChat() {
+    if (!deleteConfirm.chatId) return;
+
+    try {
+      await chatAPI.delete(`/chat/${deleteConfirm.chatId}`);
+      
+      // Remove from local state
+      const updatedChats = chats.filter(c => c.chatId !== deleteConfirm.chatId);
+      setChats(updatedChats);
+      
+      // If deleted chat was active, clear or select another
+      if (activeChat?.chatId === deleteConfirm.chatId) {
+        if (updatedChats.length > 0) {
+          fetchChatById(updatedChats[0].chatId);
+        } else {
+          setActiveChat(null);
+        }
+      }
+      
+      setToast({ show: true, message: "Chat deleted successfully!", type: "success" });
+      setTimeout(() => setToast({ show: false, message: "", type: "" }), 3000);
+    } catch (err) {
+      setToast({ show: true, message: "Failed to delete chat", type: "error" });
+      setTimeout(() => setToast({ show: false, message: "", type: "" }), 3000);
+    } finally {
+      setDeleteConfirm({ show: false, chatId: null, chatTitle: "" });
+    }
+  }
+
   function scrollToBottom() {
     setTimeout(() => {
       if (chatWindowRef.current)
@@ -218,71 +248,108 @@ export default function Chat() {
                 style={{
                   top: 'max(96px, calc(96px + env(safe-area-inset-top)))',
                   height: 'calc(100vh - max(96px, calc(96px + env(safe-area-inset-top))) - env(safe-area-inset-bottom))',
-                  maxWidth: "95vw",
-                  boxShadow: "0 0 24px 0 rgba(0,0,0,0.48)",
+                  maxWidth: "85vw",
+                  boxShadow: "0 0 40px 0 rgba(0,0,0,0.7)",
                 }}
               >
                 <div className="flex-shrink-0 flex flex-col border-b border-gray-800 bg-gray-900/50">
-                  <div className="flex items-center justify-between px-4 pt-4 pb-2">
-                    <span className="text-lg font-bold text-white">Chats</span>
-                    <Button
-                      variant="primary"
-                      className="py-1 px-3 text-sm ml-2"
-                      onClick={() => {
-                        startNewChat();
-                        setSidebarOpen(false);
-                      }}
-                      disabled={loading}
-                    >
-                      + New Chat
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      className="ml-2 text-xl flex items-center justify-center !px-3 !py-1.5"
-                      style={{ minWidth: "32px", minHeight: "32px", borderRadius: "100%" }}
-                      onClick={() => setSidebarOpen(false)}
-                      aria-label="Close sidebar"
-                    >
-                      ×
-                    </Button>
+                  <div className="flex items-center justify-between px-4 pt-5 pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl font-bold text-white">💬</span>
+                      <span className="text-lg font-bold text-white">Chats</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="primary"
+                        className="py-2 px-4 text-sm rounded-lg cursor-pointer"
+                        onClick={() => {
+                          startNewChat();
+                          setSidebarOpen(false);
+                        }}
+                        disabled={loading}
+                      >
+                        + New
+                      </Button>
+                      <button
+                        className="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-800/50 hover:bg-gray-700/50 text-gray-300 hover:text-white transition-all border border-gray-700 cursor-pointer"
+                        onClick={() => setSidebarOpen(false)}
+                        aria-label="Close sidebar"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                  <div className="px-4 pb-2">
-                    <input
-                      type="search"
-                      className="w-full p-2 rounded bg-gray-900/50 border border-gray-800 text-white"
-                      placeholder="Search chats"
-                      value={searchQuery}
-                      onChange={(e) => handleSearch(e.target.value)}
-                    />
+                  <div className="px-4 pb-3">
+                    <div className="relative">
+                      <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                      <input
+                        type="search"
+                        className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-gray-900/50 border border-gray-800 text-white text-sm placeholder-gray-400 focus:border-orange-500 focus:outline-none transition-colors"
+                        placeholder="Search chats..."
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </div>
-                <nav className="flex-1 overflow-y-auto px-2 custom-scrollbar">
-                  <ul>
+                <nav className="flex-1 overflow-y-auto px-3 py-2 custom-scrollbar">
+                  <ul className="space-y-1">
                     {chats.length === 0 && (
-                      <div className="text-gray-400 mt-8 text-center">No chats found.</div>
+                      <div className="text-gray-400 mt-8 text-center text-sm">No chats found</div>
                     )}
                     {chats.map((chat) => (
                       <li
                         key={chat.chatId}
-                        className={`cursor-pointer px-3 py-2 my-1 rounded-lg text-[15px] truncate transition ${
+                        className={`group relative px-4 py-3 rounded-lg text-sm transition-all ${
                           activeChat?.chatId === chat.chatId
-                            ? "bg-orange-500 text-white"
-                            : "hover:bg-gray-900/70 text-gray-100"
+                            ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg"
+                            : "hover:bg-gray-900/70 text-gray-200 hover:text-white"
                         }`}
-                        onClick={() => {
-                          handleSelectChat(chat.chatId);
-                          setSidebarOpen(false);
-                        }}
                       >
-                        {chat.title}
+                        <div
+                          className="cursor-pointer truncate pr-8"
+                          onClick={() => {
+                            handleSelectChat(chat.chatId);
+                            setSidebarOpen(false);
+                          }}
+                        >
+                          {chat.title}
+                        </div>
+                        <button
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-md bg-red-500/80 hover:bg-red-600 active:bg-red-700 text-white opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDeleteConfirm({ show: true, chatId: chat.chatId, chatTitle: chat.title });
+                          }}
+                          aria-label="Delete chat"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
                       </li>
                     ))}
                   </ul>
                 </nav>
-                <div className="flex-shrink-0 px-4 pb-4 pt-2">
+                <div className="flex-shrink-0 px-4 pb-4 pt-3 border-t border-gray-800">
                   {user && (
-                    <div className="bg-gray-900/50 rounded-lg text-sm text-gray-300 py-2 px-3 w-full text-center font-semibold border border-gray-800">
-                      {user.name || "User"}
+                    <div className="bg-gray-900/50 rounded-lg text-sm text-gray-300 py-2.5 px-4 w-full text-center font-semibold border border-gray-800 flex items-center justify-center gap-2">
+                      {user.profilePicture ? (
+                        <img
+                          src={user.profilePicture}
+                          alt={user.name}
+                          className="w-8 h-8 rounded-full border-2 border-orange-500 object-cover flex-shrink-0"
+                        />
+                      ) : (
+                        <span className="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                          {user.name?.charAt(0).toUpperCase() || "U"}
+                        </span>
+                      )}
+                      <span className="truncate">{user.name || "User"}</span>
                     </div>
                   )}
                 </div>
@@ -290,68 +357,102 @@ export default function Chat() {
             </>
           )}
           {mobile && !sidebarOpen && (
-            <Button
-              variant="primary"
-              className="fixed left-3 rounded-full w-10 h-10 flex items-center justify-center z-50 text-xl !p-0"
+            <button
+              className="fixed left-4 z-50 w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg shadow-orange-500/30 transition-all hover:scale-105 active:scale-95"
               style={{ 
-                minWidth: 0, 
-                minHeight: 0,
-                top: 'max(96px, calc(96px + env(safe-area-inset-top)))'
+                top: 'calc(max(96px, calc(96px + env(safe-area-inset-top))) + 12px)'
               }}
               onClick={() => setSidebarOpen(true)}
               aria-label="Open sidebar"
             >
-              ☰
-            </Button>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           )}
           {(!mobile || (mobile && !sidebarOpen)) && (
-            <aside className="bg-gray-900/50 border-r border-gray-800 flex-col w-72 lg:w-64 h-full z-30 transition duration-300 hidden lg:flex backdrop-blur">
+            <aside className="bg-gray-900/50 border-r border-gray-800 flex-col w-80 h-full z-30 transition duration-300 hidden lg:flex backdrop-blur">
               <div className="flex-shrink-0 flex flex-col border-b border-gray-800 bg-gray-900/50">
-                <div className="flex items-center justify-between px-4 pt-4 pb-2">
-                  <span className="text-lg font-bold text-white">Chats</span>
+                <div className="flex items-center justify-between px-5 pt-5 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl font-bold text-white">💬</span>
+                    <span className="text-lg font-bold text-white">Chats</span>
+                  </div>
                   <Button
                     variant="primary"
-                    className="py-1 px-3 text-sm ml-2"
+                    className="py-2 px-4 text-sm rounded-lg cursor-pointer"
                     onClick={startNewChat}
                     disabled={loading}
                   >
-                    + New Chat
+                    + New
                   </Button>
                 </div>
-                <div className="px-4 pb-2">
-                  <input
-                    type="search"
-                    className="w-full p-2 rounded bg-gray-900/50 border border-gray-800 text-white"
-                    placeholder="Search chats"
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                  />
+                <div className="px-5 pb-3">
+                  <div className="relative">
+                    <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input
+                      type="search"
+                      className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-gray-900/50 border border-gray-800 text-white text-sm placeholder-gray-400 focus:border-orange-500 focus:outline-none transition-colors"
+                      placeholder="Search chats..."
+                      value={searchQuery}
+                      onChange={(e) => handleSearch(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
-              <nav className="flex-1 overflow-y-auto px-2 custom-scrollbar">
-                <ul>
+              <nav className="flex-1 overflow-y-auto px-3 py-2 custom-scrollbar">
+                <ul className="space-y-1">
                   {chats.length === 0 && (
-                    <div className="text-gray-400 mt-8 text-center">No chats found.</div>
+                    <div className="text-gray-400 mt-8 text-center text-sm">No chats found</div>
                   )}
                   {chats.map((chat) => (
                     <li
                       key={chat.chatId}
-                      className={`cursor-pointer px-3 py-2 my-1 rounded-lg text-[15px] truncate transition ${
+                      className={`group relative px-4 py-3 rounded-lg text-sm transition-all ${
                         activeChat?.chatId === chat.chatId
-                          ? "bg-orange-500 text-white"
-                          : "hover:bg-gray-900/70 text-gray-100"
+                          ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg"
+                          : "hover:bg-gray-900/70 text-gray-200 hover:text-white"
                       }`}
-                      onClick={() => handleSelectChat(chat.chatId)}
                     >
-                      {chat.title}
+                      <div
+                        className="cursor-pointer truncate pr-8"
+                        onClick={() => handleSelectChat(chat.chatId)}
+                      >
+                        {chat.title}
+                      </div>
+                      <button
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-md bg-red-500/80 hover:bg-red-600 active:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteConfirm({ show: true, chatId: chat.chatId, chatTitle: chat.title });
+                        }}
+                        aria-label="Delete chat"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
                     </li>
                   ))}
                 </ul>
               </nav>
-              <div className="flex-shrink-0 px-4 pb-4 pt-2">
+              <div className="flex-shrink-0 px-5 pb-4 pt-3 border-t border-gray-800">
                 {user && (
-                  <div className="bg-gray-900/50 rounded-lg text-sm text-gray-300 py-2 px-3 w-full text-center font-semibold border border-gray-800">
-                    {user.name || "User"}
+                  <div className="bg-gray-900/50 rounded-lg text-sm text-gray-300 py-2.5 px-4 w-full text-center font-semibold border border-gray-800 flex items-center justify-center gap-2">
+                    {user.profilePicture ? (
+                      <img
+                        src={user.profilePicture}
+                        alt={user.name}
+                        className="w-8 h-8 rounded-full border-2 border-orange-500 object-cover flex-shrink-0"
+                      />
+                    ) : (
+                      <span className="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                        {user.name?.charAt(0).toUpperCase() || "U"}
+                      </span>
+                    )}
+                    <span className="truncate">{user.name || "User"}</span>
                   </div>
                 )}
               </div>
@@ -360,28 +461,32 @@ export default function Chat() {
           <section className="flex-1 flex flex-col justify-end min-h-0 bg-gray-900/50 rounded-lg ml-0 lg:ml-4 shadow-lg relative h-full border border-gray-800 backdrop-blur">
             <div
               ref={chatWindowRef}
-              className={`flex-1 overflow-y-auto px-3 pt-6 pb-2 custom-scrollbar ${
+              className={`flex-1 overflow-y-auto px-4 sm:px-6 pt-6 pb-2 custom-scrollbar ${
                 mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""
               }`}
               style={{ minHeight: 0, filter: mobile && sidebarOpen ? "blur(1px)" : "none" }}
             >
               {!activeChat?.messages?.length ? (
-                <div className="text-gray-400 text-center mt-20 text-2xl font-semibold">
-                  What can I help with?
+                <div className="text-gray-400 text-center mt-20 px-4">
+                  <div className="text-4xl mb-4">💬</div>
+                  <p className="text-xl sm:text-2xl font-semibold mb-2">What can I help with?</p>
+                  <p className="text-sm text-gray-500">Start a conversation or select a chat from the sidebar</p>
                 </div>
               ) : (
                 activeChat.messages.map((msg, idx) => (
                   <div
                     key={idx}
-                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} mb-3`}
+                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} mb-4`}
                   >
                     <div
-                      className="max-w-[85%] px-4 py-3 rounded-lg text-base bg-gray-900/50 text-gray-100 border border-gray-800"
+                      className={`max-w-[85%] px-4 py-3 rounded-xl text-sm sm:text-base shadow-md ${
+                        msg.role === "user" 
+                          ? "bg-orange-500 text-white" 
+                          : "bg-gray-900/50 text-gray-100 border border-gray-800"
+                      }`}
                       style={{
                         wordBreak: "break-word",
                         whiteSpace: "pre-wrap",
-                        borderBottomRightRadius: msg.role === "user" ? "0.6rem" : "",
-                        borderBottomLeftRadius: msg.role !== "user" ? "0.6rem" : "",
                       }}
                     >
                       {msg.content}
@@ -391,14 +496,14 @@ export default function Chat() {
               )}
             </div>
             <form
-              className={`w-full flex gap-2 px-3 bg-gray-900/50 border-t border-gray-800 items-center ${
+              className={`w-full flex gap-2 sm:gap-3 px-4 sm:px-6 bg-gray-900/50 border-t border-gray-800 items-end ${
                 mobile && sidebarOpen ? "opacity-30 pointer-events-none" : ""
               }`}
               style={{ 
                 zIndex: 2, 
                 filter: mobile && sidebarOpen ? "blur(1px)" : "none",
-                paddingTop: '12px',
-                paddingBottom: 'max(12px, calc(12px + env(safe-area-inset-bottom)))'
+                paddingTop: '16px',
+                paddingBottom: 'max(16px, calc(16px + env(safe-area-inset-bottom)))'
               }}
               onSubmit={sendMessage}
             >
@@ -406,28 +511,91 @@ export default function Chat() {
                 ref={inputRef}
                 rows={1}
                 value={messageInput}
-                placeholder="Type your question..."
-                className="flex-1 resize-none rounded-lg p-3 bg-gray-900/50 text-white border border-gray-800 focus:border-orange-500 placeholder-gray-400"
+                placeholder="Type your message..."
+                className="flex-1 resize-none rounded-xl p-3 sm:p-3.5 bg-gray-900/50 text-white border border-gray-800 focus:border-orange-500 focus:outline-none placeholder-gray-400 text-sm sm:text-base transition-colors"
                 autoFocus
                 onChange={(e) => setMessageInput(e.target.value)}
                 disabled={loading || (mobile && sidebarOpen)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage(e);
+                  }
+                }}
                 style={{
                   minHeight: "44px",
                   maxHeight: "264px",
                 }}
               />
-              <Button
+              <button
                 type="submit"
-                variant="gradient"
                 disabled={loading || !messageInput.trim() || (mobile && sidebarOpen)}
-                className="px-6 py-3"
+                className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-700 disabled:to-gray-700 text-white transition-all disabled:cursor-not-allowed shadow-lg disabled:shadow-none"
               >
-                {loading ? "Sending..." : "Send"}
-              </Button>
+                {loading ? (
+                  <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                )}
+              </button>
             </form>
           </section>
         </div>
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm.show && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 shadow-2xl max-w-md w-full overflow-hidden animate-fadeIn">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-gray-800 px-6 py-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Delete Chat?</h3>
+                  <p className="text-sm text-gray-400 mt-0.5">This action cannot be undone</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div className="px-6 py-5">
+              <p className="text-gray-300 text-sm leading-relaxed">
+                Are you sure you want to delete{" "}
+                <span className="font-semibold text-white">"{deleteConfirm.chatTitle}"</span>?
+              </p>
+              <p className="text-gray-400 text-xs mt-2">
+                All messages in this chat will be permanently removed.
+              </p>
+            </div>
+
+            {/* Footer */}
+            <div className="bg-gray-900/50 border-t border-gray-800 px-6 py-4 flex gap-3 justify-end">
+              <button
+                className="px-5 py-2.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium transition-colors text-sm cursor-pointer"
+                onClick={() => setDeleteConfirm({ show: false, chatId: null, chatTitle: "" })}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium transition-all shadow-lg shadow-red-500/30 text-sm cursor-pointer"
+                onClick={handleDeleteChat}
+              >
+                Delete Chat
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

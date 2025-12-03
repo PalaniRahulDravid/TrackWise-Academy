@@ -7,6 +7,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const resourcesRef = useRef(null);
@@ -24,6 +25,9 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
+    setLogoutConfirm(false);
+    setProfileOpen(false);
+    setMobileOpen(false);
     logout();
     navigate("/login");
   };
@@ -37,9 +41,9 @@ export default function Header() {
     <>
       <header className="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-md border-b border-gray-800/50 z-50">
         <div className="max-w-7xl mx-auto text-white px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <div 
-              className="bg-orange-500 px-3 py-1 rounded-md font-bold text-lg h-8 flex items-center cursor-pointer hover:bg-orange-600 transition duration-200"
+              className="bg-orange-500 px-2 sm:px-3 py-1 rounded-md font-bold text-base sm:text-lg h-7 sm:h-8 flex items-center cursor-pointer hover:bg-orange-600 transition duration-200"
               onClick={() => {
                 navigate("/");
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -47,7 +51,7 @@ export default function Header() {
             >
               ASM
             </div>
-            <span className="font-medium text-lg tracking-tight">
+            <span className="font-medium text-sm sm:text-base md:text-lg tracking-tight hidden xs:inline">
               AI Skill Mentor
             </span>
           </div>
@@ -90,7 +94,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-7">
             <button
               onClick={() => setResourcesOpen((o) => !o)}
-              className="text-sm font-medium hover:text-orange-400 transition-colors flex items-center gap-1"
+              className="text-xs sm:text-sm font-medium hover:text-orange-400 transition-colors flex items-center gap-1 cursor-pointer"
             >
               Resources
               <svg
@@ -150,10 +154,10 @@ export default function Header() {
                     <div className="py-1">
                       <button
                         onClick={() => {
-                          handleLogout();
+                          setLogoutConfirm(true);
                           setProfileOpen(false);
                         }}
-                        className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-800 transition-colors text-left text-sm"
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-800 transition-colors text-left text-sm cursor-pointer"
                       >
                         <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -167,7 +171,7 @@ export default function Header() {
             ) : (
               <button
                 onClick={() => navigate("/login")}
-                className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm cursor-pointer hover:bg-orange-600 transition duration-200"
+                className="px-3 sm:px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-xs sm:text-sm cursor-pointer hover:bg-orange-600 transition duration-200"
               >
                 Login
               </button>
@@ -205,15 +209,14 @@ export default function Header() {
       />
       {/* Mobile Drawer Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-gray-800 text-white z-50 transform transition-transform md:hidden ${
+        className={`fixed top-0 right-0 h-full w-full max-w-[320px] sm:max-w-[360px] bg-gray-800 text-white z-50 transform transition-transform md:hidden ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{ maxWidth: "90vw" }}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700">
+          <div className="flex items-center gap-2 sm:gap-3">
             <div 
-              className="bg-orange-500 px-3 py-1 rounded-md font-bold text-lg hover:bg-orange-600 transition duration-200 cursor-pointer"
+              className="bg-orange-500 px-2 sm:px-3 py-1 rounded-md font-bold text-base sm:text-lg hover:bg-orange-600 transition duration-200 cursor-pointer"
               onClick={() => {
                 navigate("/");
                 setMobileOpen(false);
@@ -222,7 +225,7 @@ export default function Header() {
             >
               ASM
             </div>
-            <span className="font-medium text-lg">AI Skill Mentor</span>
+            <span className="font-medium text-sm sm:text-base md:text-lg">AI Skill Mentor</span>
           </div>
           <button
             onClick={() => setMobileOpen(false)}
@@ -240,31 +243,31 @@ export default function Header() {
             </div>
             <a
               href="/roadmaps"
-              className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
+              className="block px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg hover:bg-gray-700 rounded"
             >
               Roadmaps
             </a>
             <a
               href="/courses"
-              className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
+              className="block px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg hover:bg-gray-700 rounded"
             >
               Courses
             </a>
             <a
               href="/dsa"
-              className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
+              className="block px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg hover:bg-gray-700 rounded"
             >
               DSA Practice
             </a>
             <a
               href="/doubts"
-              className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
+              className="block px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg hover:bg-gray-700 rounded"
             >
               Doubts
             </a>
             <a
               href="/games"
-              className="block px-6 py-3 text-lg hover:bg-gray-700 rounded"
+              className="block px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg hover:bg-gray-700 rounded"
             >
               Games
             </a>
@@ -288,7 +291,7 @@ export default function Header() {
               <span className="font-bold">{user.name || "User"}</span>
               <button
                 onClick={() => {
-                  handleLogout();
+                  setLogoutConfirm(true);
                   setMobileOpen(false);
                 }}
                 className="px-4 py-1.5 bg-orange-500 text-white rounded-md font-medium text-sm hover:bg-orange-600 transition duration-200"
@@ -315,6 +318,54 @@ export default function Header() {
         </div>
       </div>
       <div className="h-[72px]" />
+
+      {/* Logout Confirmation Modal */}
+      {logoutConfirm && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 shadow-2xl max-w-md w-full overflow-hidden animate-fadeIn">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border-b border-gray-800 px-6 py-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Logout Confirmation</h3>
+                  <p className="text-sm text-gray-400 mt-0.5">Are you sure you want to leave?</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div className="px-6 py-5">
+              <p className="text-gray-300 text-sm leading-relaxed">
+                You will be logged out of your account and redirected to the login page.
+              </p>
+              <p className="text-gray-400 text-xs mt-2">
+                You can log back in anytime to continue learning.
+              </p>
+            </div>
+
+            {/* Footer */}
+            <div className="bg-gray-900/50 border-t border-gray-800 px-6 py-4 flex gap-3 justify-end">
+              <button
+                className="px-5 py-2.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium transition-colors text-sm cursor-pointer"
+                onClick={() => setLogoutConfirm(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium transition-all shadow-lg shadow-orange-500/30 text-sm cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

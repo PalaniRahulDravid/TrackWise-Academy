@@ -20,9 +20,11 @@ export function AuthProvider({ children }) {
         if (mounted) setLoading(false);
       })
       .catch((err) => {
-        console.error("Failed to fetch profile:", err);
-        // If authentication fails, user is not logged in
-        // No need to clear anything - cookies are HTTP-Only
+        // Silently fail - user is simply not logged in
+        // Only log errors in development
+        if (import.meta.env.DEV) {
+          console.log("User not authenticated:", err.message);
+        }
         if (mounted) setLoading(false);
       });
 

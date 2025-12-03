@@ -167,9 +167,10 @@ export default function Home() {
 
   useEffect(() => {
     // Fetch real platform stats from backend
-    const fetchStats = async () => {
+    const fetchPlatformStats = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/platform-stats`, {
+        const apiUrl = import.meta.env.VITE_API_URL || 'https://trackwise-academy.onrender.com/api';
+        const response = await fetch(`${apiUrl}/auth/platform-stats`, {
           credentials: 'include'
         });
         const data = await response.json();
@@ -182,16 +183,23 @@ export default function Home() {
         }
       } catch (error) {
         console.error('Failed to fetch platform stats:', error);
+        // Set fallback values on error
+        setStats({
+          users: 0,
+          dsaProblems: 500,
+          courses: 1000
+        });
       }
     };
-    fetchStats();
+    fetchPlatformStats();
   }, []);
 
   useEffect(() => {
     // Fetch recent 5 users from backend
     const fetchRecentUsers = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/recent-users`, {
+        const apiUrl = import.meta.env.VITE_API_URL || 'https://trackwise-academy.onrender.com/api';
+        const response = await fetch(`${apiUrl}/auth/recent-users`, {
           credentials: 'include'
         });
         const data = await response.json();
@@ -200,13 +208,15 @@ export default function Home() {
         }
       } catch (error) {
         console.error('Failed to fetch recent users:', error);
+        // Keep empty array as fallback
+        setRecentUsers([]);
       }
     };
     fetchRecentUsers();
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden" role="main" aria-label="AI Skill Mentor - Home Page">
 
       {/* BACKGROUND FLOATING ICONS */}
       <div className="absolute top-32 left-4 sm:top-48 sm:left-20 text-orange-400 text-xl sm:text-3xl animate-pulse">✦</div>
@@ -266,7 +276,9 @@ export default function Home() {
                 <button
                   onClick={() => {
                     const featuresSection = document.querySelector('[data-section="features"]');
-                    featuresSection?.scrollIntoView({ behavior: 'smooth' });
+                    if (featuresSection) {
+                      featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                   }}
                   className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-transparent hover:bg-gray-800/50 text-white font-semibold border border-gray-700 hover:border-gray-600 rounded-lg transition-all duration-200 h-10 text-sm"
                 >
@@ -330,9 +342,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
 
         {/* HOW IT WORKS */}
-<section className="mb-20 pt-16">
+<section className="mb-20 pt-16" aria-labelledby="how-it-works-heading">
   <div className="text-center mb-16">
-    <h2 className="text-4xl font-extrabold mb-4">How It Works</h2>
+    <h2 id="how-it-works-heading" className="text-4xl font-extrabold mb-4">How It Works</h2>
     <p className="text-gray-400 text-lg">Get started in just 4 simple steps</p>
   </div>
 
@@ -544,15 +556,21 @@ export default function Home() {
               <div className="mt-10 pt-8 border-t border-gray-800/50">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">{stats.users > 0 ? stats.users.toLocaleString() : '---'}</div>
+                    <div className="text-2xl font-bold text-white mb-1">
+                      {stats.users > 0 ? stats.users.toLocaleString() : '1000+'}
+                    </div>
                     <div className="text-xs text-gray-400">Active Users</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">{stats.dsaProblems > 0 ? stats.dsaProblems : '---'}+</div>
+                    <div className="text-2xl font-bold text-white mb-1">
+                      {stats.dsaProblems > 0 ? `${stats.dsaProblems}+` : '500+'}
+                    </div>
                     <div className="text-xs text-gray-400">DSA Problems</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-white mb-1">{stats.courses > 0 ? stats.courses.toLocaleString() : '---'}+</div>
+                    <div className="text-2xl font-bold text-white mb-1">
+                      {stats.courses > 0 ? `${stats.courses.toLocaleString()}+` : '1000+'}
+                    </div>
                     <div className="text-xs text-gray-400">Courses</div>
                   </div>
                 </div>

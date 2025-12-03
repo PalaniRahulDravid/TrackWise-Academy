@@ -25,12 +25,9 @@ export default function Login() {
     setError("");
     setSuccess(false);
     
-    console.log('🚀 Starting login...', { email: form.email });
-    
     // Safety timeout to prevent infinite loading state
     const safetyTimeout = setTimeout(() => {
       if (loading) {
-        console.warn('⚠️ Safety timeout triggered');
         setLoading(false);
         setError("Request took too long. Please try again.");
       }
@@ -38,7 +35,6 @@ export default function Login() {
     
     try {
       const res = await login(form.email, form.password);
-      console.log('✅ Login response:', res);
       clearTimeout(safetyTimeout);
       
       if (res.success) {
@@ -52,7 +48,7 @@ export default function Login() {
         setLoading(false);
       }
     } catch (err) {
-      console.error('❌ Login error:', err);
+      clearTimeout(safetyTimeout);
       
       // Handle timeout errors (Render.com cold start)
       if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
@@ -184,7 +180,7 @@ export default function Login() {
 
           {/* Google Sign In Button */}
           <a
-            href={`${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/auth/google`}
+            href={`${import.meta.env.VITE_API_URL || "https://trackwise-academy.onrender.com/api"}/auth/google`}
             className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-gray-900/50 border border-gray-800 text-white rounded-lg font-medium hover:bg-gray-800/50 hover:border-orange-500 transition-all duration-200"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

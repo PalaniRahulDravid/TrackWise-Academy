@@ -24,7 +24,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import DSAHome from "./features/dsa/DSAHome";
+import DsaHome from "./features/dsa/DsaHome";
 import DsaQuestionList from "./features/dsa/DsaQuestionList";
 import CompanyList from "./features/dsa/CompanyList";
 import CompanyQuestionList from "./features/dsa/CompanyQuestionList";
@@ -54,7 +54,7 @@ export default function App() {
           <Route path="/courses" element={<CoursesHome />} />
           <Route path="/courses/youtube" element={<Courses />} />
           <Route path="/courses/trackwise" element={<TrackWiseCourses />} />
-          <Route path="/dsa" element={<DSAHome />} />
+          <Route path="/dsa" element={<DsaHome />} />
 
           {/* Protected Routes */}
           <Route path="/games/funny" element={<ProtectedRoute><FunnyGames /></ProtectedRoute>} />

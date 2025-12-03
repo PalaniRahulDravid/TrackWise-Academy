@@ -48,12 +48,10 @@ export default function Register() {
     }
 
     setLoading(true);
-    console.log('🚀 Starting registration...', { email: form.email, name: form.name });
     
     // Safety timeout to prevent infinite loading state
     const safetyTimeout = setTimeout(() => {
       if (loading) {
-        console.warn('⚠️ Safety timeout triggered');
         setLoading(false);
         setError("Request took too long. Please try again.");
       }
@@ -61,7 +59,6 @@ export default function Register() {
     
     try {
       const res = await register(form.name.trim(), form.email.trim(), form.password.trim());
-      console.log('✅ Registration response:', res);
       clearTimeout(safetyTimeout);
 
       if (res.success) {
@@ -78,7 +75,7 @@ export default function Register() {
         setLoading(false);
       }
     } catch (err) {
-      console.error('❌ Registration error:', err);
+      clearTimeout(safetyTimeout);
       
       // Handle timeout errors (Render.com cold start)
       if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {

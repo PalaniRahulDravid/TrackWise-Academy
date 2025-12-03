@@ -24,7 +24,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import GuestRoute from "./components/GuestRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import DsaHome from "./features/dsa/DsaHome";
+import DsaHome from "./features/dsa/DsaHome.jsx";
 import DsaQuestionList from "./features/dsa/DsaQuestionList";
 import CompanyList from "./features/dsa/CompanyList";
 import CompanyQuestionList from "./features/dsa/CompanyQuestionList";

@@ -98,8 +98,8 @@ export default function Login() {
       <div className="absolute bottom-32 right-8 text-yellow-400 text-lg sm:text-2xl animate-pulse z-0">+</div>
 
       <main
-        className="w-full bg-black text-white flex items-center justify-center px-4 overflow-hidden"
-        style={{ height: "calc(100vh - 96px)" }}
+        className="w-full bg-black text-white flex items-center justify-center px-4"
+        style={{ minHeight: "calc(100vh - 72px)", paddingTop: "72px" }}
       >
         <form
           onSubmit={handleSubmit}
@@ -164,7 +164,7 @@ export default function Login() {
           </div>
           <Button
             type="submit"
-            className="w-full mt-1"
+            className="w-full mt-1 cursor-pointer"
             variant="primary"
             disabled={loading || success}
           >

@@ -51,7 +51,7 @@ export default function Header() {
             >
               ASM
             </div>
-            <span className="font-medium text-sm sm:text-base md:text-lg tracking-tight hidden xs:inline">
+            <span className="font-medium text-sm sm:text-base md:text-lg tracking-tight">
               AI Skill Mentor
             </span>
           </div>
@@ -317,9 +317,8 @@ export default function Header() {
           )}
         </div>
       </div>
-      <div className="h-[72px]" />
 
-      {/* Logout Confirmation Modal */}
+      /* Logout Confirmation Modal */
       {logoutConfirm && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-gray-900 rounded-xl border border-gray-800 shadow-2xl max-w-md w-full overflow-hidden animate-fadeIn">

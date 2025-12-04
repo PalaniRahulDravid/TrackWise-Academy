@@ -137,13 +137,12 @@ export default function Register() {
       </div>
 
       <main
-        className="w-full bg-black text-white flex flex-col items-center justify-center px-4"
-        style={{ minHeight: "calc(100vh - 96px)" }}
+        className="w-full bg-black text-white flex flex-col items-center justify-center px-4 py-1"
+        style={{ minHeight: "calc(100vh - 72px)", paddingTop: "72px" }}
       >
         <form
           onSubmit={handleSubmit}
-          className="bg-gray-900/50 border border-gray-800 rounded-lg shadow-lg w-full max-w-sm p-8 flex flex-col"
-          style={{ marginTop: "24px" }}
+          className="bg-gray-900/50 border border-gray-800 rounded-lg shadow-lg w-full max-w-sm p-6 sm:p-8 flex flex-col my-4"
           autoComplete="off"
         >
           <h2 className="text-3xl font-bold mb-6 text-center text-white">
@@ -243,7 +242,7 @@ export default function Register() {
 
           <Button
             type="submit"
-            className="w-full mt-2 text-lg"
+            className="w-full mt-2 text-lg cursor-pointer"
             variant="primary"
             disabled={loading || success}
           >

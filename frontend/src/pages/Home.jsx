@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/Button";
-import FeatureCard from "../components/FeatureCard"; // ⭐ IMPORTED
+import FeatureCard from "../components/FeatureCard";
 import useAuth from "../hooks/useAuth";
 import {
   Github, Linkedin, Instagram, Code,
@@ -12,6 +12,12 @@ import {
   CheckCircle,
   Award,
   Users,
+  BookOpen,
+  MessageCircleQuestion,
+  Gamepad2,
+  RouteIcon,
+  GraduationCap,
+  Sparkles,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -216,128 +222,349 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden" role="main" aria-label="AI Skill Mentor - Home Page">
-
-      {/* BACKGROUND FLOATING ICONS */}
-      <div className="absolute top-32 left-4 sm:top-48 sm:left-20 text-orange-400 text-xl sm:text-3xl animate-pulse">✦</div>
-      <div className="absolute top-64 right-8 sm:top-80 sm:right-32 text-yellow-400 text-lg sm:text-2xl animate-pulse">✦</div>
-      <div className="absolute top-80 left-1/4 sm:top-96 text-orange-400 text-base sm:text-xl animate-pulse">+</div>
-      <div className="absolute bottom-32 right-4 sm:bottom-96 sm:right-20 text-yellow-400 text-lg sm:text-2xl animate-pulse">+</div>
+    <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden" role="main" aria-label="AI Skill Mentor - Home Page">
 
       <Header />
 
-      <main className="relative z-10">
+      <main className="relative z-10 pt-[40px]">
 
-        {/* HERO SECTION - MODERN DESIGN */}
-        <section className="relative overflow-hidden border-b border-gray-800 h-screen flex items-center">
-          
-          {/* Subtle Background Pattern */}
-          <div className="absolute inset-0 bg-gradient-to-b from-orange-500/5 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" />
-          
-          <div className="container relative mx-auto px-4 py-8">
-            <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-6">
-              
-              {/* Animated Badge */}
-              <div className="flex justify-center animate-fadeIn">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900/80 backdrop-blur-sm border-2 border-orange-500/20 rounded-lg shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-                  </span>
-                  <span className="text-xs sm:text-sm md:text-base font-semibold text-orange-400">
-                    Your Complete AI Learning Platform
-                  </span>
-                </div>
-              </div>
-              
-              {/* Main Heading */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight animate-fadeIn delay-100">
-                <span className="block text-white">Learn, Practice & Excel</span>
-                <span className="block bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent mt-2">Your AI-Powered Tech Journey</span>
-              </h1>
-              
-              {/* Description */}
-              <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed animate-fadeIn delay-200 px-2">
-                Master DSA with {stats.dsaProblems > 0 ? stats.dsaProblems : '500+'} curated problems, get personalized AI roadmaps, access top courses, and clear doubts instantly. Your complete platform for tech excellence.
-              </p>
-              
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 px-2 sm:px-4 animate-fadeIn delay-300">
-                <button
-                  onClick={() => navigate("/roadmaps")}
-                  className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 min-h-[40px] text-xs sm:text-sm cursor-pointer"
+        {/* HERO SECTION - FUTURISTIC AI DESIGN */}
+        {/* HERO SECTION - GCORE STYLE CIRCUIT BOARD DESIGN */}
+<section className="relative overflow-hidden min-h-[calc(100vh-72px)] flex flex-col items-center justify-center py-6 sm:py-8">
+  
+  {/* Dark Background */}
+  <div className="absolute inset-0 bg-[#0a0a0a]"></div>
+  
+  {/* Mobile Orange Gradient - Half Screen */}
+  <div className="block sm:hidden absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-orange-500/20 via-orange-600/10 to-transparent"></div>
+  
+  {/* Orange Light Streak from Top Right - Desktop only */}
+  <div className="hidden sm:block absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-orange-500/30 via-orange-600/10 to-transparent blur-3xl"></div>
+  <div className="hidden sm:block absolute top-0 right-1/4 w-[400px] h-[300px] bg-gradient-to-b from-orange-500/20 via-orange-400/5 to-transparent blur-2xl transform rotate-45"></div>
+  
+  {/* Subtle Grid Pattern */}
+  <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:80px_80px] opacity-20"></div>
+  
+  {/* TOP SECTION - TEXT CONTENT */}
+  <div className="container relative mx-auto px-4 z-20 flex-shrink-0 mb-0 sm:mb-[-90px]">
+    <div className="max-w-4xl mx-auto text-center space-y-2.5 sm:space-y-2.5">
+      
+      {/* Badge */}
+      <div className="flex justify-center animate-fadeIn mb-0 sm:mb-0">
+        <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-4 sm:py-2 bg-[#1a1a1a]/95 backdrop-blur-sm border-2 border-orange-500/50 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+          </span>
+          <span className="text-xs sm:text-sm font-medium text-orange-400">
+            Your Complete AI Learning Platform
+          </span>
+        </div>
+      </div>
+      
+      {/* Main Heading */}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight animate-fadeIn delay-100 px-2 mt-2 sm:mt-0">
+        <span className="block text-white">Your AI-Powered Tech Journey</span>
+      </h1>
+      
+      {/* Description */}
+      <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed animate-fadeIn delay-200 px-4 mt-2 sm:mt-0">
+        Boost your learning efficiency globally by bringing AI-powered education closer to you. Enjoy personalized roadmaps and best-in-class learning experience.
+      </p>
+      
+      {/* CTA Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 justify-center pt-3 sm:pt-2 animate-fadeIn delay-300 px-4">
+        <button
+          onClick={() => navigate("/roadmaps")}
+          className="relative z-30 group inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/30 text-sm cursor-pointer shadow-lg"
+        >
+          Get Started
+        </button>
+        <button
+          onClick={() => {
+            const featuresSection = document.querySelector('[data-section="features"]');
+            if (featuresSection) {
+              featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
+          className="relative z-30 inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-transparent hover:bg-gray-800/50 text-white font-semibold border-2 border-gray-600 hover:border-gray-500 rounded-lg transition-all duration-200 text-sm cursor-pointer"
+        >
+          Explore Features
+        </button>
+      </div>
+      
+      {/* Recent Users Section - Mobile Only */}
+      {recentUsers.length > 0 && (
+        <div className="block sm:hidden mt-4 animate-fadeIn delay-400">
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex -space-x-3">
+              {recentUsers.slice(0, 5).map((user, index) => (
+                <div
+                  key={user._id || index}
+                  className="relative w-10 h-10 rounded-full border-2 border-[#0a0a0a] shadow-lg overflow-hidden"
+                  style={{ zIndex: 5 - index }}
                 >
-                  Get Started Free
-                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => {
-                    const featuresSection = document.querySelector('[data-section="features"]');
-                    if (featuresSection) {
-                      featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-transparent hover:bg-gray-800/50 text-white font-semibold border border-gray-700 hover:border-gray-600 rounded-lg transition-all duration-200 min-h-[40px] text-xs sm:text-sm cursor-pointer"
-                >
-                  Explore Features
-                </button>
-              </div>
-              
-              {/* User Stats with Animated Avatars - Real Data */}
-              <div className="flex flex-col items-center gap-3 pt-4 min-h-[100px] justify-center animate-fadeIn delay-400">
-                {recentUsers.length > 0 && (
-                  <div className="flex items-center gap-1">
-                    <div className="flex -space-x-3">
-                      {recentUsers.map((person, index) => {
-                        const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'];
-                        const userColor = colors[index % colors.length];
-                        
-                        return (
-                          <div key={index} className="group relative">
-                            {/* Avatar */}
-                            {person.profilePicture ? (
-                              <img
-                                src={person.profilePicture}
-                                alt={person.name}
-                                className="w-11 h-11 rounded-full border-2 border-black shadow-lg object-cover transition-all duration-300 hover:-translate-y-1 hover:scale-110 cursor-pointer"
-                              />
-                            ) : (
-                              <div 
-                                className="w-11 h-11 rounded-full border-2 border-black shadow-lg flex items-center justify-center text-white font-semibold text-sm transition-all duration-300 hover:-translate-y-1 hover:scale-110 cursor-pointer"
-                                style={{ backgroundColor: userColor }}
-                              >
-                                {person.initial}
-                              </div>
-                            )}
-                            
-                            {/* Tooltip */}
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 border border-gray-700 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                              <p className="text-white text-xs font-semibold">{person.name}</p>
-                              <p className="text-gray-400 text-xs">{person.email}</p>
-                            </div>
-                          </div>
-                        );
-                      })}
+                  {user.profilePicture ? (
+                    <img 
+                      src={user.profilePicture} 
+                      alt={user.name || 'User'} 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center text-white font-semibold text-sm">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                     </div>
-                  </div>
-                )}
-                
-                {stats.users > 0 && (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900/50 backdrop-blur-sm border border-gray-800 shadow-lg">
-                    <Users className="h-4 w-4 text-orange-500" />
-                    <span className="text-xs sm:text-sm font-semibold text-gray-300">
-                      Join <span className="text-orange-500">{stats.users.toLocaleString()}+</span> developers already learning
-                    </span>
-                  </div>
-                )}
-              </div>
-              
+                  )}
+                </div>
+              ))}
             </div>
+            <p className="text-xs text-gray-400">
+              Join our recent learners
+            </p>
           </div>
-        </section>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {/* CIRCUIT BOARD ANIMATION SECTION - Hidden on mobile */}
+  <div className="hidden sm:flex container relative mx-auto px-4 z-10 items-center justify-center flex-1 -mt-4">
+    <div className="relative w-full max-w-6xl h-[280px] sm:h-[320px] md:h-[360px]">
+      
+      {/* SVG Circuit Lines with Light Animation */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet" style={{ overflow: 'visible' }}>
+        <defs>
+          {/* Glow Filter */}
+          <filter id="circuitGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          
+          {/* Line Gradient */}
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f97316" stopOpacity="0.6"/>
+            <stop offset="100%" stopColor="#f97316" stopOpacity="0.2"/>
+          </linearGradient>
+        </defs>
+        
+        {/* LEFT TOP LINE - Target Icon */}
+        <path 
+          d="M 70 40 L 70 110 L 378 110 L 378 140" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="3s" repeatCount="indefinite">
+            <mpath href="#leftTopPath" />
+          </animateMotion>
+        </circle>
+        <path id="leftTopPath" d="M 70 40 L 70 110 L 378 110 L 378 140" fill="none" className="hidden sm:block"/>
+        
+        {/* LEFT MIDDLE LINE - Code Icon */}
+        <path 
+          d="M 70 140 L 378 140" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s">
+            <mpath href="#leftMidPath" />
+          </animateMotion>
+        </circle>
+        <path id="leftMidPath" d="M 70 140 L 378 140" fill="none" className="hidden sm:block"/>
+        
+        {/* LEFT BOTTOM LINE - Rocket Icon */}
+        <path 
+          d="M 70 240 L 70 170 L 378 170 L 378 140" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1s">
+            <mpath href="#leftBottomPath" />
+          </animateMotion>
+        </circle>
+        <path id="leftBottomPath" d="M 70 240 L 70 170 L 378 170 L 378 140" fill="none" className="hidden sm:block"/>
+        
+        {/* RIGHT TOP LINE */}
+        <path 
+          d="M 730 40 L 730 110 L 422 110 L 422 140" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="3s" repeatCount="indefinite" begin="0.3s">
+            <mpath href="#rightTopPath" />
+          </animateMotion>
+        </circle>
+        <path id="rightTopPath" d="M 730 40 L 730 110 L 422 110 L 422 140" fill="none" className="hidden sm:block"/>
+        
+        {/* RIGHT MIDDLE LINE */}
+        <path 
+          d="M 730 140 L 422 140" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.8s">
+            <mpath href="#rightMidPath" />
+          </animateMotion>
+        </circle>
+        <path id="rightMidPath" d="M 730 140 L 422 140" fill="none" className="hidden sm:block"/>
+        
+        {/* RIGHT BOTTOM LINE */}
+        <path 
+          d="M 730 240 L 730 170 L 422 170 L 422 140" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.3s">
+            <mpath href="#rightBottomPath" />
+          </animateMotion>
+        </circle>
+        <path id="rightBottomPath" d="M 730 240 L 730 170 L 422 170 L 422 140" fill="none" className="hidden sm:block"/>
+        
+        {/* BOTTOM CENTER LINE */}
+        <path 
+          d="M 400 260 L 400 170" 
+          stroke="#f97316" 
+          strokeWidth="2" 
+          strokeOpacity="0.3" 
+          fill="none"
+          className="hidden sm:block"
+        />
+        <circle r="4" fill="#f97316" filter="url(#circuitGlow)" className="hidden sm:block">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="0.2s">
+            <mpath href="#bottomPath" />
+          </animateMotion>
+        </circle>
+        <path id="bottomPath" d="M 400 260 L 400 170" fill="none" className="hidden sm:block"/>
+      </svg>
+      
+      {/* LEFT SIDE FEATURE BOXES */}
+      <div className="absolute left-2 sm:left-6 md:left-8 lg:left-10 top-1/2 -translate-y-1/2 flex flex-col gap-[100px]">
+        {/* AI Roadmap */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <RouteIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+        
+        {/* DSA Practice */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <Code className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+        
+        {/* Training/Courses */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+      </div>
+      
+      {/* CENTER AI CHIP - SMALLER */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24">
+          {/* Chip Base */}
+          <div className="absolute inset-0 bg-[#1a1a1a] rounded-2xl border border-gray-600"></div>
+          
+          {/* Chip Pins - Top */}
+          <div className="absolute -top-2 left-1/2 -translate-x-1/2 flex gap-1">
+            <div className="w-1 h-2 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-1 h-2 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-1 h-2 bg-orange-500/60 rounded-sm"></div>
+          </div>
+          
+          {/* Chip Pins - Bottom */}
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+            <div className="w-1 h-2 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-1 h-2 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-1 h-2 bg-orange-500/60 rounded-sm"></div>
+          </div>
+          
+          {/* Chip Pins - Left */}
+          <div className="absolute left-[-8px] top-1/2 -translate-y-1/2 flex flex-col gap-1">
+            <div className="w-2 h-1 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-2 h-1 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-2 h-1 bg-orange-500/60 rounded-sm"></div>
+          </div>
+          
+          {/* Chip Pins - Right */}
+          <div className="absolute right-[-8px] top-1/2 -translate-y-1/2 flex flex-col gap-1">
+            <div className="w-2 h-1 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-2 h-1 bg-orange-500/60 rounded-sm"></div>
+            <div className="w-2 h-1 bg-orange-500/60 rounded-sm"></div>
+          </div>
+          
+          {/* Inner Chip with AI Text */}
+          <div className="absolute inset-2 bg-[#0a0a0a] rounded-xl border border-gray-700 flex items-center justify-center">
+            <span className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-gray-300 to-gray-500" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              AI
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      {/* RIGHT SIDE FEATURE BOXES */}
+      <div className="absolute right-2 sm:right-6 md:right-8 lg:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-[100px]">
+        {/* Doubt Resolution */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <MessageCircleQuestion className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+        
+        {/* Mind Games */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <Gamepad2 className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+        
+        {/* More Features */}
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+      </div>
+      
+      {/* BOTTOM CENTER BOX */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1a1a1a] rounded-xl border border-gray-700 flex items-center justify-center cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all duration-300 group">
+          <Users className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-orange-400 transition-colors" />
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  {/* Stats at Bottom */}
+  {stats.users > 0 && (
+    <div className="container relative mx-auto px-4 z-20 flex justify-center mt-4 sm:mt-4 animate-fadeIn delay-500">
+      <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-4 sm:py-2 rounded-full bg-[#1a1a1a]/95 backdrop-blur-sm border-2 border-gray-700 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+        <Users className="h-4 w-4 sm:h-4 sm:w-4 text-orange-400" />
+        <span className="text-xs sm:text-sm text-gray-200 font-medium">
+          Join <span className="text-orange-400 font-bold">{stats.users.toLocaleString()}+</span> developers already learning
+        </span>
+      </div>
+    </div>
+  )}
+</section>
+
 
         <div className="max-w-7xl mx-auto px-4">
 
